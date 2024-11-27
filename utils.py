@@ -1,21 +1,8 @@
+import logging
 from typing import Dict
 
 # Global registries
-rule_registry: Dict[str, "BaseRule"] = {}
 event_handler_registry: Dict[str, "BaseEventHandler"] = {}
-import logging
-
-
-def register_rule(rule_instance: "BaseRule"):
-    """
-    Register a rule instance in the global rule registry.
-
-    :param rule_instance: An instance of a class inheriting from BaseRule.
-    :raises ValueError: If a rule with the same name is already registered.
-    """
-    if rule_instance.name in rule_registry:
-        raise ValueError(f"Rule '{rule_instance.name}' is already registered.")
-    rule_registry[rule_instance.name] = rule_instance
 
 
 def register_event_handler(event_handler_instance: "BaseEventHandler"):

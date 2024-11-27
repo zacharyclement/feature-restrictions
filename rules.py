@@ -1,12 +1,9 @@
-# rules.py
-
 from abc import ABC, abstractmethod
 
 from models import Event, UserData
 from rule_state_store import RuleStateStore
 from user_store import UserStore
-
-# rules.py
+from utils import logger
 
 
 class BaseRule(ABC):
@@ -27,20 +24,25 @@ class BaseRule(ABC):
         - Evaluate the rule.
         - Update tripwires and take actions if the rule condition is met.
         """
+        logger.info(f"Processing rule: {self.name}")
+        logger.info(f"Rule state before: {self.rule_state_store.rule_disabled}")
         if self.rule_state_store.is_rule_disabled(self.name):
+
             return False  # Rule is disabled, no action taken
 
         # Evaluate the rule
         condition_met = self.evaluate(user_data, event)
+        logger.info(f"Rule condition met: {condition_met}")
 
         if condition_met:
-            # Apply action
+            # Apply action, flip user data flags to false
             self.apply_action(user_data)
             # Update affected users for tripwire logic
             total_users = len(self.user_store.users)
             self.rule_state_store.update_affected_users(
                 self.name, user_data.user_id, total_users
             )
+        logger.info(f"Rule state after: {self.rule_state_store.rule_disabled}")
         return condition_met
 
     @abstractmethod
@@ -65,25 +67,12 @@ class UniqueZipCodeRule(BaseRule):
         """
         Evaluates whether the ratio of unique zip codes to total credit cards exceeds 0.75.
         """
-        card_id = event.event_properties.get("card_id")
-        zip_code = event.event_properties.get("zip_code")
-        if not card_id or not zip_code:
-            raise ValueError("Both 'card_id' and 'zip_code' are required.")
+        # Ensure there are credit cards
+        if user_data.total_credit_cards == 0:
+            return False
 
-        # Simulate adding the new card
-        temp_total_credit_cards = user_data.total_credit_cards
-        temp_unique_zip_codes = user_data.unique_zip_codes.copy()
-
-        if card_id not in user_data.credit_cards:
-            temp_total_credit_cards += 1
-            temp_unique_zip_codes.add(zip_code)
-
-        ratio = (
-            len(temp_unique_zip_codes) / temp_total_credit_cards
-            if temp_total_credit_cards > 0
-            else 0
-        )
-
+        # Calculate the ratio directly from updated user data
+        ratio = len(user_data.unique_zip_codes) / user_data.total_credit_cards
         return ratio > 0.75
 
     def apply_action(self, user_data: UserData):
@@ -117,20 +106,12 @@ class ChargebackRatioRule(BaseRule):
         """
         Evaluates whether the ratio of total chargebacks to total spend exceeds 10%.
         """
-        amount = event.event_properties.get("amount")
-        if amount is None:
-            raise ValueError("'amount' is required.")
+        # Ensure there is spend to calculate the ratio
+        if user_data.total_spend == 0:
+            return False
 
-        temp_total_spend = user_data.total_spend
-        temp_total_chargebacks = user_data.total_chargebacks
-
-        if event.name == "purchase_made":
-            temp_total_spend += amount
-        elif event.name == "chargeback_occurred":
-            temp_total_chargebacks += amount
-
-        ratio = temp_total_chargebacks / temp_total_spend if temp_total_spend > 0 else 0
-
+        # Calculate the ratio directly from updated user data
+        ratio = user_data.total_chargebacks / user_data.total_spend
         return ratio > 0.10
 
     def apply_action(self, user_data: UserData):

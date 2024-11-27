@@ -17,6 +17,7 @@ class EventSender:
         :param event_name: Name of the event (e.g., "scam_message_flagged").
         :param event_properties: Dictionary of event properties (e.g., {"user_id": "user123"}).
         """
+        print("user_id type: ", type(user_id))
         url = f"{self.base_url}/event"
         payload = {"name": event_name, "event_properties": event_properties}
         try:
@@ -32,6 +33,7 @@ class EventSender:
         Check if a user can send/receive messages.
         :param user_id: User ID to check.
         """
+        print("user_id type: ", type(user_id))
         url = f"{self.base_url}/canmessage"
         params = {"user_id": user_id}
         try:
@@ -47,6 +49,7 @@ class EventSender:
         Check if a user can bid/purchase.
         :param user_id: User ID to check.
         """
+        print("user_id type: ", type(user_id))
         url = f"{self.base_url}/canpurchase"
         params = {"user_id": user_id}
         try:
@@ -65,7 +68,7 @@ if __name__ == "__main__":
     sender = EventSender(base_url)
 
     # Example user IDs
-    user_ids = [f"user_{i}" for i in range(1, 2)]
+    user_ids = [i for i in range(1, 2)]
 
     # Send multiple events for testing
     for user_id in user_ids:

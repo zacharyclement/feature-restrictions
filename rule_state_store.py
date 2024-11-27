@@ -3,6 +3,8 @@
 import time
 from typing import Dict, Set
 
+from utils import logger
+
 
 class RuleStateStore:
     """
@@ -16,14 +18,22 @@ class RuleStateStore:
         )  # rule_name -> {user_id: timestamp}
         self.time_window: int = 300  # Time window in seconds (e.g., 5 minutes)
         self.threshold: float = 0.05  # 5%
+        logger.info(
+            f"Rule state store initialized with time window: {self.time_window}s, threshold: {self.threshold}."
+        )
 
     def is_rule_disabled(self, rule_name: str) -> bool:
         """
-        Check if a rule is currently disabled.
+        is rule diabled or not
         """
-        return self.rule_disabled.get(rule_name, False)
+        disabled = self.rule_disabled.get(rule_name, False)
+        logger.info(f"disabled: {disabled}")
+        logger.info(f"rule '{rule_name}' is disabled: {disabled}")
+        return disabled
 
-    def update_affected_users(self, rule_name: str, user_id: str, total_users: int):
+    def update_affected_users(
+        self, rule_name: str, user_id: str, total_users: int
+    ) -> None:
         """
         Update the affected users for a rule and determine if the rule should be disabled.
         """
@@ -46,15 +56,25 @@ class RuleStateStore:
         affected_count = len(affected_users)
         percentage = affected_count / total_users if total_users > 0 else 0
 
-        # Disable the rule if the percentage exceeds the threshold
+        # Disable or enable the rule based on the percentage
+        previously_disabled = self.rule_disabled.get(rule_name, False)
         if percentage >= self.threshold:
             self.rule_disabled[rule_name] = True
+            if not previously_disabled:  # Log only if the state changes
+                logger.info(
+                    f"Rule '{rule_name}' disabled: {affected_count}/{total_users} users affected ({percentage:.2%})."
+                )
         else:
             self.rule_disabled[rule_name] = False
+            if previously_disabled:  # Log only if the state changes
+                logger.info(
+                    f"Rule '{rule_name}' re-enabled: {affected_count}/{total_users} users affected ({percentage:.2%})."
+                )
 
-    def clear_rules(self):
+    def clear_rules(self) -> None:
         """
         Clear all rule-related state.
         """
+        logger.info("Clearing all rule states and affected user data.")
         self.rule_disabled.clear()
         self.affected_users.clear()
