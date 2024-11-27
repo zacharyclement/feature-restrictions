@@ -1,9 +1,9 @@
 from abc import ABC, abstractmethod
 
-from models import Event, UserData
-from rule_state_store import RuleStateStore
-from user_store import UserStore
-from utils import logger
+from .models import Event, UserData
+from .trip_wire_manager import TripWireManager
+from .user_manager import UserManager
+from .utils import logger
 
 
 class BaseRule(ABC):
@@ -13,9 +13,9 @@ class BaseRule(ABC):
 
     name: str  # Unique identifier for the rule
 
-    def __init__(self, rule_state_store: RuleStateStore, user_store: UserStore):
-        self.rule_state_store = rule_state_store
-        self.user_store = user_store
+    def __init__(self, trip_wire_manager: TripWireManager, user_manager: UserManager):
+        self.trip_wire_manager = trip_wire_manager
+        self.user_manager = user_manager
 
     def process(self, user_data: UserData, event: Event):
         """
@@ -25,8 +25,8 @@ class BaseRule(ABC):
         - Update tripwires and take actions if the rule condition is met.
         """
         logger.info(f"Processing rule: {self.name}")
-        logger.info(f"Rule state before: {self.rule_state_store.rule_disabled}")
-        if self.rule_state_store.is_rule_disabled(self.name):
+        logger.info(f"Rule state before: {self.trip_wire_manager.rule_disabled}")
+        if self.trip_wire_manager.is_rule_disabled(self.name):
 
             return False  # Rule is disabled, no action taken
 
@@ -38,11 +38,13 @@ class BaseRule(ABC):
             # Apply action, flip user data flags to false
             self.apply_action(user_data)
             # Update affected users for tripwire logic
-            total_users = len(self.user_store.users)
-            self.rule_state_store.update_affected_users(
+            total_users = len(self.user_manager.users)
+            self.trip_wire_manager.update_affected_users(
                 self.name, user_data.user_id, total_users
             )
-        logger.info(f"Rule state after: {self.rule_state_store.rule_disabled}")
+        logger.info(
+            f"rule state store, rule disabled: {self.trip_wire_manager.rule_disabled}"
+        )
         return condition_met
 
     @abstractmethod

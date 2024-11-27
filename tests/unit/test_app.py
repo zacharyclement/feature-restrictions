@@ -3,8 +3,8 @@ import json
 import pytest
 from fastapi.testclient import TestClient
 
-from app import app, rule_state_store, user_store
-from models import Event
+from app import app, trip_wire_manager, user_manager
+from feature_restriction.models import Event
 
 client = TestClient(app)
 
@@ -12,8 +12,8 @@ client = TestClient(app)
 @pytest.fixture(autouse=True)
 def run_before_each_test():
     # Clear user store and rule state before each test
-    user_store.users.clear()
-    rule_state_store.clear_rules()
+    user_manager.users.clear()
+    trip_wire_manager.clear_rules()
 
 
 def test_handle_valid_event():
@@ -32,7 +32,7 @@ def test_handle_valid_event():
 
     # Assert
     assert response.status_code == 200
-    user_data = user_store.get_user("user_test_1")
+    user_data = user_manager.get_user("user_test_1")
     assert user_data.total_credit_cards == 1
     assert "card_123" in user_data.credit_cards
     assert user_data.credit_cards["card_123"] == "12345"
@@ -93,7 +93,7 @@ def test_can_message_true():
     # Arrange
     user_id = "user_test_4"
     # Create user and ensure 'can_message' is True
-    user_data = user_store.get_user(user_id)
+    user_data = user_manager.get_user(user_id)
     user_data.access_flags["can_message"] = True
 
     # Act
@@ -108,7 +108,7 @@ def test_can_message_false():
     # Arrange
     user_id = "user_test_5"
     # Create user and set 'can_message' to False
-    user_data = user_store.get_user(user_id)
+    user_data = user_manager.get_user(user_id)
     user_data.access_flags["can_message"] = False
 
     # Act
@@ -123,8 +123,8 @@ def test_can_message_nonexistent_user():
     # Arrange
     user_id = "nonexistent_user"
     # Ensure the user does not exist
-    if user_id in user_store.users:
-        del user_store.users[user_id]
+    if user_id in user_manager.users:
+        del user_manager.users[user_id]
 
     # Act
     response = client.get(f"/canmessage?user_id={user_id}")
@@ -137,7 +137,7 @@ def test_can_message_nonexistent_user():
 def test_can_purchase_true():
     # Arrange
     user_id = "user_test_6"
-    user_data = user_store.get_user(user_id)
+    user_data = user_manager.get_user(user_id)
     user_data.access_flags["can_purchase"] = True
 
     # Act
@@ -151,7 +151,7 @@ def test_can_purchase_true():
 def test_can_purchase_false():
     # Arrange
     user_id = "user_test_7"
-    user_data = user_store.get_user(user_id)
+    user_data = user_manager.get_user(user_id)
     user_data.access_flags["can_purchase"] = False
 
     # Act
@@ -165,8 +165,8 @@ def test_can_purchase_false():
 def test_can_purchase_nonexistent_user():
     # Arrange
     user_id = "nonexistent_user_purchase"
-    if user_id in user_store.users:
-        del user_store.users[user_id]
+    if user_id in user_manager.users:
+        del user_manager.users[user_id]
 
     # Act
     response = client.get(f"/canpurchase?user_id={user_id}")

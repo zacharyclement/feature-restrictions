@@ -1,8 +1,8 @@
-from models import Event, UserData
-from rule_state_store import RuleStateStore
-from rules import ChargebackRatioRule, ScamMessageRule, UniqueZipCodeRule
-from user_store import UserStore
-from utils import logger
+from .models import Event, UserData
+from .rules import ChargebackRatioRule, ScamMessageRule, UniqueZipCodeRule
+from .trip_wire_manager import TripWireManager
+from .user_manager import UserManager
+from .utils import logger
 
 
 class BaseEventHandler:
@@ -12,11 +12,11 @@ class BaseEventHandler:
 
     def __init__(
         self,
-        rule_state_store: RuleStateStore,
-        user_store: UserStore,
+        trip_wire_manager: TripWireManager,
+        user_manager: UserManager,
     ):
-        self.user_store = user_store
-        self.rule_state_store = rule_state_store
+        self.user_manager = user_manager
+        self.trip_wire_manager = trip_wire_manager
 
     async def handle(self, event: Event, user_data: UserData):
         """
@@ -47,13 +47,15 @@ class CreditCardAddedHandler(BaseEventHandler):
             logger.info(f"total credit cards after: {user_data.total_credit_cards}")
 
         # Instantiate and process the rule
-        unique_zip_code_rule = UniqueZipCodeRule(self.rule_state_store, self.user_store)
+        unique_zip_code_rule = UniqueZipCodeRule(
+            self.trip_wire_manager, self.user_manager
+        )
         logger.info(
-            f"user data before processing: {self.user_store.display_user_data(user_data.user_id)}"
+            f"user data before processing: {self.user_manager.display_user_data(user_data.user_id)}"
         )
         unique_zip_code_rule.process(user_data, event)
         logger.info(
-            f"user data after processing: {self.user_store.display_user_data(user_data.user_id)}"
+            f"user data after processing: {self.user_manager.display_user_data(user_data.user_id)}"
         )
 
 
@@ -71,13 +73,13 @@ class ScamMessageFlaggedHandler(BaseEventHandler):
         logger.info(f"scam flags after: {user_data.scam_message_flags}")
 
         # Instantiate and process the rule
-        scam_message_rule = ScamMessageRule(self.rule_state_store, self.user_store)
+        scam_message_rule = ScamMessageRule(self.trip_wire_manager, self.user_manager)
         logger.info(
-            f"user data before processing: {self.user_store.display_user_data(user_data.user_id)}"
+            f"user data before processing: {self.user_manager.display_user_data(user_data.user_id)}"
         )
         scam_message_rule.process(user_data, event)
         logger.info(
-            f"user data after processing: {self.user_store.display_user_data(user_data.user_id)}"
+            f"user data after processing: {self.user_manager.display_user_data(user_data.user_id)}"
         )
 
 
@@ -100,12 +102,12 @@ class ChargebackOccurredHandler(BaseEventHandler):
 
         # Instantiate and process the rule
         chargeback_ratio_rule = ChargebackRatioRule(
-            self.rule_state_store, self.user_store
+            self.trip_wire_manager, self.user_manager
         )
         logger.info(
-            f"user data before processing: {self.user_store.display_user_data(user_data.user_id)}"
+            f"user data before processing: {self.user_manager.display_user_data(user_data.user_id)}"
         )
         chargeback_ratio_rule.process(user_data, event)
         logger.info(
-            f"user data after processing: {self.user_store.display_user_data(user_data.user_id)}"
+            f"user data after processing: {self.user_manager.display_user_data(user_data.user_id)}"
         )

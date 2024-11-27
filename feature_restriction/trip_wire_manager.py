@@ -1,26 +1,33 @@
-# rule_state_store.py
+# trip_wire_manager.py
 
 import time
 from typing import Dict, Set
 
-from utils import logger
+from .utils import logger
 
 
-class RuleStateStore:
+class TripWireManager:
     """
-    Manages state for rules, including tripwires and disabling.
+        automatically disables a rule if too many users are affected within a specified time window
+        Manages state for rules, including tripwires and disabling.
+        Example affect_users data structure:
+        {
+        "scam_message_rule": {
+            "user_1": 1698183437.453,  # Timestamp when this user was affected
+            "user_2": 1698183438.678
+        },
+        "unique_zip_code_rule": {
+            "user_3": 1698183445.123
+        }
+    }
+
     """
 
     def __init__(self):
         self.rule_disabled: Dict[str, bool] = {}
-        self.affected_users: Dict[str, Dict[str, float]] = (
-            {}
-        )  # rule_name -> {user_id: timestamp}
+        self.affected_users: Dict[str, Dict[str, float]] = {}
         self.time_window: int = 300  # Time window in seconds (e.g., 5 minutes)
         self.threshold: float = 0.05  # 5%
-        logger.info(
-            f"Rule state store initialized with time window: {self.time_window}s, threshold: {self.threshold}."
-        )
 
     def is_rule_disabled(self, rule_name: str) -> bool:
         """
@@ -35,10 +42,15 @@ class RuleStateStore:
         self, rule_name: str, user_id: str, total_users: int
     ) -> None:
         """
-        Update the affected users for a rule and determine if the rule should be disabled.
+        This method updates the affected_users structure when a rule is applied to a user.
+        And determine if the rule should be disabled.
         """
+        logger.info(f"before update, affected_users: {self.affected_users}")
         current_time = time.time()
+        # If the rule (rule_name) is not already in self.affected_users, initialize it as an empty dictionary.
         affected_users = self.affected_users.setdefault(rule_name, {})
+        logger.info(f"self.affected_users: {self.affected_users}")
+        logger.info(f"affected_users: {affected_users}")
 
         # Remove entries outside the time window
         expired_users = [

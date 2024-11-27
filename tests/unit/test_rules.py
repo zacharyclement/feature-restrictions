@@ -15,7 +15,7 @@ def test_scam_message_rule_trigger():
     # Assert
     assert response1.status_code == 200
     assert response2.status_code == 200
-    user_data = user_store.get_user(user_id)
+    user_data = user_manager.get_user(user_id)
     assert user_data.scam_message_flags == 2
     assert user_data.access_flags["can_message"] == False
 
@@ -38,7 +38,7 @@ def test_unique_zip_code_rule_trigger():
         assert response.status_code == 200
 
     # Assert
-    user_data = user_store.get_user(user_id)
+    user_data = user_manager.get_user(user_id)
     # Should have 4 credit cards with 4 unique zip codes
     assert user_data.total_credit_cards == 4
     assert len(user_data.unique_zip_codes) == 4

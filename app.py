@@ -2,33 +2,36 @@ import logging
 
 from fastapi import FastAPI, HTTPException
 
-from event_handlers import (
+from feature_restriction.event_handlers import (
     ChargebackOccurredHandler,
     CreditCardAddedHandler,
     ScamMessageFlaggedHandler,
 )
-from models import Event
-from rule_state_store import RuleStateStore
-from user_store import UserStore
-from utils import event_handler_registry, logger, register_event_handler
+from feature_restriction.models import Event
+from feature_restriction.trip_wire_manager import TripWireManager
+from feature_restriction.user_manager import UserManager
+from feature_restriction.utils import (
+    event_handler_registry,
+    logger,
+    register_event_handler,
+)
 
 # Instantiate FastAPI app
 app = FastAPI()
-# Attach user_store to app state
+# Attach user_manager to app state
 
 logger.info("****************************************")
 logger.info("****************************************")
 
 
 # Instantiate stores
-user_store = UserStore()
-rule_state_store = RuleStateStore()
+user_manager = UserManager()
+trip_wire_manager = TripWireManager()
 
-logger.info(f"user_store initialized: {user_store}")
 # register event handlers
-register_event_handler(CreditCardAddedHandler(rule_state_store, user_store))
-register_event_handler(ScamMessageFlaggedHandler(rule_state_store, user_store))
-register_event_handler(ChargebackOccurredHandler(rule_state_store, user_store))
+register_event_handler(CreditCardAddedHandler(trip_wire_manager, user_manager))
+register_event_handler(ScamMessageFlaggedHandler(trip_wire_manager, user_manager))
+register_event_handler(ChargebackOccurredHandler(trip_wire_manager, user_manager))
 
 
 @app.post("/event")
@@ -38,21 +41,17 @@ async def handle_event(event: Event):
     """
 
     logger.info(f"** Received event: {event}")
-    logger.info(f"user_store ID: {id(user_store)}")
     # Validate event properties
 
     user_id = event.event_properties.get("user_id")
     user_id = str(user_id)
-    print("user_id type: ", type(user_id))
     if not user_id:
         raise HTTPException(
             status_code=400, detail="'user_id' is required in event properties."
         )
 
     # Retrieve or create user data
-    user_data = user_store.get_user(user_id)
-    logger.info(f"user_store ID: {id(user_store)}")
-    logger.info(f"User object ID: {id(user_store.users[user_id])}")
+    user_data = user_manager.get_user(user_id)
 
     # Retrieve the appropriate handler for the event
     handler = event_handler_registry.get(event.name)
@@ -76,13 +75,10 @@ async def can_message(user_id: str):
     """
     Endpoint to check if a user has access to send/receive messages.
     """
-    logger.info(f"Current user_store contents: {user_store.users}")
     logger.info(f"** can message, user_id: {user_id}")
-    print("user_id type: ", type(user_id))
-    logger.info(f"user_store ID: {id(user_store)}")
-    user_data = user_store.get_user(user_id)
-    logger.info(f"user_store ID: {id(user_store)}")
-    logger.info(f"User object ID: {id(user_store.users[user_id])}")
+
+    user_data = user_manager.get_user(user_id)
+
     if not user_data:
         raise HTTPException(
             status_code=404, detail=f"User with ID '{user_id}' not found."
@@ -96,14 +92,10 @@ async def can_purchase(user_id: str):
     Endpoint to check if a user has access to bid/purchase.
     """
     user_id = str(user_id)
-    logger.info(f"Current user_store contents: {user_store.users}")
     logger.info(f"** can purchase, user_id: {user_id}")
-    logger.info(f"user_store ID: {id(user_store)}")
-    logger.info(f"user data before: {user_store.display_user_data(user_id)}")
-    user_data = user_store.get_user(user_id)
-    logger.info(f"user_store ID: {id(user_store)}")
-    logger.info(f"User object ID: {id(user_store.users[user_id])}")
-    logger.info(f"user data after: {user_store.display_user_data(user_id)}")
+    logger.info(f"user data before: {user_manager.display_user_data(user_id)}")
+    user_data = user_manager.get_user(user_id)
+    logger.info(f"user data after: {user_manager.display_user_data(user_id)}")
     if not user_data:
         raise HTTPException(
             status_code=404, detail=f"User with ID '{user_id}' not found."
