@@ -7260,3 +7260,208 @@ Last Login Time: None
 2024-11-26 22:02:13,706 - fastapi_server - INFO - ****************************************
 2024-11-26 22:02:21,132 - fastapi_server - INFO - ****************************************
 2024-11-26 22:02:21,132 - fastapi_server - INFO - ****************************************
+2024-11-26 22:03:54,173 - fastapi_server - INFO - ****************************************
+2024-11-26 22:03:54,173 - fastapi_server - INFO - ****************************************
+2024-11-26 22:16:54,527 - fastapi_server - INFO - ****************************************
+2024-11-26 22:16:54,527 - fastapi_server - INFO - ****************************************
+2024-11-26 22:16:54,529 - fastapi_server - INFO - ** Received event: name='scam_message_flagged' event_properties={'user_id': 1}
+2024-11-26 22:16:54,529 - fastapi_server - INFO - Creating new user with ID '1'.
+2024-11-26 22:16:54,529 - fastapi_server - INFO - user data before processing: User ID: 1
+Scam Message Flags: 1
+Credit Cards: {}
+Total Credit Cards: 0
+Unique Zip Codes: set()
+Total Spend: 0.0
+Total Chargebacks: 0.0
+Access Flags: {'can_message': True, 'can_purchase': True}
+Last Login Time: None
+2024-11-26 22:16:54,529 - fastapi_server - INFO - Processing rule: scam_message_rule
+2024-11-26 22:16:54,529 - fastapi_server - INFO - Rule state before: {}
+2024-11-26 22:16:54,529 - fastapi_server - INFO - disabled: False
+2024-11-26 22:16:54,529 - fastapi_server - INFO - rule 'scam_message_rule' is disabled: False
+2024-11-26 22:16:54,529 - fastapi_server - INFO - Rule condition met: False
+2024-11-26 22:16:54,529 - fastapi_server - INFO - rule state store, rule disabled: {}
+2024-11-26 22:16:54,529 - fastapi_server - INFO - user data after processing: User ID: 1
+Scam Message Flags: 1
+Credit Cards: {}
+Total Credit Cards: 0
+Unique Zip Codes: set()
+Total Spend: 0.0
+Total Chargebacks: 0.0
+Access Flags: {'can_message': True, 'can_purchase': True}
+Last Login Time: None
+2024-11-26 22:16:54,532 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': 1, 'card_id': 'card_52', 'zip_code': '35735'}
+2024-11-26 22:16:54,532 - fastapi_server - INFO - handling credit_card_added
+2024-11-26 22:16:54,532 - fastapi_server - INFO - total credit cards before: 0
+2024-11-26 22:16:54,532 - fastapi_server - INFO - total credit cards after: 1
+2024-11-26 22:16:54,532 - fastapi_server - INFO - user data before processing: User ID: 1
+Scam Message Flags: 1
+Credit Cards: {'card_52': '35735'}
+Total Credit Cards: 1
+Unique Zip Codes: {'35735'}
+Total Spend: 0.0
+Total Chargebacks: 0.0
+Access Flags: {'can_message': True, 'can_purchase': True}
+Last Login Time: None
+2024-11-26 22:16:54,532 - fastapi_server - INFO - Processing rule: unique_zip_code_rule
+2024-11-26 22:16:54,532 - fastapi_server - INFO - Rule state before: {}
+2024-11-26 22:16:54,532 - fastapi_server - INFO - disabled: False
+2024-11-26 22:16:54,532 - fastapi_server - INFO - rule 'unique_zip_code_rule' is disabled: False
+2024-11-26 22:16:54,532 - fastapi_server - INFO - Rule condition met: True
+2024-11-26 22:16:54,532 - fastapi_server - INFO - self.affected_users: {'unique_zip_code_rule': {}}
+2024-11-26 22:16:54,532 - fastapi_server - INFO - Rule 'unique_zip_code_rule' disabled: 1/1 users affected (100.00%).
+2024-11-26 22:16:54,532 - fastapi_server - INFO - rule state store, rule disabled: {'unique_zip_code_rule': True}
+2024-11-26 22:16:54,532 - fastapi_server - INFO - user data after processing: User ID: 1
+Scam Message Flags: 1
+Credit Cards: {'card_52': '35735'}
+Total Credit Cards: 1
+Unique Zip Codes: {'35735'}
+Total Spend: 0.0
+Total Chargebacks: 0.0
+Access Flags: {'can_message': True, 'can_purchase': False}
+Last Login Time: None
+2024-11-26 22:16:54,533 - fastapi_server - INFO - ** Received event: name='chargeback_occurred' event_properties={'user_id': 1, 'amount': 635}
+2024-11-26 22:16:54,533 - fastapi_server - INFO - user data before processing: User ID: 1
+Scam Message Flags: 1
+Credit Cards: {'card_52': '35735'}
+Total Credit Cards: 1
+Unique Zip Codes: {'35735'}
+Total Spend: 0.0
+Total Chargebacks: 635.0
+Access Flags: {'can_message': True, 'can_purchase': False}
+Last Login Time: None
+2024-11-26 22:16:54,533 - fastapi_server - INFO - Processing rule: chargeback_ratio_rule
+2024-11-26 22:16:54,533 - fastapi_server - INFO - Rule state before: {'unique_zip_code_rule': True}
+2024-11-26 22:16:54,533 - fastapi_server - INFO - disabled: False
+2024-11-26 22:16:54,533 - fastapi_server - INFO - rule 'chargeback_ratio_rule' is disabled: False
+2024-11-26 22:16:54,533 - fastapi_server - INFO - Rule condition met: False
+2024-11-26 22:16:54,533 - fastapi_server - INFO - rule state store, rule disabled: {'unique_zip_code_rule': True}
+2024-11-26 22:16:54,533 - fastapi_server - INFO - user data after processing: User ID: 1
+Scam Message Flags: 1
+Credit Cards: {'card_52': '35735'}
+Total Credit Cards: 1
+Unique Zip Codes: {'35735'}
+Total Spend: 0.0
+Total Chargebacks: 635.0
+Access Flags: {'can_message': True, 'can_purchase': False}
+Last Login Time: None
+2024-11-26 22:16:54,534 - fastapi_server - INFO - ** can message, user_id: 1
+2024-11-26 22:16:54,535 - fastapi_server - INFO - ** can purchase, user_id: 1
+2024-11-26 22:16:54,535 - fastapi_server - INFO - user data before: User ID: 1
+Scam Message Flags: 1
+Credit Cards: {'card_52': '35735'}
+Total Credit Cards: 1
+Unique Zip Codes: {'35735'}
+Total Spend: 0.0
+Total Chargebacks: 635.0
+Access Flags: {'can_message': True, 'can_purchase': False}
+Last Login Time: None
+2024-11-26 22:16:54,535 - fastapi_server - INFO - user data after: User ID: 1
+Scam Message Flags: 1
+Credit Cards: {'card_52': '35735'}
+Total Credit Cards: 1
+Unique Zip Codes: {'35735'}
+Total Spend: 0.0
+Total Chargebacks: 635.0
+Access Flags: {'can_message': True, 'can_purchase': False}
+Last Login Time: None
+2024-11-26 22:16:58,766 - fastapi_server - INFO - ** Received event: name='scam_message_flagged' event_properties={'user_id': 1}
+2024-11-26 22:16:58,766 - fastapi_server - INFO - user data before processing: User ID: 1
+Scam Message Flags: 2
+Credit Cards: {'card_52': '35735'}
+Total Credit Cards: 1
+Unique Zip Codes: {'35735'}
+Total Spend: 0.0
+Total Chargebacks: 635.0
+Access Flags: {'can_message': True, 'can_purchase': False}
+Last Login Time: None
+2024-11-26 22:16:58,766 - fastapi_server - INFO - Processing rule: scam_message_rule
+2024-11-26 22:16:58,766 - fastapi_server - INFO - Rule state before: {'unique_zip_code_rule': True}
+2024-11-26 22:16:58,766 - fastapi_server - INFO - disabled: False
+2024-11-26 22:16:58,766 - fastapi_server - INFO - rule 'scam_message_rule' is disabled: False
+2024-11-26 22:16:58,766 - fastapi_server - INFO - Rule condition met: True
+2024-11-26 22:16:58,766 - fastapi_server - INFO - self.affected_users: {'unique_zip_code_rule': {'1': 1732688214.53229}, 'scam_message_rule': {}}
+2024-11-26 22:16:58,766 - fastapi_server - INFO - Rule 'scam_message_rule' disabled: 1/1 users affected (100.00%).
+2024-11-26 22:16:58,766 - fastapi_server - INFO - rule state store, rule disabled: {'unique_zip_code_rule': True, 'scam_message_rule': True}
+2024-11-26 22:16:58,766 - fastapi_server - INFO - user data after processing: User ID: 1
+Scam Message Flags: 2
+Credit Cards: {'card_52': '35735'}
+Total Credit Cards: 1
+Unique Zip Codes: {'35735'}
+Total Spend: 0.0
+Total Chargebacks: 635.0
+Access Flags: {'can_message': False, 'can_purchase': False}
+Last Login Time: None
+2024-11-26 22:16:58,768 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': 1, 'card_id': 'card_67', 'zip_code': '39583'}
+2024-11-26 22:16:58,768 - fastapi_server - INFO - handling credit_card_added
+2024-11-26 22:16:58,768 - fastapi_server - INFO - total credit cards before: 1
+2024-11-26 22:16:58,768 - fastapi_server - INFO - total credit cards after: 2
+2024-11-26 22:16:58,768 - fastapi_server - INFO - user data before processing: User ID: 1
+Scam Message Flags: 2
+Credit Cards: {'card_52': '35735', 'card_67': '39583'}
+Total Credit Cards: 2
+Unique Zip Codes: {'35735', '39583'}
+Total Spend: 0.0
+Total Chargebacks: 635.0
+Access Flags: {'can_message': False, 'can_purchase': False}
+Last Login Time: None
+2024-11-26 22:16:58,768 - fastapi_server - INFO - Processing rule: unique_zip_code_rule
+2024-11-26 22:16:58,768 - fastapi_server - INFO - Rule state before: {'unique_zip_code_rule': True, 'scam_message_rule': True}
+2024-11-26 22:16:58,768 - fastapi_server - INFO - disabled: True
+2024-11-26 22:16:58,768 - fastapi_server - INFO - rule 'unique_zip_code_rule' is disabled: True
+2024-11-26 22:16:58,768 - fastapi_server - INFO - user data after processing: User ID: 1
+Scam Message Flags: 2
+Credit Cards: {'card_52': '35735', 'card_67': '39583'}
+Total Credit Cards: 2
+Unique Zip Codes: {'35735', '39583'}
+Total Spend: 0.0
+Total Chargebacks: 635.0
+Access Flags: {'can_message': False, 'can_purchase': False}
+Last Login Time: None
+2024-11-26 22:16:58,769 - fastapi_server - INFO - ** Received event: name='chargeback_occurred' event_properties={'user_id': 1, 'amount': 210}
+2024-11-26 22:16:58,769 - fastapi_server - INFO - user data before processing: User ID: 1
+Scam Message Flags: 2
+Credit Cards: {'card_52': '35735', 'card_67': '39583'}
+Total Credit Cards: 2
+Unique Zip Codes: {'35735', '39583'}
+Total Spend: 0.0
+Total Chargebacks: 845.0
+Access Flags: {'can_message': False, 'can_purchase': False}
+Last Login Time: None
+2024-11-26 22:16:58,769 - fastapi_server - INFO - Processing rule: chargeback_ratio_rule
+2024-11-26 22:16:58,769 - fastapi_server - INFO - Rule state before: {'unique_zip_code_rule': True, 'scam_message_rule': True}
+2024-11-26 22:16:58,769 - fastapi_server - INFO - disabled: False
+2024-11-26 22:16:58,769 - fastapi_server - INFO - rule 'chargeback_ratio_rule' is disabled: False
+2024-11-26 22:16:58,769 - fastapi_server - INFO - Rule condition met: False
+2024-11-26 22:16:58,769 - fastapi_server - INFO - rule state store, rule disabled: {'unique_zip_code_rule': True, 'scam_message_rule': True}
+2024-11-26 22:16:58,769 - fastapi_server - INFO - user data after processing: User ID: 1
+Scam Message Flags: 2
+Credit Cards: {'card_52': '35735', 'card_67': '39583'}
+Total Credit Cards: 2
+Unique Zip Codes: {'35735', '39583'}
+Total Spend: 0.0
+Total Chargebacks: 845.0
+Access Flags: {'can_message': False, 'can_purchase': False}
+Last Login Time: None
+2024-11-26 22:16:58,771 - fastapi_server - INFO - ** can message, user_id: 1
+2024-11-26 22:16:58,772 - fastapi_server - INFO - ** can purchase, user_id: 1
+2024-11-26 22:16:58,772 - fastapi_server - INFO - user data before: User ID: 1
+Scam Message Flags: 2
+Credit Cards: {'card_52': '35735', 'card_67': '39583'}
+Total Credit Cards: 2
+Unique Zip Codes: {'35735', '39583'}
+Total Spend: 0.0
+Total Chargebacks: 845.0
+Access Flags: {'can_message': False, 'can_purchase': False}
+Last Login Time: None
+2024-11-26 22:16:58,772 - fastapi_server - INFO - user data after: User ID: 1
+Scam Message Flags: 2
+Credit Cards: {'card_52': '35735', 'card_67': '39583'}
+Total Credit Cards: 2
+Unique Zip Codes: {'35735', '39583'}
+Total Spend: 0.0
+Total Chargebacks: 845.0
+Access Flags: {'can_message': False, 'can_purchase': False}
+Last Login Time: None
+2024-11-26 22:18:33,967 - fastapi_server - INFO - ****************************************
+2024-11-26 22:18:33,967 - fastapi_server - INFO - ****************************************

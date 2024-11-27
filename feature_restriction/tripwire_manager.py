@@ -1,4 +1,4 @@
-# trip_wire_manager.py
+# tripwire_manager.py
 
 import time
 from typing import Dict, Set
@@ -38,19 +38,19 @@ class TripWireManager:
         logger.info(f"rule '{rule_name}' is disabled: {disabled}")
         return disabled
 
-    def update_affected_users(
+    def apply_tripwire_if_needed(
         self, rule_name: str, user_id: str, total_users: int
     ) -> None:
         """
+        the tripwire disables the rule if too many users are affected within a specified time window.
         This method updates the affected_users structure when a rule is applied to a user.
         And determine if the rule should be disabled.
         """
-        logger.info(f"before update, affected_users: {self.affected_users}")
+
         current_time = time.time()
         # If the rule (rule_name) is not already in self.affected_users, initialize it as an empty dictionary.
         affected_users = self.affected_users.setdefault(rule_name, {})
         logger.info(f"self.affected_users: {self.affected_users}")
-        logger.info(f"affected_users: {affected_users}")
 
         # Remove entries outside the time window
         expired_users = [

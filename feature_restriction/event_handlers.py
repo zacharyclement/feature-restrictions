@@ -1,6 +1,6 @@
 from .models import Event, UserData
 from .rules import ChargebackRatioRule, ScamMessageRule, UniqueZipCodeRule
-from .trip_wire_manager import TripWireManager
+from .tripwire_manager import TripWireManager
 from .user_manager import UserManager
 from .utils import logger
 
@@ -12,11 +12,11 @@ class BaseEventHandler:
 
     def __init__(
         self,
-        trip_wire_manager: TripWireManager,
+        tripwire_manager: TripWireManager,
         user_manager: UserManager,
     ):
         self.user_manager = user_manager
-        self.trip_wire_manager = trip_wire_manager
+        self.tripwire_manager = tripwire_manager
 
     async def handle(self, event: Event, user_data: UserData):
         """
@@ -48,7 +48,7 @@ class CreditCardAddedHandler(BaseEventHandler):
 
         # Instantiate and process the rule
         unique_zip_code_rule = UniqueZipCodeRule(
-            self.trip_wire_manager, self.user_manager
+            self.tripwire_manager, self.user_manager
         )
         logger.info(
             f"user data before processing: {self.user_manager.display_user_data(user_data.user_id)}"
@@ -66,14 +66,12 @@ class ScamMessageFlaggedHandler(BaseEventHandler):
         """
         Handle the 'scam_message_flagged' event.
         """
-        logger.info(f"handling {self.event_name}")
+
         # Increment the scam message flag count
-        logger.info(f"scam flags before: {user_data.scam_message_flags}")
         user_data.scam_message_flags += 1
-        logger.info(f"scam flags after: {user_data.scam_message_flags}")
 
         # Instantiate and process the rule
-        scam_message_rule = ScamMessageRule(self.trip_wire_manager, self.user_manager)
+        scam_message_rule = ScamMessageRule(self.tripwire_manager, self.user_manager)
         logger.info(
             f"user data before processing: {self.user_manager.display_user_data(user_data.user_id)}"
         )
@@ -90,19 +88,16 @@ class ChargebackOccurredHandler(BaseEventHandler):
         """
         Handle the 'chargeback_occurred' event.
         """
-        logger.info(f"handling {self.event_name}")
         amount = event.event_properties.get("amount")
         if amount is None:
             raise ValueError("'amount' is required.")
 
         # Update the user's total chargebacks
-        logger.info(f"total chargebacks before: {user_data.total_chargebacks}")
         user_data.total_chargebacks += amount
-        logger.info(f"total chargebacks after: {user_data.total_chargebacks}")
 
         # Instantiate and process the rule
         chargeback_ratio_rule = ChargebackRatioRule(
-            self.trip_wire_manager, self.user_manager
+            self.tripwire_manager, self.user_manager
         )
         logger.info(
             f"user data before processing: {self.user_manager.display_user_data(user_data.user_id)}"

@@ -8,7 +8,7 @@ from feature_restriction.event_handlers import (
     ScamMessageFlaggedHandler,
 )
 from feature_restriction.models import Event
-from feature_restriction.trip_wire_manager import TripWireManager
+from feature_restriction.tripwire_manager import TripWireManager
 from feature_restriction.user_manager import UserManager
 from feature_restriction.utils import (
     event_handler_registry,
@@ -24,14 +24,14 @@ logger.info("****************************************")
 logger.info("****************************************")
 
 
-# Instantiate stores
+# Instantiate managers
 user_manager = UserManager()
-trip_wire_manager = TripWireManager()
+tripwire_manager = TripWireManager()
 
 # register event handlers
-register_event_handler(CreditCardAddedHandler(trip_wire_manager, user_manager))
-register_event_handler(ScamMessageFlaggedHandler(trip_wire_manager, user_manager))
-register_event_handler(ChargebackOccurredHandler(trip_wire_manager, user_manager))
+register_event_handler(CreditCardAddedHandler(tripwire_manager, user_manager))
+register_event_handler(ScamMessageFlaggedHandler(tripwire_manager, user_manager))
+register_event_handler(ChargebackOccurredHandler(tripwire_manager, user_manager))
 
 
 @app.post("/event")

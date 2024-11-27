@@ -3,7 +3,7 @@ import json
 import pytest
 from fastapi.testclient import TestClient
 
-from app import app, trip_wire_manager, user_manager
+from app import app, tripwire_manager, user_manager
 from feature_restriction.models import Event
 
 client = TestClient(app)
@@ -13,7 +13,7 @@ client = TestClient(app)
 def run_before_each_test():
     # Clear user store and rule state before each test
     user_manager.users.clear()
-    trip_wire_manager.clear_rules()
+    tripwire_manager.clear_rules()
 
 
 def test_handle_valid_event():
