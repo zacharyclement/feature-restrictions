@@ -74,19 +74,19 @@ class TripWireManager:
             self.rule_disabled[rule_name] = True
             if not previously_disabled:  # Log only if the state changes
                 logger.info(
-                    f"Rule '{rule_name}' disabled: {affected_count}/{total_users} users affected ({percentage:.2%})."
+                    f"Tripwire thrown: Rule '{rule_name}' disabled: {affected_count}/{total_users} users affected ({percentage:.2%})."
                 )
         else:
             self.rule_disabled[rule_name] = False
             if previously_disabled:  # Log only if the state changes
                 logger.info(
-                    f"Rule '{rule_name}' re-enabled: {affected_count}/{total_users} users affected ({percentage:.2%})."
+                    f"Tripwire disengaged: Rule '{rule_name}' re-enabled: {affected_count}/{total_users} users affected ({percentage:.2%})."
                 )
 
     def clear_rules(self) -> None:
         """
         Clear all rule-related state.
         """
-        logger.info("Clearing all rule states and affected user data.")
+        logger.info("Clearing all tripwire states and affected user data.")
         self.rule_disabled.clear()
         self.affected_users.clear()

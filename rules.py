@@ -1,9 +1,10 @@
 from abc import ABC, abstractmethod
 
-from .models import Event, UserData
-from .tripwire_manager import TripWireManager
-from .user_manager import UserManager
-from .utils import logger
+from feature_restriction.user_manager import UserManager
+
+from feature_restriction.models import Event, UserData
+from feature_restriction.tripwire_manager import TripWireManager
+from feature_restriction.utils import logger
 
 
 class BaseRule(ABC):
@@ -13,8 +14,8 @@ class BaseRule(ABC):
 
     name: str  # Unique identifier for the rule
 
-    def __init__(self, tripwire_manager: TripWireManager, user_manager: UserManager):
-        self.tripwire_manager = tripwire_manager
+    def __init__(self, trip_wire_manager: TripWireManager, user_manager: UserManager):
+        self.trip_wire_manager = trip_wire_manager
         self.user_manager = user_manager
 
     def process(self, user_data: UserData, event: Event):
@@ -25,27 +26,25 @@ class BaseRule(ABC):
         - Update tripwires and take actions if the rule condition is met.
         """
         logger.info(f"Processing rule: {self.name}")
-        logger.info(
-            f"rule disabled, before processing: {self.tripwire_manager.rule_disabled}"
-        )
-        if self.tripwire_manager.is_rule_disabled(self.name):
+        logger.info(f"tripwire state before: {self.trip_wire_manager.rule_disabled}")
+        if self.trip_wire_manager.is_rule_disabled(self.name):
+
             return False  # Rule is disabled, no action taken
 
-        # Evaluate the rule, should we modify the data?
+        # Evaluate the rule
         condition_met = self.evaluate(user_data, event)
         logger.info(f"Rule condition met: {condition_met}")
 
         if condition_met:
             # Apply action, flip user data flags to false
-            self.apply_rule(user_data)
-            logger.info(f"rule {self.name} applied to user {user_data.user_id}")
+            self.apply_action(user_data)
             # Update affected users for tripwire logic
             total_users = len(self.user_manager.users)
-            self.tripwire_manager.apply_tripwire_if_needed(
+            self.trip_wire_manager.update_affected_users(
                 self.name, user_data.user_id, total_users
             )
         logger.info(
-            f"rule disabled, after processing: {self.tripwire_manager.rule_disabled}"
+            f"tripwire state store, rule disabled: {self.trip_wire_manager.rule_disabled}"
         )
         return condition_met
 
@@ -57,7 +56,7 @@ class BaseRule(ABC):
         pass
 
     @abstractmethod
-    def apply_rule(self, user_data: UserData):
+    def apply_action(self, user_data: UserData):
         """
         Apply specific actions if the rule condition is met.
         """
@@ -79,7 +78,7 @@ class UniqueZipCodeRule(BaseRule):
         ratio = len(user_data.unique_zip_codes) / user_data.total_credit_cards
         return ratio > 0.75
 
-    def apply_rule(self, user_data: UserData):
+    def apply_action(self, user_data: UserData):
         """
         Disable the 'can_purchase' flag if the rule condition is met.
         """
@@ -96,7 +95,7 @@ class ScamMessageRule(BaseRule):
         # Assume scam_message_flags has already been incremented by the handler
         return user_data.scam_message_flags >= 2
 
-    def apply_rule(self, user_data: UserData):
+    def apply_action(self, user_data: UserData):
         """
         Disable the 'can_message' flag if the rule condition is met.
         """
@@ -118,7 +117,7 @@ class ChargebackRatioRule(BaseRule):
         ratio = user_data.total_chargebacks / user_data.total_spend
         return ratio > 0.10
 
-    def apply_rule(self, user_data: UserData):
+    def apply_action(self, user_data: UserData):
         """
         Disable the 'can_purchase' flag if the rule condition is met.
         """

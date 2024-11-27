@@ -11,7 +11,7 @@ client = TestClient(app)
 
 @pytest.fixture(autouse=True)
 def run_before_each_test():
-    # Clear user store and rule state before each test
+    # Clear user store and tripwire state before each test
     user_manager.users.clear()
     tripwire_manager.clear_rules()
 
