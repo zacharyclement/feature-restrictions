@@ -24,17 +24,16 @@ class TripWireManager:
     """
 
     def __init__(self):
-        self.rule_disabled: Dict[str, bool] = {}
+        self.tripwire_disabled_rules: Dict[str, bool] = {}
         self.affected_users: Dict[str, Dict[str, float]] = {}
         self.time_window: int = 300  # Time window in seconds (e.g., 5 minutes)
         self.threshold: float = 0.05  # 5%
 
-    def is_rule_disabled(self, rule_name: str) -> bool:
+    def is_tripwire_disabled_rules(self, rule_name: str) -> bool:
         """
         is rule diabled or not
         """
-        disabled = self.rule_disabled.get(rule_name, False)
-        logger.info(f"disabled: {disabled}")
+        disabled = self.tripwire_disabled_rules.get(rule_name, False)
         logger.info(f"rule '{rule_name}' is disabled: {disabled}")
         return disabled
 
@@ -69,15 +68,15 @@ class TripWireManager:
         percentage = affected_count / total_users if total_users > 0 else 0
 
         # Disable or enable the rule based on the percentage
-        previously_disabled = self.rule_disabled.get(rule_name, False)
+        previously_disabled = self.tripwire_disabled_rules.get(rule_name, False)
         if percentage >= self.threshold:
-            self.rule_disabled[rule_name] = True
+            self.tripwire_disabled_rules[rule_name] = True
             if not previously_disabled:  # Log only if the state changes
                 logger.info(
                     f"Tripwire thrown: Rule '{rule_name}' disabled: {affected_count}/{total_users} users affected ({percentage:.2%})."
                 )
         else:
-            self.rule_disabled[rule_name] = False
+            self.tripwire_disabled_rules[rule_name] = False
             if previously_disabled:  # Log only if the state changes
                 logger.info(
                     f"Tripwire disengaged: Rule '{rule_name}' re-enabled: {affected_count}/{total_users} users affected ({percentage:.2%})."
@@ -88,5 +87,5 @@ class TripWireManager:
         Clear all rule-related state.
         """
         logger.info("Clearing all tripwire states and affected user data.")
-        self.rule_disabled.clear()
+        self.tripwire_disabled_rules.clear()
         self.affected_users.clear()

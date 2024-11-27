@@ -1,8 +1,8 @@
 import threading
 from queue import Queue
 
-from feature_restriction.models import Event
-from feature_restriction.utils import logger
+from .models import Event
+from .utils import event_handler_registry, logger
 
 
 class EventConsumer:

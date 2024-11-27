@@ -18,7 +18,7 @@ class BaseEventHandler:
         self.user_manager = user_manager
         self.tripwire_manager = tripwire_manager
 
-    async def handle(self, event: Event, user_data: UserData):
+    def handle(self, event: Event, user_data: UserData):
         """
         Handle the event. Must be overridden by subclasses.
         """
@@ -28,7 +28,7 @@ class BaseEventHandler:
 class CreditCardAddedHandler(BaseEventHandler):
     event_name = "credit_card_added"
 
-    async def handle(self, event: Event, user_data: UserData):
+    def handle(self, event: Event, user_data: UserData):
         """
         Handle the 'credit_card_added' event.
         """
@@ -53,7 +53,7 @@ class CreditCardAddedHandler(BaseEventHandler):
         logger.info(
             f"user data before processing: {self.user_manager.display_user_data(user_data.user_id)}"
         )
-        unique_zip_code_rule.process(user_data, event)
+        unique_zip_code_rule.process_rule(user_data, event)
         logger.info(
             f"user data after processing: {self.user_manager.display_user_data(user_data.user_id)}"
         )
@@ -62,7 +62,7 @@ class CreditCardAddedHandler(BaseEventHandler):
 class ScamMessageFlaggedHandler(BaseEventHandler):
     event_name = "scam_message_flagged"
 
-    async def handle(self, event: Event, user_data: UserData):
+    def handle(self, event: Event, user_data: UserData):
         """
         Handle the 'scam_message_flagged' event.
         """
@@ -75,7 +75,7 @@ class ScamMessageFlaggedHandler(BaseEventHandler):
         logger.info(
             f"user data before processing: {self.user_manager.display_user_data(user_data.user_id)}"
         )
-        scam_message_rule.process(user_data, event)
+        scam_message_rule.process_rule(user_data, event)
         logger.info(
             f"user data after processing: {self.user_manager.display_user_data(user_data.user_id)}"
         )
@@ -84,7 +84,7 @@ class ScamMessageFlaggedHandler(BaseEventHandler):
 class ChargebackOccurredHandler(BaseEventHandler):
     event_name = "chargeback_occurred"
 
-    async def handle(self, event: Event, user_data: UserData):
+    def handle(self, event: Event, user_data: UserData):
         """
         Handle the 'chargeback_occurred' event.
         """
@@ -102,7 +102,7 @@ class ChargebackOccurredHandler(BaseEventHandler):
         logger.info(
             f"user data before processing: {self.user_manager.display_user_data(user_data.user_id)}"
         )
-        chargeback_ratio_rule.check_rule(user_data, event)
+        chargeback_ratio_rule.process_rule(user_data, event)
         logger.info(
             f"user data after processing: {self.user_manager.display_user_data(user_data.user_id)}"
         )

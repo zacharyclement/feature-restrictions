@@ -25,8 +25,10 @@ class BaseRule(ABC):
         - Update tripwires and take actions if the rule condition is met.
         """
         logger.info(f"Processing rule: {self.name}")
-        logger.info(f"tripwire state before: {self.trip_wire_manager.rule_disabled}")
-        if self.trip_wire_manager.is_rule_disabled(self.name):
+        logger.info(
+            f"tripwire state before: {self.trip_wire_manager.tripwire_disabled_rules}"
+        )
+        if self.trip_wire_manager.is_tripwire_disabled_rules(self.name):
 
             return False  # Rule is disabled, no action taken
 
@@ -43,7 +45,7 @@ class BaseRule(ABC):
                 self.name, user_data.user_id, total_users
             )
         logger.info(
-            f"tripwire state store, rule disabled: {self.trip_wire_manager.rule_disabled}"
+            f"tripwire state store, rule disabled: {self.trip_wire_manager.tripwire_disabled_rules}"
         )
         return condition_met
 
