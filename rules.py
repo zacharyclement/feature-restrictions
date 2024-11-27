@@ -1,9 +1,8 @@
 from abc import ABC, abstractmethod
 
-from feature_restriction.user_manager import UserManager
-
 from feature_restriction.models import Event, UserData
 from feature_restriction.tripwire_manager import TripWireManager
+from feature_restriction.user_manager import UserManager
 from feature_restriction.utils import logger
 
 
@@ -18,7 +17,7 @@ class BaseRule(ABC):
         self.trip_wire_manager = trip_wire_manager
         self.user_manager = user_manager
 
-    def process(self, user_data: UserData, event: Event):
+    def check_rule(self, user_data: UserData, event: Event):
         """
         Process the rule:
         - Check if the rule is disabled.

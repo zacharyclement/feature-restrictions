@@ -102,7 +102,7 @@ class ChargebackOccurredHandler(BaseEventHandler):
         logger.info(
             f"user data before processing: {self.user_manager.display_user_data(user_data.user_id)}"
         )
-        chargeback_ratio_rule.process(user_data, event)
+        chargeback_ratio_rule.check_rule(user_data, event)
         logger.info(
             f"user data after processing: {self.user_manager.display_user_data(user_data.user_id)}"
         )

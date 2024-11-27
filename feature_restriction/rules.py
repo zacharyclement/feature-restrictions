@@ -17,7 +17,7 @@ class BaseRule(ABC):
         self.tripwire_manager = tripwire_manager
         self.user_manager = user_manager
 
-    def process(self, user_data: UserData, event: Event):
+    def check_rule(self, user_data: UserData, event: Event):
         """
         Process the rule:
         - Check if the rule is disabled.
@@ -32,11 +32,11 @@ class BaseRule(ABC):
             return False  # Rule is disabled, no action taken
 
         # Evaluate the rule, should we modify the data?
-        condition_met = self.evaluate(user_data, event)
+        condition_met = self.evaluate_rule(user_data, event)
         logger.info(f"Rule condition met: {condition_met}")
 
         if condition_met:
-            # Apply action, flip user data flags to false
+            # Apply rule, flip user data flags to false
             self.apply_rule(user_data)
             logger.info(f"rule {self.name} applied to user {user_data.user_id}")
             # Update affected users for tripwire logic
@@ -50,7 +50,7 @@ class BaseRule(ABC):
         return condition_met
 
     @abstractmethod
-    def evaluate(self, user_data: UserData, event: Event) -> bool:
+    def evaluate_rule(self, user_data: UserData) -> bool:
         """
         Evaluate the rule based on user data and event.
         """
@@ -60,6 +60,7 @@ class BaseRule(ABC):
     def apply_rule(self, user_data: UserData):
         """
         Apply specific actions if the rule condition is met.
+        modifies access flags in user data
         """
         pass
 
@@ -67,7 +68,7 @@ class BaseRule(ABC):
 class UniqueZipCodeRule(BaseRule):
     name = "unique_zip_code_rule"
 
-    def evaluate(self, user_data: UserData, event: Event) -> bool:
+    def evaluate_rule(self, user_data: UserData) -> bool:
         """
         Evaluates whether the ratio of unique zip codes to total credit cards exceeds 0.75.
         """
@@ -89,7 +90,7 @@ class UniqueZipCodeRule(BaseRule):
 class ScamMessageRule(BaseRule):
     name = "scam_message_rule"
 
-    def evaluate(self, user_data: UserData, event: Event) -> bool:
+    def evaluate_rule(self, user_data: UserData) -> bool:
         """
         Evaluates whether the user has reached the scam message flag threshold.
         """
@@ -106,7 +107,7 @@ class ScamMessageRule(BaseRule):
 class ChargebackRatioRule(BaseRule):
     name = "chargeback_ratio_rule"
 
-    def evaluate(self, user_data: UserData, event: Event) -> bool:
+    def evaluate_rule(self, user_data: UserData) -> bool:
         """
         Evaluates whether the ratio of total chargebacks to total spend exceeds 10%.
         """

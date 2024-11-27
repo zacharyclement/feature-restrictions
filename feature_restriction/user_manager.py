@@ -8,19 +8,49 @@ from .utils import logger
 
 class UserManager:
     """
-    Thread-safe Singleton class for managing user-related data.
+    This class provides methods for managing user information in memory. It ensures
+    that each user is only created once and allows retrieval and display of user data.
+
+    Attributes:
+        users (dict): A dictionary mapping user IDs (str) to their corresponding UserData objects.
+
+    Methods:
+        get_user(user_id: str) -> UserData:
+            Retrieve a user by their ID. If the user does not exist, create a new UserData object for them.
+
+        display_user_data(user_id: str) -> str:
+            Retrieve and format all the data associated with a given user for display purposes.
     """
 
     def __init__(self):
         self.users = {}
 
     def get_user(self, user_id: str) -> UserData:
+        """
+        Retrieve a user by their ID. If the user does not already exist, create a new UserData object.
+
+        Args:
+            user_id (str): The unique identifier for the user.
+
+        Returns:
+            UserData: The UserData object associated with the given user ID.
+        """
         if user_id not in self.users:
             logger.info(f"Creating new user with ID '{user_id}'.")
             self.users[user_id] = UserData(user_id)
         return self.users[user_id]
 
     def display_user_data(self, user_id: str):
+        """
+        Display all the data associated with a given user in a human-readable format.
+
+        Args:
+            user_id (str): The unique identifier for the user whose data is to be displayed.
+
+        Returns:
+            str: A formatted string containing all the user's data, or a message indicating
+                 that the user ID was not found.
+        """
         if user_id not in self.users:
             return f"User with ID '{user_id}' not found."
         user_data = self.users[user_id]
