@@ -21,6 +21,7 @@ class EventConsumer:
         self.user_manager = user_manager
         self.tripwire_manager = tripwire_manager
         self.consumer_thread = None
+        self._stop_event = threading.Event()  # Event to signal the thread to stop
 
     def process_event(self, event: Event):
         """
@@ -51,10 +52,12 @@ class EventConsumer:
         """
         Continuously consume events from the queue and process them.
         """
-        while True:
+        logger.info("entering while loop.")
+        while not self._stop_event.is_set():
+            logger.info("in while loop")
             try:
                 # Get the next event from the queue
-                event = self.event_queue.get()
+                event = self.event_queue.get()  # Timeout to allow stop check
 
                 logger.info(f"Processing event: {event}")
 
@@ -76,3 +79,14 @@ class EventConsumer:
             )
             self.consumer_thread.start()
             logger.info("Event consumer thread started.")
+
+    def stop(self):
+        """
+        Stop the consumer thread gracefully.
+        """
+        if self.consumer_thread:
+            logger.info("Stopping event consumer thread...")
+            self._stop_event.set()  # Signal the thread to stop
+            self.consumer_thread.join()  # Wait for the thread to finish
+            self.consumer_thread = None
+            logger.info("Event consumer thread stopped.")

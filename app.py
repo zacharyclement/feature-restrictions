@@ -24,8 +24,6 @@ app = FastAPI()
 
 logger.info("****************************************")
 logger.info("****************************************")
-
-
 # Instantiate managers
 user_manager = UserManager()
 tripwire_manager = TripWireManager()
@@ -47,6 +45,7 @@ def start_consumer():
     """
     Start the event consumer thread when the application starts.
     """
+
     event_consumer.start()
 
 
@@ -61,42 +60,6 @@ async def handle_event(event: Event):
     event_queue.put(event)
 
     return {"status": "Event enqueued for processing."}
-
-
-# @app.post("/event")
-# async def handle_event(event: Event):
-#     """
-#     Endpoint to handle incoming events and dispatch them to the appropriate handler.
-#     """
-
-#     logger.info(f"** Received event: {event}")
-#     # Validate event properties
-
-#     user_id = event.event_properties.get("user_id")
-#     user_id = str(user_id)
-#     if not user_id:
-#         raise HTTPException(
-#             status_code=400, detail="'user_id' is required in event properties."
-#         )
-
-#     # Retrieve or create user data
-#     user_data = user_manager.get_user(user_id)
-
-#     # Retrieve the appropriate handler for the event
-#     handler = event_handler_registry.get(event.name)
-#     if not handler:
-#         raise HTTPException(
-#             status_code=400, detail=f"No handler registered for event: {event.name}"
-#         )
-
-#     # Process the event
-#     try:
-#         return await handler.handle(event, user_data)
-#     except Exception as e:
-#         raise HTTPException(
-#             status_code=500,
-#             detail=f"An error occurred while processing the event: {str(e)}",
-#         )
 
 
 @app.get("/canmessage")
@@ -130,3 +93,19 @@ def can_purchase(user_id: str):
             status_code=404, detail=f"User with ID '{user_id}' not found."
         )
     return {"can_purchase": user_data.access_flags.get("can_purchase", True)}
+
+
+@app.on_event("shutdown")
+async def shutdown():
+    """
+    Clean up resources during application shutdown.
+    """
+    logger.info("Shutting down FastAPI app.")
+    # consumer = app.state.event_consumer
+
+    # Stop the consumer
+    if event_consumer:
+        logger.info("Stopping event consumer.")
+        event_consumer.stop()
+        event_consumer.consumer_thread.join()  # Wait for the thread to finish
+        logger.info("Event consumer stopped.")

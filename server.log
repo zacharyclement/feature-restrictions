@@ -9090,3 +9090,1031 @@ Total Spend: 0.0
 Total Chargebacks: 840.0
 Access Flags: {'can_message': True, 'can_purchase': False}
 Last Login Time: None
+2024-11-27 15:31:33,926 - fastapi_server - INFO - ****************************************
+2024-11-27 15:31:33,926 - fastapi_server - INFO - ****************************************
+2024-11-27 15:31:33,927 - fastapi_server - INFO - Event consumer thread started.
+2024-11-27 15:34:00,647 - fastapi_server - INFO - ****************************************
+2024-11-27 15:34:00,647 - fastapi_server - INFO - ****************************************
+2024-11-27 15:34:00,648 - fastapi_server - INFO - Event consumer thread started.
+2024-11-27 15:38:02,676 - fastapi_server - INFO - ****************************************
+2024-11-27 15:38:02,677 - fastapi_server - INFO - ****************************************
+2024-11-27 15:38:02,678 - fastapi_server - INFO - Event consumer thread started.
+2024-11-27 15:38:47,703 - fastapi_server - INFO - ****************************************
+2024-11-27 15:38:47,704 - fastapi_server - INFO - ****************************************
+2024-11-27 15:38:47,704 - fastapi_server - INFO - Event consumer thread started.
+2024-11-27 15:39:44,743 - fastapi_server - INFO - ****************************************
+2024-11-27 15:39:44,743 - fastapi_server - INFO - ****************************************
+2024-11-27 15:39:44,744 - fastapi_server - INFO - Event consumer thread started.
+2024-11-27 15:41:49,651 - fastapi_server - INFO - ****************************************
+2024-11-27 15:41:49,651 - fastapi_server - INFO - ****************************************
+2024-11-27 15:41:49,652 - fastapi_server - INFO - Event consumer thread started.
+2024-11-27 15:42:02,678 - fastapi_server - INFO - ****************************************
+2024-11-27 15:42:02,678 - fastapi_server - INFO - ****************************************
+2024-11-27 15:42:02,679 - fastapi_server - INFO - Event consumer thread started.
+2024-11-27 15:42:50,315 - fastapi_server - INFO - ****************************************
+2024-11-27 15:42:50,315 - fastapi_server - INFO - ****************************************
+2024-11-27 15:42:50,316 - fastapi_server - INFO - Event consumer thread started.
+2024-11-27 15:43:04,826 - fastapi_server - INFO - ****************************************
+2024-11-27 15:43:04,826 - fastapi_server - INFO - ****************************************
+2024-11-27 15:43:04,827 - fastapi_server - INFO - Event consumer thread started.
+2024-11-27 15:44:40,737 - fastapi_server - INFO - ****************************************
+2024-11-27 15:44:40,737 - fastapi_server - INFO - ****************************************
+2024-11-27 15:44:40,738 - fastapi_server - INFO - Event consumer thread started.
+2024-11-27 15:49:37,525 - fastapi_server - INFO - ****************************************
+2024-11-27 15:49:37,525 - fastapi_server - INFO - ****************************************
+2024-11-27 15:49:37,526 - fastapi_server - INFO - Event consumer thread started.
+2024-11-27 15:49:41,929 - fastapi_server - INFO - ****************************************
+2024-11-27 15:49:41,929 - fastapi_server - INFO - ****************************************
+2024-11-27 15:49:41,930 - fastapi_server - INFO - Event consumer thread started.
+2024-11-27 15:51:17,511 - fastapi_server - INFO - ****************************************
+2024-11-27 15:51:17,511 - fastapi_server - INFO - ****************************************
+2024-11-27 15:51:17,512 - fastapi_server - INFO - Event consumer thread started.
+2024-11-27 15:51:24,243 - fastapi_server - INFO - ****************************************
+2024-11-27 15:51:24,244 - fastapi_server - INFO - ****************************************
+2024-11-27 15:51:24,245 - fastapi_server - INFO - Event consumer thread started.
+2024-11-27 15:51:31,961 - fastapi_server - INFO - ****************************************
+2024-11-27 15:51:31,961 - fastapi_server - INFO - ****************************************
+2024-11-27 15:51:31,962 - fastapi_server - INFO - Event consumer thread started.
+2024-11-27 15:52:06,473 - fastapi_server - INFO - ****************************************
+2024-11-27 15:52:06,473 - fastapi_server - INFO - ****************************************
+2024-11-27 15:52:06,474 - fastapi_server - INFO - Event consumer thread started.
+2024-11-27 15:53:10,782 - fastapi_server - INFO - ****************************************
+2024-11-27 15:53:10,782 - fastapi_server - INFO - ****************************************
+2024-11-27 15:53:10,783 - fastapi_server - INFO - Event consumer thread started.
+2024-11-27 15:53:17,413 - fastapi_server - INFO - ****************************************
+2024-11-27 15:53:17,413 - fastapi_server - INFO - ****************************************
+2024-11-27 15:53:17,414 - fastapi_server - INFO - Event consumer thread started.
+2024-11-27 15:53:53,995 - fastapi_server - INFO - ****************************************
+2024-11-27 15:53:53,995 - fastapi_server - INFO - ****************************************
+2024-11-27 15:53:53,996 - fastapi_server - INFO - Event consumer thread started.
+2024-11-27 15:54:03,347 - fastapi_server - INFO - ****************************************
+2024-11-27 15:54:03,347 - fastapi_server - INFO - ****************************************
+2024-11-27 15:54:03,348 - fastapi_server - INFO - Event consumer thread started.
+2024-11-27 15:54:09,461 - fastapi_server - INFO - ****************************************
+2024-11-27 15:54:09,461 - fastapi_server - INFO - ****************************************
+2024-11-27 15:54:09,462 - fastapi_server - INFO - Event consumer thread started.
+2024-11-27 15:54:29,942 - fastapi_server - INFO - ****************************************
+2024-11-27 15:54:29,942 - fastapi_server - INFO - ****************************************
+2024-11-27 15:54:29,943 - fastapi_server - INFO - Event consumer thread started.
+2024-11-27 16:13:16,805 - fastapi_server - INFO - ****************************************
+2024-11-27 16:13:16,805 - fastapi_server - INFO - ****************************************
+2024-11-27 16:29:53,381 - fastapi_server - INFO - ****************************************
+2024-11-27 16:29:53,381 - fastapi_server - INFO - ****************************************
+2024-11-27 16:29:53,425 - fastapi_server - INFO - Event consumer thread started.
+2024-11-27 16:29:53,425 - fastapi_server - INFO - Clearing all tripwire states and affected user data.
+2024-11-27 16:29:53,431 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': '1', 'card_id': 'card_0', 'zip_code': '10000'}
+2024-11-27 16:29:53,431 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 16:29:53,432 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': '2', 'card_id': 'card_1', 'zip_code': '10001'}
+2024-11-27 16:29:53,432 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 16:29:53,432 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': '3', 'card_id': 'card_2', 'zip_code': '10002'}
+2024-11-27 16:29:53,433 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 16:29:53,433 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': '4', 'card_id': 'card_3', 'zip_code': '10003'}
+2024-11-27 16:29:53,433 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 16:29:53,434 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': '5', 'card_id': 'card_4', 'zip_code': '10004'}
+2024-11-27 16:29:53,434 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 16:29:53,434 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': '6', 'card_id': 'card_5', 'zip_code': '10005'}
+2024-11-27 16:29:53,435 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 16:29:53,446 - fastapi_server - INFO - Stopping event consumer thread...
+2024-11-27 16:29:54,431 - fastapi_server - ERROR - Error processing event: 
+2024-11-27 16:29:54,432 - fastapi_server - INFO - Event consumer thread stopped.
+2024-11-27 16:29:54,435 - fastapi_server - INFO - Event consumer thread started.
+2024-11-27 16:29:54,435 - fastapi_server - INFO - Clearing all tripwire states and affected user data.
+2024-11-27 16:29:54,438 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': '1', 'card_id': 'card_0', 'zip_code': '10000'}
+2024-11-27 16:29:54,440 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 16:29:54,441 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': '2', 'card_id': 'card_1', 'zip_code': '10001'}
+2024-11-27 16:29:54,442 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 16:29:54,443 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': '3', 'card_id': 'card_2', 'zip_code': '10002'}
+2024-11-27 16:29:54,444 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 16:29:54,445 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': '4', 'card_id': 'card_3', 'zip_code': '10003'}
+2024-11-27 16:29:54,447 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 16:29:54,448 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': '5', 'card_id': 'card_4', 'zip_code': '10004'}
+2024-11-27 16:29:54,449 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 16:29:54,450 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': '6', 'card_id': 'card_5', 'zip_code': '10005'}
+2024-11-27 16:29:54,451 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 16:29:54,454 - fastapi_server - INFO - Stopping event consumer thread...
+2024-11-27 16:29:55,440 - fastapi_server - ERROR - Error processing event: 
+2024-11-27 16:29:55,441 - fastapi_server - INFO - Event consumer thread stopped.
+2024-11-27 16:30:43,267 - fastapi_server - INFO - ****************************************
+2024-11-27 16:30:43,267 - fastapi_server - INFO - ****************************************
+2024-11-27 16:30:43,278 - fastapi_server - INFO - Event consumer thread started.
+2024-11-27 16:30:43,279 - fastapi_server - INFO - Clearing all tripwire states and affected user data.
+2024-11-27 16:30:43,282 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': '1', 'card_id': 'card_0', 'zip_code': '10000'}
+2024-11-27 16:30:43,283 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 16:30:43,284 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': '2', 'card_id': 'card_1', 'zip_code': '10001'}
+2024-11-27 16:30:43,284 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 16:30:43,285 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': '3', 'card_id': 'card_2', 'zip_code': '10002'}
+2024-11-27 16:30:43,285 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 16:30:43,285 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': '4', 'card_id': 'card_3', 'zip_code': '10003'}
+2024-11-27 16:30:43,286 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 16:30:43,286 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': '5', 'card_id': 'card_4', 'zip_code': '10004'}
+2024-11-27 16:30:43,286 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 16:30:43,287 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': '6', 'card_id': 'card_5', 'zip_code': '10005'}
+2024-11-27 16:30:43,287 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 16:30:43,287 - fastapi_server - INFO - rule 'unique_zip_code_rule' is disabled: False
+2024-11-27 16:30:43,297 - fastapi_server - INFO - Stopping event consumer thread...
+2024-11-27 16:30:44,284 - fastapi_server - ERROR - Error processing event: 
+2024-11-27 16:30:44,284 - fastapi_server - INFO - Event consumer thread stopped.
+2024-11-27 16:30:44,288 - fastapi_server - INFO - Event consumer thread started.
+2024-11-27 16:30:44,289 - fastapi_server - INFO - Clearing all tripwire states and affected user data.
+2024-11-27 16:30:44,291 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': '1', 'card_id': 'card_0', 'zip_code': '10000'}
+2024-11-27 16:30:44,293 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 16:30:44,294 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': '2', 'card_id': 'card_1', 'zip_code': '10001'}
+2024-11-27 16:30:44,295 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 16:30:44,297 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': '3', 'card_id': 'card_2', 'zip_code': '10002'}
+2024-11-27 16:30:44,298 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 16:30:44,299 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': '4', 'card_id': 'card_3', 'zip_code': '10003'}
+2024-11-27 16:30:44,299 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 16:30:44,301 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': '5', 'card_id': 'card_4', 'zip_code': '10004'}
+2024-11-27 16:30:44,301 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 16:30:44,302 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': '6', 'card_id': 'card_5', 'zip_code': '10005'}
+2024-11-27 16:30:44,303 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 16:30:44,303 - fastapi_server - INFO - rule 'unique_zip_code_rule' is disabled: False
+2024-11-27 16:30:44,306 - fastapi_server - INFO - Stopping event consumer thread...
+2024-11-27 16:30:45,293 - fastapi_server - ERROR - Error processing event: 
+2024-11-27 16:30:45,294 - fastapi_server - INFO - Event consumer thread stopped.
+2024-11-27 16:36:41,052 - fastapi_server - INFO - ****************************************
+2024-11-27 16:36:41,053 - fastapi_server - INFO - ****************************************
+2024-11-27 16:36:41,097 - fastapi_server - INFO - Event consumer thread started.
+2024-11-27 16:36:41,097 - fastapi_server - INFO - Clearing all tripwire states and affected user data.
+2024-11-27 16:36:41,098 - fastapi_server - INFO - Creating new user with ID '1'.
+2024-11-27 16:36:41,098 - fastapi_server - INFO - Creating new user with ID '2'.
+2024-11-27 16:36:41,098 - fastapi_server - INFO - Creating new user with ID '3'.
+2024-11-27 16:36:41,098 - fastapi_server - INFO - Creating new user with ID '4'.
+2024-11-27 16:36:41,098 - fastapi_server - INFO - Creating new user with ID '5'.
+2024-11-27 16:36:41,098 - fastapi_server - INFO - Creating new user with ID '6'.
+2024-11-27 16:36:41,098 - fastapi_server - INFO - Creating new user with ID '7'.
+2024-11-27 16:36:41,098 - fastapi_server - INFO - Creating new user with ID '8'.
+2024-11-27 16:36:41,098 - fastapi_server - INFO - Creating new user with ID '9'.
+2024-11-27 16:36:41,098 - fastapi_server - INFO - Creating new user with ID '10'.
+2024-11-27 16:36:41,098 - fastapi_server - INFO - Creating new user with ID '11'.
+2024-11-27 16:36:41,098 - fastapi_server - INFO - Creating new user with ID '12'.
+2024-11-27 16:36:41,098 - fastapi_server - INFO - Creating new user with ID '13'.
+2024-11-27 16:36:41,098 - fastapi_server - INFO - Creating new user with ID '14'.
+2024-11-27 16:36:41,098 - fastapi_server - INFO - Creating new user with ID '15'.
+2024-11-27 16:36:41,098 - fastapi_server - INFO - Creating new user with ID '16'.
+2024-11-27 16:36:41,098 - fastapi_server - INFO - Creating new user with ID '17'.
+2024-11-27 16:36:41,098 - fastapi_server - INFO - Creating new user with ID '18'.
+2024-11-27 16:36:41,098 - fastapi_server - INFO - Creating new user with ID '19'.
+2024-11-27 16:36:41,098 - fastapi_server - INFO - Creating new user with ID '20'.
+2024-11-27 16:36:41,098 - fastapi_server - INFO - Creating new user with ID '21'.
+2024-11-27 16:36:41,098 - fastapi_server - INFO - Creating new user with ID '22'.
+2024-11-27 16:36:41,098 - fastapi_server - INFO - Creating new user with ID '23'.
+2024-11-27 16:36:41,098 - fastapi_server - INFO - Creating new user with ID '24'.
+2024-11-27 16:36:41,098 - fastapi_server - INFO - Creating new user with ID '25'.
+2024-11-27 16:36:41,098 - fastapi_server - INFO - Creating new user with ID '26'.
+2024-11-27 16:36:41,098 - fastapi_server - INFO - Creating new user with ID '27'.
+2024-11-27 16:36:41,098 - fastapi_server - INFO - Creating new user with ID '28'.
+2024-11-27 16:36:41,098 - fastapi_server - INFO - Creating new user with ID '29'.
+2024-11-27 16:36:41,098 - fastapi_server - INFO - Creating new user with ID '30'.
+2024-11-27 16:36:41,098 - fastapi_server - INFO - Creating new user with ID '31'.
+2024-11-27 16:36:41,098 - fastapi_server - INFO - Creating new user with ID '32'.
+2024-11-27 16:36:41,098 - fastapi_server - INFO - Creating new user with ID '33'.
+2024-11-27 16:36:41,098 - fastapi_server - INFO - Creating new user with ID '34'.
+2024-11-27 16:36:41,098 - fastapi_server - INFO - Creating new user with ID '35'.
+2024-11-27 16:36:41,098 - fastapi_server - INFO - Creating new user with ID '36'.
+2024-11-27 16:36:41,098 - fastapi_server - INFO - Creating new user with ID '37'.
+2024-11-27 16:36:41,098 - fastapi_server - INFO - Creating new user with ID '38'.
+2024-11-27 16:36:41,098 - fastapi_server - INFO - Creating new user with ID '39'.
+2024-11-27 16:36:41,098 - fastapi_server - INFO - Creating new user with ID '40'.
+2024-11-27 16:36:41,098 - fastapi_server - INFO - Creating new user with ID '41'.
+2024-11-27 16:36:41,098 - fastapi_server - INFO - Creating new user with ID '42'.
+2024-11-27 16:36:41,098 - fastapi_server - INFO - Creating new user with ID '43'.
+2024-11-27 16:36:41,098 - fastapi_server - INFO - Creating new user with ID '44'.
+2024-11-27 16:36:41,099 - fastapi_server - INFO - Creating new user with ID '45'.
+2024-11-27 16:36:41,099 - fastapi_server - INFO - Creating new user with ID '46'.
+2024-11-27 16:36:41,099 - fastapi_server - INFO - Creating new user with ID '47'.
+2024-11-27 16:36:41,099 - fastapi_server - INFO - Creating new user with ID '48'.
+2024-11-27 16:36:41,099 - fastapi_server - INFO - Creating new user with ID '49'.
+2024-11-27 16:36:41,099 - fastapi_server - INFO - Creating new user with ID '50'.
+2024-11-27 16:36:41,099 - fastapi_server - INFO - Creating new user with ID '51'.
+2024-11-27 16:36:41,099 - fastapi_server - INFO - Creating new user with ID '52'.
+2024-11-27 16:36:41,099 - fastapi_server - INFO - Creating new user with ID '53'.
+2024-11-27 16:36:41,099 - fastapi_server - INFO - Creating new user with ID '54'.
+2024-11-27 16:36:41,099 - fastapi_server - INFO - Creating new user with ID '55'.
+2024-11-27 16:36:41,099 - fastapi_server - INFO - Creating new user with ID '56'.
+2024-11-27 16:36:41,099 - fastapi_server - INFO - Creating new user with ID '57'.
+2024-11-27 16:36:41,099 - fastapi_server - INFO - Creating new user with ID '58'.
+2024-11-27 16:36:41,099 - fastapi_server - INFO - Creating new user with ID '59'.
+2024-11-27 16:36:41,099 - fastapi_server - INFO - Creating new user with ID '60'.
+2024-11-27 16:36:41,099 - fastapi_server - INFO - Creating new user with ID '61'.
+2024-11-27 16:36:41,099 - fastapi_server - INFO - Creating new user with ID '62'.
+2024-11-27 16:36:41,099 - fastapi_server - INFO - Creating new user with ID '63'.
+2024-11-27 16:36:41,099 - fastapi_server - INFO - Creating new user with ID '64'.
+2024-11-27 16:36:41,099 - fastapi_server - INFO - Creating new user with ID '65'.
+2024-11-27 16:36:41,099 - fastapi_server - INFO - Creating new user with ID '66'.
+2024-11-27 16:36:41,099 - fastapi_server - INFO - Creating new user with ID '67'.
+2024-11-27 16:36:41,099 - fastapi_server - INFO - Creating new user with ID '68'.
+2024-11-27 16:36:41,099 - fastapi_server - INFO - Creating new user with ID '69'.
+2024-11-27 16:36:41,099 - fastapi_server - INFO - Creating new user with ID '70'.
+2024-11-27 16:36:41,099 - fastapi_server - INFO - Creating new user with ID '71'.
+2024-11-27 16:36:41,099 - fastapi_server - INFO - Creating new user with ID '72'.
+2024-11-27 16:36:41,099 - fastapi_server - INFO - Creating new user with ID '73'.
+2024-11-27 16:36:41,099 - fastapi_server - INFO - Creating new user with ID '74'.
+2024-11-27 16:36:41,099 - fastapi_server - INFO - Creating new user with ID '75'.
+2024-11-27 16:36:41,099 - fastapi_server - INFO - Creating new user with ID '76'.
+2024-11-27 16:36:41,099 - fastapi_server - INFO - Creating new user with ID '77'.
+2024-11-27 16:36:41,099 - fastapi_server - INFO - Creating new user with ID '78'.
+2024-11-27 16:36:41,099 - fastapi_server - INFO - Creating new user with ID '79'.
+2024-11-27 16:36:41,099 - fastapi_server - INFO - Creating new user with ID '80'.
+2024-11-27 16:36:41,099 - fastapi_server - INFO - Creating new user with ID '81'.
+2024-11-27 16:36:41,099 - fastapi_server - INFO - Creating new user with ID '82'.
+2024-11-27 16:36:41,099 - fastapi_server - INFO - Creating new user with ID '83'.
+2024-11-27 16:36:41,099 - fastapi_server - INFO - Creating new user with ID '84'.
+2024-11-27 16:36:41,099 - fastapi_server - INFO - Creating new user with ID '85'.
+2024-11-27 16:36:41,099 - fastapi_server - INFO - Creating new user with ID '86'.
+2024-11-27 16:36:41,099 - fastapi_server - INFO - Creating new user with ID '87'.
+2024-11-27 16:36:41,099 - fastapi_server - INFO - Creating new user with ID '88'.
+2024-11-27 16:36:41,099 - fastapi_server - INFO - Creating new user with ID '89'.
+2024-11-27 16:36:41,099 - fastapi_server - INFO - Creating new user with ID '90'.
+2024-11-27 16:36:41,099 - fastapi_server - INFO - Creating new user with ID '91'.
+2024-11-27 16:36:41,099 - fastapi_server - INFO - Creating new user with ID '92'.
+2024-11-27 16:36:41,099 - fastapi_server - INFO - Creating new user with ID '93'.
+2024-11-27 16:36:41,099 - fastapi_server - INFO - Creating new user with ID '94'.
+2024-11-27 16:36:41,099 - fastapi_server - INFO - Creating new user with ID '95'.
+2024-11-27 16:36:41,099 - fastapi_server - INFO - Creating new user with ID '96'.
+2024-11-27 16:36:41,099 - fastapi_server - INFO - Creating new user with ID '97'.
+2024-11-27 16:36:41,099 - fastapi_server - INFO - Creating new user with ID '98'.
+2024-11-27 16:36:41,099 - fastapi_server - INFO - Creating new user with ID '99'.
+2024-11-27 16:36:41,099 - fastapi_server - INFO - Creating new user with ID '100'.
+2024-11-27 16:36:41,104 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': '1', 'card_id': 'card_0', 'zip_code': '10000'}
+2024-11-27 16:36:41,104 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 16:36:41,105 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': '2', 'card_id': 'card_1', 'zip_code': '10001'}
+2024-11-27 16:36:41,105 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 16:36:41,106 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': '3', 'card_id': 'card_2', 'zip_code': '10002'}
+2024-11-27 16:36:41,106 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 16:36:41,106 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': '4', 'card_id': 'card_3', 'zip_code': '10003'}
+2024-11-27 16:36:41,107 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 16:36:41,107 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': '5', 'card_id': 'card_4', 'zip_code': '10004'}
+2024-11-27 16:36:41,108 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 16:36:41,108 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': '6', 'card_id': 'card_5', 'zip_code': '10005'}
+2024-11-27 16:36:41,108 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 16:36:41,108 - fastapi_server - INFO - rule 'unique_zip_code_rule' is disabled: False
+2024-11-27 16:36:41,119 - fastapi_server - INFO - Stopping event consumer thread...
+2024-11-27 16:36:42,103 - fastapi_server - ERROR - Error processing event: 
+2024-11-27 16:36:42,103 - fastapi_server - INFO - Event consumer thread stopped.
+2024-11-27 16:36:42,106 - fastapi_server - INFO - Event consumer thread started.
+2024-11-27 16:36:42,106 - fastapi_server - INFO - Clearing all tripwire states and affected user data.
+2024-11-27 16:36:42,106 - fastapi_server - INFO - Creating new user with ID '1'.
+2024-11-27 16:36:42,107 - fastapi_server - INFO - Creating new user with ID '2'.
+2024-11-27 16:36:42,107 - fastapi_server - INFO - Creating new user with ID '3'.
+2024-11-27 16:36:42,107 - fastapi_server - INFO - Creating new user with ID '4'.
+2024-11-27 16:36:42,107 - fastapi_server - INFO - Creating new user with ID '5'.
+2024-11-27 16:36:42,107 - fastapi_server - INFO - Creating new user with ID '6'.
+2024-11-27 16:36:42,107 - fastapi_server - INFO - Creating new user with ID '7'.
+2024-11-27 16:36:42,107 - fastapi_server - INFO - Creating new user with ID '8'.
+2024-11-27 16:36:42,107 - fastapi_server - INFO - Creating new user with ID '9'.
+2024-11-27 16:36:42,107 - fastapi_server - INFO - Creating new user with ID '10'.
+2024-11-27 16:36:42,107 - fastapi_server - INFO - Creating new user with ID '11'.
+2024-11-27 16:36:42,107 - fastapi_server - INFO - Creating new user with ID '12'.
+2024-11-27 16:36:42,107 - fastapi_server - INFO - Creating new user with ID '13'.
+2024-11-27 16:36:42,108 - fastapi_server - INFO - Creating new user with ID '14'.
+2024-11-27 16:36:42,108 - fastapi_server - INFO - Creating new user with ID '15'.
+2024-11-27 16:36:42,108 - fastapi_server - INFO - Creating new user with ID '16'.
+2024-11-27 16:36:42,108 - fastapi_server - INFO - Creating new user with ID '17'.
+2024-11-27 16:36:42,108 - fastapi_server - INFO - Creating new user with ID '18'.
+2024-11-27 16:36:42,108 - fastapi_server - INFO - Creating new user with ID '19'.
+2024-11-27 16:36:42,108 - fastapi_server - INFO - Creating new user with ID '20'.
+2024-11-27 16:36:42,108 - fastapi_server - INFO - Creating new user with ID '21'.
+2024-11-27 16:36:42,108 - fastapi_server - INFO - Creating new user with ID '22'.
+2024-11-27 16:36:42,108 - fastapi_server - INFO - Creating new user with ID '23'.
+2024-11-27 16:36:42,108 - fastapi_server - INFO - Creating new user with ID '24'.
+2024-11-27 16:36:42,108 - fastapi_server - INFO - Creating new user with ID '25'.
+2024-11-27 16:36:42,109 - fastapi_server - INFO - Creating new user with ID '26'.
+2024-11-27 16:36:42,109 - fastapi_server - INFO - Creating new user with ID '27'.
+2024-11-27 16:36:42,109 - fastapi_server - INFO - Creating new user with ID '28'.
+2024-11-27 16:36:42,109 - fastapi_server - INFO - Creating new user with ID '29'.
+2024-11-27 16:36:42,109 - fastapi_server - INFO - Creating new user with ID '30'.
+2024-11-27 16:36:42,109 - fastapi_server - INFO - Creating new user with ID '31'.
+2024-11-27 16:36:42,109 - fastapi_server - INFO - Creating new user with ID '32'.
+2024-11-27 16:36:42,109 - fastapi_server - INFO - Creating new user with ID '33'.
+2024-11-27 16:36:42,109 - fastapi_server - INFO - Creating new user with ID '34'.
+2024-11-27 16:36:42,109 - fastapi_server - INFO - Creating new user with ID '35'.
+2024-11-27 16:36:42,109 - fastapi_server - INFO - Creating new user with ID '36'.
+2024-11-27 16:36:42,109 - fastapi_server - INFO - Creating new user with ID '37'.
+2024-11-27 16:36:42,110 - fastapi_server - INFO - Creating new user with ID '38'.
+2024-11-27 16:36:42,110 - fastapi_server - INFO - Creating new user with ID '39'.
+2024-11-27 16:36:42,110 - fastapi_server - INFO - Creating new user with ID '40'.
+2024-11-27 16:36:42,110 - fastapi_server - INFO - Creating new user with ID '41'.
+2024-11-27 16:36:42,110 - fastapi_server - INFO - Creating new user with ID '42'.
+2024-11-27 16:36:42,110 - fastapi_server - INFO - Creating new user with ID '43'.
+2024-11-27 16:36:42,110 - fastapi_server - INFO - Creating new user with ID '44'.
+2024-11-27 16:36:42,110 - fastapi_server - INFO - Creating new user with ID '45'.
+2024-11-27 16:36:42,110 - fastapi_server - INFO - Creating new user with ID '46'.
+2024-11-27 16:36:42,110 - fastapi_server - INFO - Creating new user with ID '47'.
+2024-11-27 16:36:42,110 - fastapi_server - INFO - Creating new user with ID '48'.
+2024-11-27 16:36:42,110 - fastapi_server - INFO - Creating new user with ID '49'.
+2024-11-27 16:36:42,111 - fastapi_server - INFO - Creating new user with ID '50'.
+2024-11-27 16:36:42,111 - fastapi_server - INFO - Creating new user with ID '51'.
+2024-11-27 16:36:42,111 - fastapi_server - INFO - Creating new user with ID '52'.
+2024-11-27 16:36:42,111 - fastapi_server - INFO - Creating new user with ID '53'.
+2024-11-27 16:36:42,111 - fastapi_server - INFO - Creating new user with ID '54'.
+2024-11-27 16:36:42,111 - fastapi_server - INFO - Creating new user with ID '55'.
+2024-11-27 16:36:42,111 - fastapi_server - INFO - Creating new user with ID '56'.
+2024-11-27 16:36:42,111 - fastapi_server - INFO - Creating new user with ID '57'.
+2024-11-27 16:36:42,111 - fastapi_server - INFO - Creating new user with ID '58'.
+2024-11-27 16:36:42,111 - fastapi_server - INFO - Creating new user with ID '59'.
+2024-11-27 16:36:42,111 - fastapi_server - INFO - Creating new user with ID '60'.
+2024-11-27 16:36:42,111 - fastapi_server - INFO - Creating new user with ID '61'.
+2024-11-27 16:36:42,112 - fastapi_server - INFO - Creating new user with ID '62'.
+2024-11-27 16:36:42,112 - fastapi_server - INFO - Creating new user with ID '63'.
+2024-11-27 16:36:42,112 - fastapi_server - INFO - Creating new user with ID '64'.
+2024-11-27 16:36:42,112 - fastapi_server - INFO - Creating new user with ID '65'.
+2024-11-27 16:36:42,112 - fastapi_server - INFO - Creating new user with ID '66'.
+2024-11-27 16:36:42,112 - fastapi_server - INFO - Creating new user with ID '67'.
+2024-11-27 16:36:42,112 - fastapi_server - INFO - Creating new user with ID '68'.
+2024-11-27 16:36:42,112 - fastapi_server - INFO - Creating new user with ID '69'.
+2024-11-27 16:36:42,112 - fastapi_server - INFO - Creating new user with ID '70'.
+2024-11-27 16:36:42,112 - fastapi_server - INFO - Creating new user with ID '71'.
+2024-11-27 16:36:42,112 - fastapi_server - INFO - Creating new user with ID '72'.
+2024-11-27 16:36:42,112 - fastapi_server - INFO - Creating new user with ID '73'.
+2024-11-27 16:36:42,112 - fastapi_server - INFO - Creating new user with ID '74'.
+2024-11-27 16:36:42,112 - fastapi_server - INFO - Creating new user with ID '75'.
+2024-11-27 16:36:42,113 - fastapi_server - INFO - Creating new user with ID '76'.
+2024-11-27 16:36:42,113 - fastapi_server - INFO - Creating new user with ID '77'.
+2024-11-27 16:36:42,113 - fastapi_server - INFO - Creating new user with ID '78'.
+2024-11-27 16:36:42,113 - fastapi_server - INFO - Creating new user with ID '79'.
+2024-11-27 16:36:42,113 - fastapi_server - INFO - Creating new user with ID '80'.
+2024-11-27 16:36:42,113 - fastapi_server - INFO - Creating new user with ID '81'.
+2024-11-27 16:36:42,113 - fastapi_server - INFO - Creating new user with ID '82'.
+2024-11-27 16:36:42,113 - fastapi_server - INFO - Creating new user with ID '83'.
+2024-11-27 16:36:42,113 - fastapi_server - INFO - Creating new user with ID '84'.
+2024-11-27 16:36:42,113 - fastapi_server - INFO - Creating new user with ID '85'.
+2024-11-27 16:36:42,113 - fastapi_server - INFO - Creating new user with ID '86'.
+2024-11-27 16:36:42,113 - fastapi_server - INFO - Creating new user with ID '87'.
+2024-11-27 16:36:42,113 - fastapi_server - INFO - Creating new user with ID '88'.
+2024-11-27 16:36:42,113 - fastapi_server - INFO - Creating new user with ID '89'.
+2024-11-27 16:36:42,113 - fastapi_server - INFO - Creating new user with ID '90'.
+2024-11-27 16:36:42,113 - fastapi_server - INFO - Creating new user with ID '91'.
+2024-11-27 16:36:42,113 - fastapi_server - INFO - Creating new user with ID '92'.
+2024-11-27 16:36:42,114 - fastapi_server - INFO - Creating new user with ID '93'.
+2024-11-27 16:36:42,114 - fastapi_server - INFO - Creating new user with ID '94'.
+2024-11-27 16:36:42,114 - fastapi_server - INFO - Creating new user with ID '95'.
+2024-11-27 16:36:42,114 - fastapi_server - INFO - Creating new user with ID '96'.
+2024-11-27 16:36:42,114 - fastapi_server - INFO - Creating new user with ID '97'.
+2024-11-27 16:36:42,114 - fastapi_server - INFO - Creating new user with ID '98'.
+2024-11-27 16:36:42,114 - fastapi_server - INFO - Creating new user with ID '99'.
+2024-11-27 16:36:42,114 - fastapi_server - INFO - Creating new user with ID '100'.
+2024-11-27 16:36:42,115 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': '1', 'card_id': 'card_0', 'zip_code': '10000'}
+2024-11-27 16:36:42,116 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 16:36:42,117 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': '2', 'card_id': 'card_1', 'zip_code': '10001'}
+2024-11-27 16:36:42,117 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 16:36:42,118 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': '3', 'card_id': 'card_2', 'zip_code': '10002'}
+2024-11-27 16:36:42,119 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 16:36:42,119 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': '4', 'card_id': 'card_3', 'zip_code': '10003'}
+2024-11-27 16:36:42,120 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 16:36:42,121 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': '5', 'card_id': 'card_4', 'zip_code': '10004'}
+2024-11-27 16:36:42,121 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 16:36:42,122 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': '6', 'card_id': 'card_5', 'zip_code': '10005'}
+2024-11-27 16:36:42,122 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 16:36:42,122 - fastapi_server - INFO - rule 'unique_zip_code_rule' is disabled: False
+2024-11-27 16:36:42,124 - fastapi_server - INFO - Stopping event consumer thread...
+2024-11-27 16:36:43,107 - fastapi_server - ERROR - Error processing event: 
+2024-11-27 16:36:43,108 - fastapi_server - INFO - Event consumer thread stopped.
+2024-11-27 16:43:00,292 - fastapi_server - INFO - ****************************************
+2024-11-27 16:43:00,292 - fastapi_server - INFO - ****************************************
+2024-11-27 16:43:00,305 - fastapi_server - INFO - entering while loop.
+2024-11-27 16:43:00,305 - fastapi_server - INFO - Event consumer thread started.
+2024-11-27 16:43:00,305 - fastapi_server - INFO - in while loop
+2024-11-27 16:43:00,305 - fastapi_server - INFO - Clearing all tripwire states and affected user data.
+2024-11-27 16:43:00,305 - fastapi_server - INFO - Creating new user with ID '1'.
+2024-11-27 16:43:00,305 - fastapi_server - INFO - Creating new user with ID '2'.
+2024-11-27 16:43:00,305 - fastapi_server - INFO - Creating new user with ID '3'.
+2024-11-27 16:43:00,305 - fastapi_server - INFO - Creating new user with ID '4'.
+2024-11-27 16:43:00,305 - fastapi_server - INFO - Creating new user with ID '5'.
+2024-11-27 16:43:00,305 - fastapi_server - INFO - Creating new user with ID '6'.
+2024-11-27 16:43:00,305 - fastapi_server - INFO - Creating new user with ID '7'.
+2024-11-27 16:43:00,305 - fastapi_server - INFO - Creating new user with ID '8'.
+2024-11-27 16:43:00,305 - fastapi_server - INFO - Creating new user with ID '9'.
+2024-11-27 16:43:00,305 - fastapi_server - INFO - Creating new user with ID '10'.
+2024-11-27 16:43:00,305 - fastapi_server - INFO - Creating new user with ID '11'.
+2024-11-27 16:43:00,305 - fastapi_server - INFO - Creating new user with ID '12'.
+2024-11-27 16:43:00,305 - fastapi_server - INFO - Creating new user with ID '13'.
+2024-11-27 16:43:00,305 - fastapi_server - INFO - Creating new user with ID '14'.
+2024-11-27 16:43:00,305 - fastapi_server - INFO - Creating new user with ID '15'.
+2024-11-27 16:43:00,305 - fastapi_server - INFO - Creating new user with ID '16'.
+2024-11-27 16:43:00,305 - fastapi_server - INFO - Creating new user with ID '17'.
+2024-11-27 16:43:00,305 - fastapi_server - INFO - Creating new user with ID '18'.
+2024-11-27 16:43:00,305 - fastapi_server - INFO - Creating new user with ID '19'.
+2024-11-27 16:43:00,305 - fastapi_server - INFO - Creating new user with ID '20'.
+2024-11-27 16:43:00,305 - fastapi_server - INFO - Creating new user with ID '21'.
+2024-11-27 16:43:00,305 - fastapi_server - INFO - Creating new user with ID '22'.
+2024-11-27 16:43:00,305 - fastapi_server - INFO - Creating new user with ID '23'.
+2024-11-27 16:43:00,305 - fastapi_server - INFO - Creating new user with ID '24'.
+2024-11-27 16:43:00,305 - fastapi_server - INFO - Creating new user with ID '25'.
+2024-11-27 16:43:00,306 - fastapi_server - INFO - Creating new user with ID '26'.
+2024-11-27 16:43:00,306 - fastapi_server - INFO - Creating new user with ID '27'.
+2024-11-27 16:43:00,306 - fastapi_server - INFO - Creating new user with ID '28'.
+2024-11-27 16:43:00,306 - fastapi_server - INFO - Creating new user with ID '29'.
+2024-11-27 16:43:00,306 - fastapi_server - INFO - Creating new user with ID '30'.
+2024-11-27 16:43:00,306 - fastapi_server - INFO - Creating new user with ID '31'.
+2024-11-27 16:43:00,306 - fastapi_server - INFO - Creating new user with ID '32'.
+2024-11-27 16:43:00,306 - fastapi_server - INFO - Creating new user with ID '33'.
+2024-11-27 16:43:00,306 - fastapi_server - INFO - Creating new user with ID '34'.
+2024-11-27 16:43:00,306 - fastapi_server - INFO - Creating new user with ID '35'.
+2024-11-27 16:43:00,306 - fastapi_server - INFO - Creating new user with ID '36'.
+2024-11-27 16:43:00,306 - fastapi_server - INFO - Creating new user with ID '37'.
+2024-11-27 16:43:00,306 - fastapi_server - INFO - Creating new user with ID '38'.
+2024-11-27 16:43:00,306 - fastapi_server - INFO - Creating new user with ID '39'.
+2024-11-27 16:43:00,306 - fastapi_server - INFO - Creating new user with ID '40'.
+2024-11-27 16:43:00,306 - fastapi_server - INFO - Creating new user with ID '41'.
+2024-11-27 16:43:00,306 - fastapi_server - INFO - Creating new user with ID '42'.
+2024-11-27 16:43:00,306 - fastapi_server - INFO - Creating new user with ID '43'.
+2024-11-27 16:43:00,306 - fastapi_server - INFO - Creating new user with ID '44'.
+2024-11-27 16:43:00,306 - fastapi_server - INFO - Creating new user with ID '45'.
+2024-11-27 16:43:00,306 - fastapi_server - INFO - Creating new user with ID '46'.
+2024-11-27 16:43:00,306 - fastapi_server - INFO - Creating new user with ID '47'.
+2024-11-27 16:43:00,306 - fastapi_server - INFO - Creating new user with ID '48'.
+2024-11-27 16:43:00,306 - fastapi_server - INFO - Creating new user with ID '49'.
+2024-11-27 16:43:00,306 - fastapi_server - INFO - Creating new user with ID '50'.
+2024-11-27 16:43:00,306 - fastapi_server - INFO - Creating new user with ID '51'.
+2024-11-27 16:43:00,306 - fastapi_server - INFO - Creating new user with ID '52'.
+2024-11-27 16:43:00,306 - fastapi_server - INFO - Creating new user with ID '53'.
+2024-11-27 16:43:00,306 - fastapi_server - INFO - Creating new user with ID '54'.
+2024-11-27 16:43:00,306 - fastapi_server - INFO - Creating new user with ID '55'.
+2024-11-27 16:43:00,306 - fastapi_server - INFO - Creating new user with ID '56'.
+2024-11-27 16:43:00,306 - fastapi_server - INFO - Creating new user with ID '57'.
+2024-11-27 16:43:00,306 - fastapi_server - INFO - Creating new user with ID '58'.
+2024-11-27 16:43:00,306 - fastapi_server - INFO - Creating new user with ID '59'.
+2024-11-27 16:43:00,306 - fastapi_server - INFO - Creating new user with ID '60'.
+2024-11-27 16:43:00,306 - fastapi_server - INFO - Creating new user with ID '61'.
+2024-11-27 16:43:00,306 - fastapi_server - INFO - Creating new user with ID '62'.
+2024-11-27 16:43:00,306 - fastapi_server - INFO - Creating new user with ID '63'.
+2024-11-27 16:43:00,306 - fastapi_server - INFO - Creating new user with ID '64'.
+2024-11-27 16:43:00,306 - fastapi_server - INFO - Creating new user with ID '65'.
+2024-11-27 16:43:00,306 - fastapi_server - INFO - Creating new user with ID '66'.
+2024-11-27 16:43:00,306 - fastapi_server - INFO - Creating new user with ID '67'.
+2024-11-27 16:43:00,306 - fastapi_server - INFO - Creating new user with ID '68'.
+2024-11-27 16:43:00,306 - fastapi_server - INFO - Creating new user with ID '69'.
+2024-11-27 16:43:00,306 - fastapi_server - INFO - Creating new user with ID '70'.
+2024-11-27 16:43:00,306 - fastapi_server - INFO - Creating new user with ID '71'.
+2024-11-27 16:43:00,306 - fastapi_server - INFO - Creating new user with ID '72'.
+2024-11-27 16:43:00,306 - fastapi_server - INFO - Creating new user with ID '73'.
+2024-11-27 16:43:00,306 - fastapi_server - INFO - Creating new user with ID '74'.
+2024-11-27 16:43:00,306 - fastapi_server - INFO - Creating new user with ID '75'.
+2024-11-27 16:43:00,306 - fastapi_server - INFO - Creating new user with ID '76'.
+2024-11-27 16:43:00,306 - fastapi_server - INFO - Creating new user with ID '77'.
+2024-11-27 16:43:00,306 - fastapi_server - INFO - Creating new user with ID '78'.
+2024-11-27 16:43:00,306 - fastapi_server - INFO - Creating new user with ID '79'.
+2024-11-27 16:43:00,306 - fastapi_server - INFO - Creating new user with ID '80'.
+2024-11-27 16:43:00,306 - fastapi_server - INFO - Creating new user with ID '81'.
+2024-11-27 16:43:00,307 - fastapi_server - INFO - Creating new user with ID '82'.
+2024-11-27 16:43:00,307 - fastapi_server - INFO - Creating new user with ID '83'.
+2024-11-27 16:43:00,307 - fastapi_server - INFO - Creating new user with ID '84'.
+2024-11-27 16:43:00,307 - fastapi_server - INFO - Creating new user with ID '85'.
+2024-11-27 16:43:00,307 - fastapi_server - INFO - Creating new user with ID '86'.
+2024-11-27 16:43:00,307 - fastapi_server - INFO - Creating new user with ID '87'.
+2024-11-27 16:43:00,307 - fastapi_server - INFO - Creating new user with ID '88'.
+2024-11-27 16:43:00,307 - fastapi_server - INFO - Creating new user with ID '89'.
+2024-11-27 16:43:00,307 - fastapi_server - INFO - Creating new user with ID '90'.
+2024-11-27 16:43:00,307 - fastapi_server - INFO - Creating new user with ID '91'.
+2024-11-27 16:43:00,307 - fastapi_server - INFO - Creating new user with ID '92'.
+2024-11-27 16:43:00,307 - fastapi_server - INFO - Creating new user with ID '93'.
+2024-11-27 16:43:00,307 - fastapi_server - INFO - Creating new user with ID '94'.
+2024-11-27 16:43:00,307 - fastapi_server - INFO - Creating new user with ID '95'.
+2024-11-27 16:43:00,307 - fastapi_server - INFO - Creating new user with ID '96'.
+2024-11-27 16:43:00,307 - fastapi_server - INFO - Creating new user with ID '97'.
+2024-11-27 16:43:00,307 - fastapi_server - INFO - Creating new user with ID '98'.
+2024-11-27 16:43:00,307 - fastapi_server - INFO - Creating new user with ID '99'.
+2024-11-27 16:43:00,307 - fastapi_server - INFO - Creating new user with ID '100'.
+2024-11-27 16:43:00,311 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': '1', 'card_id': 'card_0', 'zip_code': '10000'}
+2024-11-27 16:43:00,311 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 16:43:00,312 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': '2', 'card_id': 'card_1', 'zip_code': '10001'}
+2024-11-27 16:43:00,312 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 16:43:00,313 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': '3', 'card_id': 'card_2', 'zip_code': '10002'}
+2024-11-27 16:43:00,313 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 16:43:00,313 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': '4', 'card_id': 'card_3', 'zip_code': '10003'}
+2024-11-27 16:43:00,313 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 16:43:00,314 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': '5', 'card_id': 'card_4', 'zip_code': '10004'}
+2024-11-27 16:43:00,314 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 16:43:00,314 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': '6', 'card_id': 'card_5', 'zip_code': '10005'}
+2024-11-27 16:43:00,315 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 16:43:00,315 - fastapi_server - INFO - rule 'unique_zip_code_rule' is disabled: False
+2024-11-27 16:43:00,325 - fastapi_server - INFO - Stopping event consumer thread...
+2024-11-27 16:43:01,310 - fastapi_server - ERROR - Error processing event: 
+2024-11-27 16:43:01,311 - fastapi_server - INFO - Event consumer thread stopped.
+2024-11-27 16:43:01,315 - fastapi_server - INFO - entering while loop.
+2024-11-27 16:43:01,316 - fastapi_server - INFO - Event consumer thread started.
+2024-11-27 16:43:01,316 - fastapi_server - INFO - in while loop
+2024-11-27 16:43:01,316 - fastapi_server - INFO - Clearing all tripwire states and affected user data.
+2024-11-27 16:43:01,317 - fastapi_server - INFO - Creating new user with ID '1'.
+2024-11-27 16:43:01,317 - fastapi_server - INFO - Creating new user with ID '2'.
+2024-11-27 16:43:01,317 - fastapi_server - INFO - Creating new user with ID '3'.
+2024-11-27 16:43:01,317 - fastapi_server - INFO - Creating new user with ID '4'.
+2024-11-27 16:43:01,317 - fastapi_server - INFO - Creating new user with ID '5'.
+2024-11-27 16:43:01,318 - fastapi_server - INFO - Creating new user with ID '6'.
+2024-11-27 16:43:01,318 - fastapi_server - INFO - Creating new user with ID '7'.
+2024-11-27 16:43:01,318 - fastapi_server - INFO - Creating new user with ID '8'.
+2024-11-27 16:43:01,318 - fastapi_server - INFO - Creating new user with ID '9'.
+2024-11-27 16:43:01,318 - fastapi_server - INFO - Creating new user with ID '10'.
+2024-11-27 16:43:01,319 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': '1', 'card_id': 'card_0', 'zip_code': '10000'}
+2024-11-27 16:43:01,320 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 16:43:01,321 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': '2', 'card_id': 'card_1', 'zip_code': '10001'}
+2024-11-27 16:43:01,322 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 16:43:01,323 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': '3', 'card_id': 'card_2', 'zip_code': '10002'}
+2024-11-27 16:43:01,324 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 16:43:01,324 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': '4', 'card_id': 'card_3', 'zip_code': '10003'}
+2024-11-27 16:43:01,325 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 16:43:01,326 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': '5', 'card_id': 'card_4', 'zip_code': '10004'}
+2024-11-27 16:43:01,326 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 16:43:01,327 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': '6', 'card_id': 'card_5', 'zip_code': '10005'}
+2024-11-27 16:43:01,328 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 16:43:01,328 - fastapi_server - INFO - rule 'unique_zip_code_rule' is disabled: False
+2024-11-27 16:43:01,330 - fastapi_server - INFO - Stopping event consumer thread...
+2024-11-27 16:43:02,318 - fastapi_server - ERROR - Error processing event: 
+2024-11-27 16:43:02,319 - fastapi_server - INFO - Event consumer thread stopped.
+2024-11-27 16:44:39,573 - fastapi_server - INFO - ****************************************
+2024-11-27 16:44:39,573 - fastapi_server - INFO - ****************************************
+2024-11-27 16:44:39,584 - fastapi_server - INFO - entering while loop.
+2024-11-27 16:44:39,584 - fastapi_server - INFO - Event consumer thread started.
+2024-11-27 16:44:39,584 - fastapi_server - INFO - in while loop
+2024-11-27 16:44:39,584 - fastapi_server - INFO - Clearing all tripwire states and affected user data.
+2024-11-27 16:44:39,584 - fastapi_server - INFO - Creating new user with ID '1'.
+2024-11-27 16:44:39,584 - fastapi_server - INFO - Creating new user with ID '2'.
+2024-11-27 16:44:39,584 - fastapi_server - INFO - Creating new user with ID '3'.
+2024-11-27 16:44:39,584 - fastapi_server - INFO - Creating new user with ID '4'.
+2024-11-27 16:44:39,584 - fastapi_server - INFO - Creating new user with ID '5'.
+2024-11-27 16:44:39,584 - fastapi_server - INFO - Creating new user with ID '6'.
+2024-11-27 16:44:39,584 - fastapi_server - INFO - Creating new user with ID '7'.
+2024-11-27 16:44:39,584 - fastapi_server - INFO - Creating new user with ID '8'.
+2024-11-27 16:44:39,584 - fastapi_server - INFO - Creating new user with ID '9'.
+2024-11-27 16:44:39,584 - fastapi_server - INFO - Creating new user with ID '10'.
+2024-11-27 16:44:39,584 - fastapi_server - INFO - Creating new user with ID '11'.
+2024-11-27 16:44:39,584 - fastapi_server - INFO - Creating new user with ID '12'.
+2024-11-27 16:44:39,584 - fastapi_server - INFO - Creating new user with ID '13'.
+2024-11-27 16:44:39,584 - fastapi_server - INFO - Creating new user with ID '14'.
+2024-11-27 16:44:39,584 - fastapi_server - INFO - Creating new user with ID '15'.
+2024-11-27 16:44:39,584 - fastapi_server - INFO - Creating new user with ID '16'.
+2024-11-27 16:44:39,585 - fastapi_server - INFO - Creating new user with ID '17'.
+2024-11-27 16:44:39,585 - fastapi_server - INFO - Creating new user with ID '18'.
+2024-11-27 16:44:39,585 - fastapi_server - INFO - Creating new user with ID '19'.
+2024-11-27 16:44:39,585 - fastapi_server - INFO - Creating new user with ID '20'.
+2024-11-27 16:44:39,585 - fastapi_server - INFO - Creating new user with ID '21'.
+2024-11-27 16:44:39,585 - fastapi_server - INFO - Creating new user with ID '22'.
+2024-11-27 16:44:39,585 - fastapi_server - INFO - Creating new user with ID '23'.
+2024-11-27 16:44:39,585 - fastapi_server - INFO - Creating new user with ID '24'.
+2024-11-27 16:44:39,585 - fastapi_server - INFO - Creating new user with ID '25'.
+2024-11-27 16:44:39,585 - fastapi_server - INFO - Creating new user with ID '26'.
+2024-11-27 16:44:39,585 - fastapi_server - INFO - Creating new user with ID '27'.
+2024-11-27 16:44:39,585 - fastapi_server - INFO - Creating new user with ID '28'.
+2024-11-27 16:44:39,585 - fastapi_server - INFO - Creating new user with ID '29'.
+2024-11-27 16:44:39,585 - fastapi_server - INFO - Creating new user with ID '30'.
+2024-11-27 16:44:39,585 - fastapi_server - INFO - Creating new user with ID '31'.
+2024-11-27 16:44:39,585 - fastapi_server - INFO - Creating new user with ID '32'.
+2024-11-27 16:44:39,585 - fastapi_server - INFO - Creating new user with ID '33'.
+2024-11-27 16:44:39,585 - fastapi_server - INFO - Creating new user with ID '34'.
+2024-11-27 16:44:39,585 - fastapi_server - INFO - Creating new user with ID '35'.
+2024-11-27 16:44:39,585 - fastapi_server - INFO - Creating new user with ID '36'.
+2024-11-27 16:44:39,585 - fastapi_server - INFO - Creating new user with ID '37'.
+2024-11-27 16:44:39,585 - fastapi_server - INFO - Creating new user with ID '38'.
+2024-11-27 16:44:39,585 - fastapi_server - INFO - Creating new user with ID '39'.
+2024-11-27 16:44:39,585 - fastapi_server - INFO - Creating new user with ID '40'.
+2024-11-27 16:44:39,585 - fastapi_server - INFO - Creating new user with ID '41'.
+2024-11-27 16:44:39,585 - fastapi_server - INFO - Creating new user with ID '42'.
+2024-11-27 16:44:39,585 - fastapi_server - INFO - Creating new user with ID '43'.
+2024-11-27 16:44:39,585 - fastapi_server - INFO - Creating new user with ID '44'.
+2024-11-27 16:44:39,585 - fastapi_server - INFO - Creating new user with ID '45'.
+2024-11-27 16:44:39,585 - fastapi_server - INFO - Creating new user with ID '46'.
+2024-11-27 16:44:39,585 - fastapi_server - INFO - Creating new user with ID '47'.
+2024-11-27 16:44:39,585 - fastapi_server - INFO - Creating new user with ID '48'.
+2024-11-27 16:44:39,585 - fastapi_server - INFO - Creating new user with ID '49'.
+2024-11-27 16:44:39,585 - fastapi_server - INFO - Creating new user with ID '50'.
+2024-11-27 16:44:39,585 - fastapi_server - INFO - Creating new user with ID '51'.
+2024-11-27 16:44:39,585 - fastapi_server - INFO - Creating new user with ID '52'.
+2024-11-27 16:44:39,585 - fastapi_server - INFO - Creating new user with ID '53'.
+2024-11-27 16:44:39,585 - fastapi_server - INFO - Creating new user with ID '54'.
+2024-11-27 16:44:39,585 - fastapi_server - INFO - Creating new user with ID '55'.
+2024-11-27 16:44:39,585 - fastapi_server - INFO - Creating new user with ID '56'.
+2024-11-27 16:44:39,585 - fastapi_server - INFO - Creating new user with ID '57'.
+2024-11-27 16:44:39,585 - fastapi_server - INFO - Creating new user with ID '58'.
+2024-11-27 16:44:39,585 - fastapi_server - INFO - Creating new user with ID '59'.
+2024-11-27 16:44:39,585 - fastapi_server - INFO - Creating new user with ID '60'.
+2024-11-27 16:44:39,585 - fastapi_server - INFO - Creating new user with ID '61'.
+2024-11-27 16:44:39,585 - fastapi_server - INFO - Creating new user with ID '62'.
+2024-11-27 16:44:39,585 - fastapi_server - INFO - Creating new user with ID '63'.
+2024-11-27 16:44:39,585 - fastapi_server - INFO - Creating new user with ID '64'.
+2024-11-27 16:44:39,585 - fastapi_server - INFO - Creating new user with ID '65'.
+2024-11-27 16:44:39,585 - fastapi_server - INFO - Creating new user with ID '66'.
+2024-11-27 16:44:39,585 - fastapi_server - INFO - Creating new user with ID '67'.
+2024-11-27 16:44:39,585 - fastapi_server - INFO - Creating new user with ID '68'.
+2024-11-27 16:44:39,585 - fastapi_server - INFO - Creating new user with ID '69'.
+2024-11-27 16:44:39,585 - fastapi_server - INFO - Creating new user with ID '70'.
+2024-11-27 16:44:39,585 - fastapi_server - INFO - Creating new user with ID '71'.
+2024-11-27 16:44:39,585 - fastapi_server - INFO - Creating new user with ID '72'.
+2024-11-27 16:44:39,585 - fastapi_server - INFO - Creating new user with ID '73'.
+2024-11-27 16:44:39,585 - fastapi_server - INFO - Creating new user with ID '74'.
+2024-11-27 16:44:39,585 - fastapi_server - INFO - Creating new user with ID '75'.
+2024-11-27 16:44:39,586 - fastapi_server - INFO - Creating new user with ID '76'.
+2024-11-27 16:44:39,586 - fastapi_server - INFO - Creating new user with ID '77'.
+2024-11-27 16:44:39,586 - fastapi_server - INFO - Creating new user with ID '78'.
+2024-11-27 16:44:39,586 - fastapi_server - INFO - Creating new user with ID '79'.
+2024-11-27 16:44:39,586 - fastapi_server - INFO - Creating new user with ID '80'.
+2024-11-27 16:44:39,586 - fastapi_server - INFO - Creating new user with ID '81'.
+2024-11-27 16:44:39,586 - fastapi_server - INFO - Creating new user with ID '82'.
+2024-11-27 16:44:39,586 - fastapi_server - INFO - Creating new user with ID '83'.
+2024-11-27 16:44:39,586 - fastapi_server - INFO - Creating new user with ID '84'.
+2024-11-27 16:44:39,586 - fastapi_server - INFO - Creating new user with ID '85'.
+2024-11-27 16:44:39,586 - fastapi_server - INFO - Creating new user with ID '86'.
+2024-11-27 16:44:39,586 - fastapi_server - INFO - Creating new user with ID '87'.
+2024-11-27 16:44:39,586 - fastapi_server - INFO - Creating new user with ID '88'.
+2024-11-27 16:44:39,586 - fastapi_server - INFO - Creating new user with ID '89'.
+2024-11-27 16:44:39,586 - fastapi_server - INFO - Creating new user with ID '90'.
+2024-11-27 16:44:39,586 - fastapi_server - INFO - Creating new user with ID '91'.
+2024-11-27 16:44:39,586 - fastapi_server - INFO - Creating new user with ID '92'.
+2024-11-27 16:44:39,586 - fastapi_server - INFO - Creating new user with ID '93'.
+2024-11-27 16:44:39,586 - fastapi_server - INFO - Creating new user with ID '94'.
+2024-11-27 16:44:39,586 - fastapi_server - INFO - Creating new user with ID '95'.
+2024-11-27 16:44:39,586 - fastapi_server - INFO - Creating new user with ID '96'.
+2024-11-27 16:44:39,586 - fastapi_server - INFO - Creating new user with ID '97'.
+2024-11-27 16:44:39,586 - fastapi_server - INFO - Creating new user with ID '98'.
+2024-11-27 16:44:39,586 - fastapi_server - INFO - Creating new user with ID '99'.
+2024-11-27 16:44:39,586 - fastapi_server - INFO - Creating new user with ID '100'.
+2024-11-27 16:44:39,590 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': '1', 'card_id': 'card_0', 'zip_code': '10000'}
+2024-11-27 16:44:39,590 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 16:44:39,591 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': '2', 'card_id': 'card_1', 'zip_code': '10001'}
+2024-11-27 16:44:39,591 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 16:44:39,591 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': '3', 'card_id': 'card_2', 'zip_code': '10002'}
+2024-11-27 16:44:39,592 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 16:44:39,592 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': '4', 'card_id': 'card_3', 'zip_code': '10003'}
+2024-11-27 16:44:39,592 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 16:44:39,593 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': '5', 'card_id': 'card_4', 'zip_code': '10004'}
+2024-11-27 16:44:39,593 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 16:44:39,593 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': '6', 'card_id': 'card_5', 'zip_code': '10005'}
+2024-11-27 16:44:39,594 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 16:44:39,594 - fastapi_server - INFO - rule 'unique_zip_code_rule' is disabled: False
+2024-11-27 16:44:39,605 - fastapi_server - INFO - Stopping event consumer thread...
+2024-11-27 16:45:48,524 - fastapi_server - INFO - ****************************************
+2024-11-27 16:45:48,524 - fastapi_server - INFO - ****************************************
+2024-11-27 16:45:48,538 - fastapi_server - INFO - entering while loop.
+2024-11-27 16:45:48,538 - fastapi_server - INFO - Event consumer thread started.
+2024-11-27 16:45:48,538 - fastapi_server - INFO - in while loop
+2024-11-27 16:45:48,538 - fastapi_server - INFO - Clearing all tripwire states and affected user data.
+2024-11-27 16:45:48,539 - fastapi_server - INFO - Creating new user with ID '1'.
+2024-11-27 16:45:48,539 - fastapi_server - INFO - Creating new user with ID '2'.
+2024-11-27 16:45:48,539 - fastapi_server - INFO - Creating new user with ID '3'.
+2024-11-27 16:45:48,539 - fastapi_server - INFO - Creating new user with ID '4'.
+2024-11-27 16:45:48,539 - fastapi_server - INFO - Creating new user with ID '5'.
+2024-11-27 16:45:48,539 - fastapi_server - INFO - Creating new user with ID '6'.
+2024-11-27 16:45:48,539 - fastapi_server - INFO - Creating new user with ID '7'.
+2024-11-27 16:45:48,539 - fastapi_server - INFO - Creating new user with ID '8'.
+2024-11-27 16:45:48,539 - fastapi_server - INFO - Creating new user with ID '9'.
+2024-11-27 16:45:48,539 - fastapi_server - INFO - Creating new user with ID '10'.
+2024-11-27 16:45:48,543 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': '1', 'card_id': 'card_0', 'zip_code': '10000'}
+2024-11-27 16:45:48,543 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 16:45:48,544 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': '2', 'card_id': 'card_1', 'zip_code': '10001'}
+2024-11-27 16:45:48,544 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 16:45:48,544 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': '3', 'card_id': 'card_2', 'zip_code': '10002'}
+2024-11-27 16:45:48,545 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 16:45:48,545 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': '4', 'card_id': 'card_3', 'zip_code': '10003'}
+2024-11-27 16:45:48,545 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 16:45:48,546 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': '5', 'card_id': 'card_4', 'zip_code': '10004'}
+2024-11-27 16:45:48,546 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 16:45:48,547 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': '6', 'card_id': 'card_5', 'zip_code': '10005'}
+2024-11-27 16:45:48,547 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 16:45:48,547 - fastapi_server - INFO - rule 'unique_zip_code_rule' is disabled: False
+2024-11-27 16:45:48,558 - fastapi_server - INFO - Stopping event consumer thread...
+2024-11-27 16:53:01,894 - fastapi_server - INFO - ****************************************
+2024-11-27 16:53:01,894 - fastapi_server - INFO - ****************************************
+2024-11-27 16:55:04,566 - fastapi_server - INFO - ****************************************
+2024-11-27 16:55:04,567 - fastapi_server - INFO - ****************************************
+2024-11-27 16:55:04,580 - fastapi_server - INFO - Clearing all tripwire states and affected user data.
+2024-11-27 16:55:04,580 - fastapi_server - INFO - entering while loop.
+2024-11-27 16:55:04,580 - fastapi_server - INFO - in while loop
+2024-11-27 16:55:04,585 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': 1, 'card_id': 'card_123', 'zip_code': '12345'}
+2024-11-27 16:55:04,585 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 16:55:39,814 - fastapi_server - INFO - ****************************************
+2024-11-27 16:55:39,814 - fastapi_server - INFO - ****************************************
+2024-11-27 16:55:39,826 - fastapi_server - INFO - Clearing all tripwire states and affected user data.
+2024-11-27 16:55:39,827 - fastapi_server - INFO - entering while loop.
+2024-11-27 16:55:39,827 - fastapi_server - INFO - in while loop
+2024-11-27 16:55:39,830 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': 1, 'card_id': 'card_123', 'zip_code': '12345'}
+2024-11-27 16:55:39,831 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 16:55:40,836 - fastapi_server - INFO - Creating new user with ID '1'.
+2024-11-27 17:44:52,984 - fastapi_server - INFO - ****************************************
+2024-11-27 17:44:52,984 - fastapi_server - INFO - ****************************************
+2024-11-27 17:44:53,032 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': 1, 'card_id': 'card_123', 'zip_code': '12345'}
+2024-11-27 17:44:53,033 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 17:44:53,033 - fastapi_server - INFO - Creating new user with ID '1'.
+2024-11-27 17:44:53,044 - fastapi_server - INFO - Creating new user with ID '1'.
+2024-11-27 17:44:53,045 - fastapi_server - INFO - ** can message, user_id: 1
+2024-11-27 17:44:53,045 - fastapi_server - INFO - Creating new user with ID '1'.
+2024-11-27 17:44:53,045 - fastapi_server - INFO - user data: User ID: 1
+Scam Message Flags: 0
+Credit Cards: {}
+Total Credit Cards: 0
+Unique Zip Codes: set()
+Total Spend: 0.0
+Total Chargebacks: 0.0
+Access Flags: {'can_message': True, 'can_purchase': True}
+Last Login Time: None
+2024-11-27 17:44:53,046 - httpx - INFO - HTTP Request: GET http://testserver/canmessage?user_id=1 "HTTP/1.1 200 OK"
+2024-11-27 17:44:53,062 - fastapi_server - INFO - Creating new user with ID '1'.
+2024-11-27 17:44:53,063 - fastapi_server - INFO - ** can purchase, user_id: 1
+2024-11-27 17:44:53,063 - fastapi_server - INFO - user data: User ID: 1
+Scam Message Flags: 0
+Credit Cards: {}
+Total Credit Cards: 0
+Unique Zip Codes: set()
+Total Spend: 0.0
+Total Chargebacks: 0.0
+Access Flags: {'can_message': True, 'can_purchase': True}
+Last Login Time: None
+2024-11-27 17:44:53,063 - httpx - INFO - HTTP Request: GET http://testserver/canpurchase?user_id=1 "HTTP/1.1 200 OK"
+2024-11-27 20:44:48,893 - fastapi_server - INFO - ****************************************
+2024-11-27 20:44:48,893 - fastapi_server - INFO - ****************************************
+2024-11-27 20:44:48,911 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': 1, 'card_id': 'card_123', 'zip_code': '12345'}
+2024-11-27 20:44:48,911 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 20:44:48,912 - fastapi_server - INFO - Creating new user with ID '1'.
+2024-11-27 20:44:48,923 - fastapi_server - INFO - Creating new user with ID '1'.
+2024-11-27 20:44:48,924 - fastapi_server - INFO - ** can message, user_id: 1
+2024-11-27 20:44:48,924 - fastapi_server - INFO - Creating new user with ID '1'.
+2024-11-27 20:44:48,924 - fastapi_server - INFO - user data: User ID: 1
+Scam Message Flags: 0
+Credit Cards: {}
+Total Credit Cards: 0
+Unique Zip Codes: set()
+Total Spend: 0.0
+Total Chargebacks: 0.0
+Access Flags: {'can_message': True, 'can_purchase': True}
+Last Login Time: None
+2024-11-27 20:44:48,924 - httpx - INFO - HTTP Request: GET http://testserver/canmessage?user_id=1 "HTTP/1.1 200 OK"
+2024-11-27 20:44:48,940 - fastapi_server - INFO - Creating new user with ID '1'.
+2024-11-27 20:44:48,940 - fastapi_server - INFO - ** can purchase, user_id: 1
+2024-11-27 20:44:48,940 - fastapi_server - INFO - user data: User ID: 1
+Scam Message Flags: 0
+Credit Cards: {}
+Total Credit Cards: 0
+Unique Zip Codes: set()
+Total Spend: 0.0
+Total Chargebacks: 0.0
+Access Flags: {'can_message': True, 'can_purchase': True}
+Last Login Time: None
+2024-11-27 20:44:48,941 - httpx - INFO - HTTP Request: GET http://testserver/canpurchase?user_id=1 "HTTP/1.1 200 OK"
+2024-11-27 20:50:26,247 - fastapi_server - INFO - ****************************************
+2024-11-27 20:50:26,247 - fastapi_server - INFO - ****************************************
+2024-11-27 20:50:26,264 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': 1, 'card_id': 'card_123', 'zip_code': '12345'}
+2024-11-27 20:50:26,265 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 20:50:26,265 - fastapi_server - INFO - Creating new user with ID '1'.
+2024-11-27 20:50:26,276 - fastapi_server - INFO - Creating new user with ID '1'.
+2024-11-27 20:50:26,277 - fastapi_server - INFO - ** can message, user_id: 1
+2024-11-27 20:50:26,277 - fastapi_server - INFO - Creating new user with ID '1'.
+2024-11-27 20:50:26,277 - fastapi_server - INFO - user data: User ID: 1
+Scam Message Flags: 0
+Credit Cards: {}
+Total Credit Cards: 0
+Unique Zip Codes: set()
+Total Spend: 0.0
+Total Chargebacks: 0.0
+Access Flags: {'can_message': True, 'can_purchase': True}
+Last Login Time: None
+2024-11-27 20:50:26,278 - httpx - INFO - HTTP Request: GET http://testserver/canmessage?user_id=1 "HTTP/1.1 200 OK"
+2024-11-27 20:50:26,291 - fastapi_server - INFO - Creating new user with ID '1'.
+2024-11-27 20:50:26,292 - fastapi_server - INFO - ** can purchase, user_id: 1
+2024-11-27 20:50:26,292 - fastapi_server - INFO - user data: User ID: 1
+Scam Message Flags: 0
+Credit Cards: {}
+Total Credit Cards: 0
+Unique Zip Codes: set()
+Total Spend: 0.0
+Total Chargebacks: 0.0
+Access Flags: {'can_message': True, 'can_purchase': True}
+Last Login Time: None
+2024-11-27 20:50:26,292 - httpx - INFO - HTTP Request: GET http://testserver/canpurchase?user_id=1 "HTTP/1.1 200 OK"
+2024-11-27 20:54:57,767 - fastapi_server - INFO - ****************************************
+2024-11-27 20:54:57,767 - fastapi_server - INFO - ****************************************
+2024-11-27 20:54:57,787 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': 1, 'card_id': 'card_123', 'zip_code': '12345'}
+2024-11-27 20:54:57,788 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 20:54:57,799 - fastapi_server - INFO - Creating new user with ID '1'.
+2024-11-27 20:54:57,800 - fastapi_server - INFO - ** can message, user_id: 1
+2024-11-27 20:54:57,800 - fastapi_server - INFO - Creating new user with ID '1'.
+2024-11-27 20:54:57,800 - fastapi_server - INFO - user data: User ID: 1
+Scam Message Flags: 0
+Credit Cards: {}
+Total Credit Cards: 0
+Unique Zip Codes: set()
+Total Spend: 0.0
+Total Chargebacks: 0.0
+Access Flags: {'can_message': True, 'can_purchase': True}
+Last Login Time: None
+2024-11-27 20:54:57,801 - httpx - INFO - HTTP Request: GET http://testserver/canmessage?user_id=1 "HTTP/1.1 200 OK"
+2024-11-27 20:54:57,815 - fastapi_server - INFO - Creating new user with ID '1'.
+2024-11-27 20:54:57,816 - fastapi_server - INFO - ** can purchase, user_id: 1
+2024-11-27 20:54:57,816 - fastapi_server - INFO - user data: User ID: 1
+Scam Message Flags: 0
+Credit Cards: {}
+Total Credit Cards: 0
+Unique Zip Codes: set()
+Total Spend: 0.0
+Total Chargebacks: 0.0
+Access Flags: {'can_message': True, 'can_purchase': True}
+Last Login Time: None
+2024-11-27 20:54:57,816 - httpx - INFO - HTTP Request: GET http://testserver/canpurchase?user_id=1 "HTTP/1.1 200 OK"
+2024-11-27 20:57:40,819 - fastapi_server - INFO - ****************************************
+2024-11-27 20:57:40,819 - fastapi_server - INFO - ****************************************
+2024-11-27 20:57:40,838 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': 1, 'card_id': 'card_123', 'zip_code': '12345'}
+2024-11-27 20:57:40,838 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 20:57:40,849 - fastapi_server - INFO - Creating new user with ID '1'.
+2024-11-27 20:57:40,850 - fastapi_server - INFO - Creating new user with ID '1'.
+2024-11-27 20:57:40,851 - fastapi_server - INFO - ** can purchase, user_id: 1
+2024-11-27 20:57:40,851 - fastapi_server - INFO - Creating new user with ID '1'.
+2024-11-27 20:57:40,851 - fastapi_server - INFO - user data: User ID: 1
+Scam Message Flags: 0
+Credit Cards: {}
+Total Credit Cards: 0
+Unique Zip Codes: set()
+Total Spend: 0.0
+Total Chargebacks: 0.0
+Access Flags: {'can_message': True, 'can_purchase': True}
+Last Login Time: None
+2024-11-27 20:57:40,851 - httpx - INFO - HTTP Request: GET http://testserver/canpurchase?user_id=1 "HTTP/1.1 200 OK"
+2024-11-27 20:58:45,949 - fastapi_server - INFO - ****************************************
+2024-11-27 20:58:45,949 - fastapi_server - INFO - ****************************************
+2024-11-27 20:58:45,966 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': 1, 'card_id': 'card_123', 'zip_code': '12345'}
+2024-11-27 20:58:45,966 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 20:58:45,977 - fastapi_server - INFO - Creating new user with ID '1'.
+2024-11-27 20:58:45,979 - fastapi_server - INFO - Creating new user with ID '1'.
+2024-11-27 20:58:45,979 - fastapi_server - INFO - ** can purchase, user_id: 1
+2024-11-27 20:58:45,979 - fastapi_server - INFO - Creating new user with ID '1'.
+2024-11-27 20:58:45,979 - fastapi_server - INFO - user data: User ID: 1
+Scam Message Flags: 0
+Credit Cards: {}
+Total Credit Cards: 0
+Unique Zip Codes: set()
+Total Spend: 0.0
+Total Chargebacks: 0.0
+Access Flags: {'can_message': True, 'can_purchase': True}
+Last Login Time: None
+2024-11-27 20:58:45,980 - httpx - INFO - HTTP Request: GET http://testserver/canpurchase?user_id=1 "HTTP/1.1 200 OK"
+2024-11-27 20:59:24,528 - fastapi_server - INFO - ****************************************
+2024-11-27 20:59:24,528 - fastapi_server - INFO - ****************************************
+2024-11-27 20:59:24,546 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': 1, 'card_id': 'card_123', 'zip_code': '12345'}
+2024-11-27 20:59:24,546 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 20:59:24,557 - fastapi_server - INFO - Creating new user with ID '1'.
+2024-11-27 20:59:24,558 - fastapi_server - INFO - Creating new user with ID '1'.
+2024-11-27 20:59:24,559 - fastapi_server - INFO - ** can purchase, user_id: 1
+2024-11-27 20:59:24,559 - fastapi_server - INFO - Creating new user with ID '1'.
+2024-11-27 20:59:24,559 - fastapi_server - INFO - user data: User ID: 1
+Scam Message Flags: 0
+Credit Cards: {}
+Total Credit Cards: 0
+Unique Zip Codes: set()
+Total Spend: 0.0
+Total Chargebacks: 0.0
+Access Flags: {'can_message': True, 'can_purchase': True}
+Last Login Time: None
+2024-11-27 20:59:24,560 - httpx - INFO - HTTP Request: GET http://testserver/canpurchase?user_id=1 "HTTP/1.1 200 OK"
+2024-11-27 21:00:51,782 - fastapi_server - INFO - ****************************************
+2024-11-27 21:00:51,782 - fastapi_server - INFO - ****************************************
+2024-11-27 21:00:51,800 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': 1, 'card_id': 'card_123', 'zip_code': '12345'}
+2024-11-27 21:00:51,801 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 21:00:51,813 - fastapi_server - INFO - Creating new user with ID '1'.
+2024-11-27 21:00:51,814 - fastapi_server - INFO - Creating new user with ID '1'.
+2024-11-27 21:00:51,815 - fastapi_server - INFO - ** can purchase, user_id: 1
+2024-11-27 21:00:51,815 - fastapi_server - INFO - Creating new user with ID '1'.
+2024-11-27 21:00:51,815 - fastapi_server - INFO - user data: User ID: 1
+Scam Message Flags: 0
+Credit Cards: {}
+Total Credit Cards: 0
+Unique Zip Codes: set()
+Total Spend: 0.0
+Total Chargebacks: 0.0
+Access Flags: {'can_message': True, 'can_purchase': True}
+Last Login Time: None
+2024-11-27 21:00:51,816 - httpx - INFO - HTTP Request: GET http://testserver/canpurchase?user_id=1 "HTTP/1.1 200 OK"
+2024-11-27 21:02:32,626 - fastapi_server - INFO - ****************************************
+2024-11-27 21:02:32,626 - fastapi_server - INFO - ****************************************
+2024-11-27 21:02:32,643 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': 1, 'card_id': 'card_123', 'zip_code': '12345'}
+2024-11-27 21:02:32,644 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 21:02:32,655 - fastapi_server - INFO - Creating new user with ID '1'.
+2024-11-27 21:02:32,656 - fastapi_server - INFO - Creating new user with ID '1'.
+2024-11-27 21:02:32,657 - fastapi_server - INFO - ** can purchase, user_id: 1
+2024-11-27 21:02:32,657 - fastapi_server - INFO - Creating new user with ID '1'.
+2024-11-27 21:02:32,657 - fastapi_server - INFO - user data: User ID: 1
+Scam Message Flags: 0
+Credit Cards: {}
+Total Credit Cards: 0
+Unique Zip Codes: set()
+Total Spend: 0.0
+Total Chargebacks: 0.0
+Access Flags: {'can_message': True, 'can_purchase': True}
+Last Login Time: None
+2024-11-27 21:02:32,657 - httpx - INFO - HTTP Request: GET http://testserver/canpurchase?user_id=1 "HTTP/1.1 200 OK"
+2024-11-27 21:03:31,619 - fastapi_server - INFO - ****************************************
+2024-11-27 21:03:31,619 - fastapi_server - INFO - ****************************************
+2024-11-27 21:03:31,636 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': 1, 'card_id': 'card_123', 'zip_code': '12345'}
+2024-11-27 21:03:31,637 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 21:03:31,648 - fastapi_server - INFO - Creating new user with ID '1'.
+2024-11-27 21:03:31,648 - fastapi_server - INFO - Processing rule: scam_message_rule
+2024-11-27 21:03:31,648 - fastapi_server - INFO - tripwire disabled rules, before processing: {}
+2024-11-27 21:03:31,648 - fastapi_server - INFO - rule 'scam_message_rule' is disabled: False
+2024-11-27 21:03:31,648 - fastapi_server - INFO - Rule condition met: True
+2024-11-27 21:03:31,648 - fastapi_server - INFO - rule scam_message_rule applied to user 1
+2024-11-27 21:03:31,650 - fastapi_server - INFO - Creating new user with ID '1'.
+2024-11-27 21:03:31,650 - fastapi_server - INFO - ** can purchase, user_id: 1
+2024-11-27 21:03:31,650 - fastapi_server - INFO - Creating new user with ID '1'.
+2024-11-27 21:03:31,650 - fastapi_server - INFO - user data: User ID: 1
+Scam Message Flags: 0
+Credit Cards: {}
+Total Credit Cards: 0
+Unique Zip Codes: set()
+Total Spend: 0.0
+Total Chargebacks: 0.0
+Access Flags: {'can_message': True, 'can_purchase': True}
+Last Login Time: None
+2024-11-27 21:03:31,651 - httpx - INFO - HTTP Request: GET http://testserver/canpurchase?user_id=1 "HTTP/1.1 200 OK"
+2024-11-27 21:04:48,284 - fastapi_server - INFO - ****************************************
+2024-11-27 21:04:48,284 - fastapi_server - INFO - ****************************************
+2024-11-27 21:04:48,296 - fastapi_server - INFO - Creating new user with ID '1'.
+2024-11-27 21:04:48,296 - fastapi_server - INFO - Processing rule: scam_message_rule
+2024-11-27 21:04:48,296 - fastapi_server - INFO - tripwire disabled rules, before processing: {}
+2024-11-27 21:04:48,296 - fastapi_server - INFO - rule 'scam_message_rule' is disabled: False
+2024-11-27 21:04:48,296 - fastapi_server - INFO - Rule condition met: True
+2024-11-27 21:04:48,296 - fastapi_server - INFO - rule scam_message_rule applied to user 1
+2024-11-27 21:08:39,290 - fastapi_server - INFO - ****************************************
+2024-11-27 21:08:39,290 - fastapi_server - INFO - ****************************************
+2024-11-27 21:08:39,302 - fastapi_server - INFO - Creating new user with ID '1'.
+2024-11-27 21:08:39,302 - fastapi_server - INFO - Processing rule: scam_message_rule
+2024-11-27 21:08:39,302 - fastapi_server - INFO - tripwire disabled rules, before processing: {}
+2024-11-27 21:08:39,302 - fastapi_server - INFO - rule 'scam_message_rule' is disabled: False
+2024-11-27 21:08:39,302 - fastapi_server - INFO - Rule condition met: True
+2024-11-27 21:08:39,302 - fastapi_server - INFO - rule scam_message_rule applied to user 1
+2024-11-27 21:08:39,302 - fastapi_server - INFO - self.affected_users: {'scam_message_rule': {}}
+2024-11-27 21:08:39,302 - fastapi_server - INFO - Tripwire thrown: Rule 'scam_message_rule' disabled: 1/1 users affected (100.00%).
+2024-11-27 21:08:39,302 - fastapi_server - INFO - tripwire disabled rules, after processing: {'scam_message_rule': True}
+2024-11-27 21:08:39,306 - fastapi_server - INFO - ** can message, user_id: 1
+2024-11-27 21:08:39,306 - fastapi_server - INFO - Creating new user with ID '1'.
+2024-11-27 21:08:39,306 - fastapi_server - INFO - user data: User ID: 1
+Scam Message Flags: 0
+Credit Cards: {}
+Total Credit Cards: 0
+Unique Zip Codes: set()
+Total Spend: 0.0
+Total Chargebacks: 0.0
+Access Flags: {'can_message': True, 'can_purchase': True}
+Last Login Time: None
+2024-11-27 21:08:39,307 - httpx - INFO - HTTP Request: GET http://testserver/canmessage?user_id=1 "HTTP/1.1 200 OK"
+2024-11-27 21:17:54,089 - fastapi_server - INFO - ****************************************
+2024-11-27 21:17:54,089 - fastapi_server - INFO - ****************************************
+2024-11-27 21:17:54,105 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': 1, 'card_id': 'card_123', 'zip_code': '12345'}
+2024-11-27 21:17:54,106 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 21:17:54,106 - fastapi_server - INFO - ** can message, user_id: 1
+2024-11-27 21:17:54,106 - fastapi_server - INFO - Creating new user with ID '1'.
+2024-11-27 21:17:54,106 - fastapi_server - INFO - user data: User ID: 1
+Scam Message Flags: 0
+Credit Cards: {}
+Total Credit Cards: 0
+Unique Zip Codes: set()
+Total Spend: 0.0
+Total Chargebacks: 0.0
+Access Flags: {'can_message': True, 'can_purchase': True}
+Last Login Time: None
+2024-11-27 21:17:54,107 - httpx - INFO - HTTP Request: GET http://testserver/canmessage?user_id=1 "HTTP/1.1 200 OK"
+2024-11-27 21:18:27,179 - fastapi_server - INFO - ****************************************
+2024-11-27 21:18:27,179 - fastapi_server - INFO - ****************************************
+2024-11-27 21:18:27,194 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': '1', 'card_id': 'card_123', 'zip_code': '12345'}
+2024-11-27 21:18:27,195 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 21:18:27,195 - fastapi_server - INFO - ** can message, user_id: 1
+2024-11-27 21:18:27,195 - fastapi_server - INFO - Creating new user with ID '1'.
+2024-11-27 21:18:27,195 - fastapi_server - INFO - user data: User ID: 1
+Scam Message Flags: 0
+Credit Cards: {}
+Total Credit Cards: 0
+Unique Zip Codes: set()
+Total Spend: 0.0
+Total Chargebacks: 0.0
+Access Flags: {'can_message': True, 'can_purchase': True}
+Last Login Time: None
+2024-11-27 21:18:27,196 - httpx - INFO - HTTP Request: GET http://testserver/canmessage?user_id=1 "HTTP/1.1 200 OK"
+2024-11-27 21:19:20,775 - fastapi_server - INFO - ****************************************
+2024-11-27 21:19:20,775 - fastapi_server - INFO - ****************************************
+2024-11-27 21:19:20,789 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': '1', 'card_id': 'card_123', 'zip_code': '12345'}
+2024-11-27 21:19:20,790 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 21:19:20,790 - fastapi_server - INFO - ** can message, user_id: 1
+2024-11-27 21:19:20,790 - fastapi_server - INFO - Creating new user with ID '1'.
+2024-11-27 21:19:20,790 - fastapi_server - INFO - user data: User ID: 1
+Scam Message Flags: 0
+Credit Cards: {}
+Total Credit Cards: 0
+Unique Zip Codes: set()
+Total Spend: 0.0
+Total Chargebacks: 0.0
+Access Flags: {'can_message': True, 'can_purchase': True}
+Last Login Time: None
+2024-11-27 21:19:20,791 - httpx - INFO - HTTP Request: GET http://testserver/canmessage?user_id=1 "HTTP/1.1 200 OK"
+2024-11-27 21:22:31,236 - fastapi_server - INFO - ****************************************
+2024-11-27 21:22:31,236 - fastapi_server - INFO - ****************************************
+2024-11-27 21:22:31,251 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': '1', 'card_id': 'card_123', 'zip_code': '12345'}
+2024-11-27 21:22:31,252 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 21:22:31,253 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': '1', 'card_id': 'card_456', 'zip_code': '56789'}
+2024-11-27 21:22:31,253 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 21:22:50,767 - fastapi_server - INFO - ****************************************
+2024-11-27 21:22:50,767 - fastapi_server - INFO - ****************************************
+2024-11-27 21:22:50,781 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': '1', 'card_id': 'card_123', 'zip_code': '12345'}
+2024-11-27 21:22:50,782 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 21:22:50,782 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': '1', 'card_id': 'card_456', 'zip_code': '56789'}
+2024-11-27 21:22:50,783 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 21:23:47,283 - fastapi_server - INFO - ****************************************
+2024-11-27 21:23:47,283 - fastapi_server - INFO - ****************************************
+2024-11-27 21:23:47,302 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': '1', 'card_id': 'card_123', 'zip_code': '12345'}
+2024-11-27 21:23:47,303 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-27 21:23:47,303 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': '1', 'card_id': 'card_456', 'zip_code': '56789'}
+2024-11-27 21:23:47,304 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"

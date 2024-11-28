@@ -17,7 +17,7 @@ class BaseRule(ABC):
         self.tripwire_manager = tripwire_manager
         self.user_manager = user_manager
 
-    def process_rule(self, user_data: UserData, event: Event):
+    def process_rule(self, user_data: UserData):
         """
         Process the rule:
         - Check if the rule is disabled.
@@ -28,7 +28,7 @@ class BaseRule(ABC):
         logger.info(
             f"tripwire disabled rules, before processing: {self.tripwire_manager.tripwire_disabled_rules}"
         )
-        if self.tripwire_manager.is_tripwire_disabled_rules(self.name):
+        if self.tripwire_manager.is_rule_disabled_via_tripwire(self.name):
             return False  # Rule is disabled, no action taken
 
         # Evaluate the rule, should we modify the data?

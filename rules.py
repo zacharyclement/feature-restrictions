@@ -28,7 +28,7 @@ class BaseRule(ABC):
         logger.info(
             f"tripwire state before: {self.trip_wire_manager.tripwire_disabled_rules}"
         )
-        if self.trip_wire_manager.is_tripwire_disabled_rules(self.name):
+        if self.trip_wire_manager.is_rule_disabled_via_tripwire(self.name):
 
             return False  # Rule is disabled, no action taken
 

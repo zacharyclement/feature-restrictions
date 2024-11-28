@@ -29,7 +29,7 @@ class TripWireManager:
         self.time_window: int = 300  # Time window in seconds (e.g., 5 minutes)
         self.threshold: float = 0.05  # 5%
 
-    def is_tripwire_disabled_rules(self, rule_name: str) -> bool:
+    def is_rule_disabled_via_tripwire(self, rule_name: str) -> bool:
         """
         is rule diabled or not
         """
