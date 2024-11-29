@@ -10118,3 +10118,178 @@ Last Login Time: None
 2024-11-27 21:23:47,303 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
 2024-11-27 21:23:47,303 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': '1', 'card_id': 'card_456', 'zip_code': '56789'}
 2024-11-27 21:23:47,304 - httpx - INFO - HTTP Request: POST http://testserver/event "HTTP/1.1 200 OK"
+2024-11-29 09:12:18,934 - fastapi_server - INFO - ****************************************
+2024-11-29 09:12:18,934 - fastapi_server - INFO - ****************************************
+2024-11-29 09:12:18,935 - fastapi_server - INFO - Registering event handlers...
+2024-11-29 09:48:47,177 - fastapi_server - INFO - ****************************************
+2024-11-29 09:48:47,177 - fastapi_server - INFO - ****************************************
+2024-11-29 09:48:47,178 - fastapi_server - INFO - entering while loop.
+2024-11-29 09:48:47,178 - fastapi_server - INFO - Event consumer thread started.
+2024-11-29 09:48:47,178 - fastapi_server - INFO - in while loop
+2024-11-29 09:48:52,070 - fastapi_server - INFO - ** Received event: name='scam_message_flagged' event_properties={'user_id': 1}
+2024-11-29 09:48:52,070 - fastapi_server - INFO - Processing event: name='scam_message_flagged' event_properties={'user_id': 1}
+2024-11-29 09:48:52,070 - fastapi_server - INFO - Creating new user with ID '1'.
+2024-11-29 09:48:52,070 - fastapi_server - INFO - user data before processing: User ID: 1
+Scam Message Flags: 1
+Credit Cards: {}
+Total Credit Cards: 0
+Unique Zip Codes: set()
+Total Spend: 0.0
+Total Chargebacks: 0.0
+Access Flags: {'can_message': True, 'can_purchase': True}
+Last Login Time: None
+2024-11-29 09:48:52,070 - fastapi_server - ERROR - An error occurred while processing the event: BaseRule.process_rule() takes 2 positional arguments but 3 were given
+2024-11-29 09:48:52,070 - fastapi_server - INFO - in while loop
+2024-11-29 09:48:52,071 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': 1, 'card_id': 'card_45', 'zip_code': '32477'}
+2024-11-29 09:48:52,072 - fastapi_server - INFO - Processing event: name='credit_card_added' event_properties={'user_id': 1, 'card_id': 'card_45', 'zip_code': '32477'}
+2024-11-29 09:48:52,072 - fastapi_server - INFO - handling credit_card_added
+2024-11-29 09:48:52,072 - fastapi_server - INFO - total credit cards before: 0
+2024-11-29 09:48:52,072 - fastapi_server - INFO - total credit cards after: 1
+2024-11-29 09:48:52,072 - fastapi_server - INFO - user data before processing: User ID: 1
+Scam Message Flags: 1
+Credit Cards: {'card_45': '32477'}
+Total Credit Cards: 1
+Unique Zip Codes: {'32477'}
+Total Spend: 0.0
+Total Chargebacks: 0.0
+Access Flags: {'can_message': True, 'can_purchase': True}
+Last Login Time: None
+2024-11-29 09:48:52,072 - fastapi_server - ERROR - An error occurred while processing the event: BaseRule.process_rule() takes 2 positional arguments but 3 were given
+2024-11-29 09:48:52,072 - fastapi_server - INFO - in while loop
+2024-11-29 09:48:52,073 - fastapi_server - INFO - ** Received event: name='chargeback_occurred' event_properties={'user_id': 1, 'amount': 878}
+2024-11-29 09:48:52,073 - fastapi_server - INFO - Processing event: name='chargeback_occurred' event_properties={'user_id': 1, 'amount': 878}
+2024-11-29 09:48:52,073 - fastapi_server - INFO - user data before processing: User ID: 1
+Scam Message Flags: 1
+Credit Cards: {'card_45': '32477'}
+Total Credit Cards: 1
+Unique Zip Codes: {'32477'}
+Total Spend: 0.0
+Total Chargebacks: 878.0
+Access Flags: {'can_message': True, 'can_purchase': True}
+Last Login Time: None
+2024-11-29 09:48:52,073 - fastapi_server - ERROR - An error occurred while processing the event: BaseRule.process_rule() takes 2 positional arguments but 3 were given
+2024-11-29 09:48:52,073 - fastapi_server - INFO - in while loop
+2024-11-29 09:48:52,077 - fastapi_server - INFO - ** can message, user_id: 1
+2024-11-29 09:48:52,077 - fastapi_server - INFO - user data: User ID: 1
+Scam Message Flags: 1
+Credit Cards: {'card_45': '32477'}
+Total Credit Cards: 1
+Unique Zip Codes: {'32477'}
+Total Spend: 0.0
+Total Chargebacks: 878.0
+Access Flags: {'can_message': True, 'can_purchase': True}
+Last Login Time: None
+2024-11-29 09:48:52,078 - fastapi_server - INFO - ** can purchase, user_id: 1
+2024-11-29 09:48:52,078 - fastapi_server - INFO - user data: User ID: 1
+Scam Message Flags: 1
+Credit Cards: {'card_45': '32477'}
+Total Credit Cards: 1
+Unique Zip Codes: {'32477'}
+Total Spend: 0.0
+Total Chargebacks: 878.0
+Access Flags: {'can_message': True, 'can_purchase': True}
+Last Login Time: None
+2024-11-29 09:49:27,503 - fastapi_server - INFO - Shutting down FastAPI app.
+2024-11-29 09:49:27,503 - fastapi_server - INFO - Stopping event consumer.
+2024-11-29 09:49:27,503 - fastapi_server - INFO - Stopping event consumer thread...
+2024-11-29 09:54:22,394 - fastapi_server - INFO - ****************************************
+2024-11-29 09:54:22,394 - fastapi_server - INFO - ****************************************
+2024-11-29 09:54:22,394 - fastapi_server - INFO - Registering event handlers...
+2024-11-29 09:58:18,904 - fastapi_server - INFO - ****************************************
+2024-11-29 09:58:18,904 - fastapi_server - INFO - ****************************************
+2024-11-29 09:58:18,904 - fastapi_server - INFO - Registering default event handlers...
+2024-11-29 09:58:18,904 - fastapi_server - INFO - Registered handler for event: credit_card_added
+2024-11-29 09:58:18,904 - fastapi_server - INFO - Registered handler for event: scam_message_flagged
+2024-11-29 09:58:18,904 - fastapi_server - INFO - Registered handler for event: chargeback_occurred
+2024-11-29 09:58:18,904 - fastapi_server - INFO - Default event handlers registered successfully.
+2024-11-29 09:58:18,905 - fastapi_server - INFO - Entering event consumption loop.
+2024-11-29 09:58:18,905 - fastapi_server - INFO - Event consumer thread started.
+2024-11-29 09:58:18,905 - fastapi_server - INFO - In event consumption loop.
+2024-11-29 09:59:00,354 - fastapi_server - INFO - ** Received event: name='scam_message_flagged' event_properties={'user_id': 1}
+2024-11-29 09:59:00,354 - fastapi_server - INFO - Processing event: {'name': 'scam_message_flagged', 'event_properties': {'user_id': 1}}
+2024-11-29 09:59:00,354 - fastapi_server - ERROR - Error processing event: 'dict' object has no attribute 'event_properties'
+2024-11-29 09:59:00,354 - fastapi_server - INFO - In event consumption loop.
+2024-11-29 09:59:00,356 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': 1, 'card_id': 'card_4', 'zip_code': '46138'}
+2024-11-29 09:59:00,356 - fastapi_server - INFO - Processing event: {'name': 'credit_card_added', 'event_properties': {'user_id': 1, 'card_id': 'card_4', 'zip_code': '46138'}}
+2024-11-29 09:59:00,356 - fastapi_server - ERROR - Error processing event: 'dict' object has no attribute 'event_properties'
+2024-11-29 09:59:00,356 - fastapi_server - INFO - In event consumption loop.
+2024-11-29 09:59:00,357 - fastapi_server - INFO - ** Received event: name='chargeback_occurred' event_properties={'user_id': 1, 'amount': 519}
+2024-11-29 09:59:00,357 - fastapi_server - INFO - Processing event: {'name': 'chargeback_occurred', 'event_properties': {'user_id': 1, 'amount': 519}}
+2024-11-29 09:59:00,357 - fastapi_server - ERROR - Error processing event: 'dict' object has no attribute 'event_properties'
+2024-11-29 09:59:00,357 - fastapi_server - INFO - In event consumption loop.
+2024-11-29 10:00:26,257 - fastapi_server - INFO - Shutting down FastAPI app.
+2024-11-29 10:00:26,257 - fastapi_server - INFO - Stopping event consumer.
+2024-11-29 10:00:26,258 - fastapi_server - INFO - Stopping event consumer thread...
+2024-11-29 10:11:15,911 - fastapi_server - INFO - ****************************************
+2024-11-29 10:11:15,911 - fastapi_server - INFO - ****************************************
+2024-11-29 10:11:15,911 - fastapi_server - INFO - Registering default event handlers...
+2024-11-29 10:11:15,911 - fastapi_server - INFO - Registered handler for event: credit_card_added
+2024-11-29 10:11:15,911 - fastapi_server - INFO - Registered handler for event: scam_message_flagged
+2024-11-29 10:11:15,911 - fastapi_server - INFO - Registered handler for event: chargeback_occurred
+2024-11-29 10:11:15,911 - fastapi_server - INFO - Default event handlers registered successfully.
+2024-11-29 10:11:15,912 - fastapi_server - INFO - Entering event consumption loop.
+2024-11-29 10:11:15,912 - fastapi_server - INFO - Event consumer thread started.
+2024-11-29 10:11:15,912 - fastapi_server - INFO - In event consumption loop.
+2024-11-29 10:11:55,769 - fastapi_server - INFO - ** Received event: name='scam_message_flagged' event_properties={'user_id': 1}
+2024-11-29 10:11:55,769 - fastapi_server - INFO - Processing event: name='scam_message_flagged' event_properties={'user_id': 1}
+2024-11-29 10:11:55,769 - fastapi_server - INFO - Creating new user with ID '1'.
+2024-11-29 10:11:55,769 - fastapi_server - INFO - user data before processing: User ID: 1
+Scam Message Flags: 1
+Credit Cards: {}
+Total Credit Cards: 0
+Unique Zip Codes: set()
+Total Spend: 0.0
+Total Chargebacks: 0.0
+Access Flags: {'can_message': True, 'can_purchase': True}
+Last Login Time: None
+2024-11-29 10:11:55,769 - fastapi_server - ERROR - An error occurred while processing the event: BaseRule.process_rule() takes 2 positional arguments but 3 were given
+2024-11-29 10:11:55,769 - fastapi_server - INFO - In event consumption loop.
+2024-11-29 10:11:55,771 - fastapi_server - INFO - ** Received event: name='credit_card_added' event_properties={'user_id': 1, 'card_id': 'card_62', 'zip_code': '96582'}
+2024-11-29 10:11:55,771 - fastapi_server - INFO - Processing event: name='credit_card_added' event_properties={'user_id': 1, 'card_id': 'card_62', 'zip_code': '96582'}
+2024-11-29 10:11:55,771 - fastapi_server - INFO - handling credit_card_added
+2024-11-29 10:11:55,771 - fastapi_server - INFO - total credit cards before: 0
+2024-11-29 10:11:55,771 - fastapi_server - INFO - total credit cards after: 1
+2024-11-29 10:11:55,771 - fastapi_server - INFO - user data before processing: User ID: 1
+Scam Message Flags: 1
+Credit Cards: {'card_62': '96582'}
+Total Credit Cards: 1
+Unique Zip Codes: {'96582'}
+Total Spend: 0.0
+Total Chargebacks: 0.0
+Access Flags: {'can_message': True, 'can_purchase': True}
+Last Login Time: None
+2024-11-29 10:11:55,771 - fastapi_server - ERROR - An error occurred while processing the event: BaseRule.process_rule() takes 2 positional arguments but 3 were given
+2024-11-29 10:11:55,771 - fastapi_server - INFO - In event consumption loop.
+2024-11-29 10:11:55,772 - fastapi_server - INFO - ** Received event: name='chargeback_occurred' event_properties={'user_id': 1, 'amount': 216}
+2024-11-29 10:11:55,772 - fastapi_server - INFO - Processing event: name='chargeback_occurred' event_properties={'user_id': 1, 'amount': 216}
+2024-11-29 10:11:55,772 - fastapi_server - INFO - user data before processing: User ID: 1
+Scam Message Flags: 1
+Credit Cards: {'card_62': '96582'}
+Total Credit Cards: 1
+Unique Zip Codes: {'96582'}
+Total Spend: 0.0
+Total Chargebacks: 216.0
+Access Flags: {'can_message': True, 'can_purchase': True}
+Last Login Time: None
+2024-11-29 10:11:55,772 - fastapi_server - ERROR - An error occurred while processing the event: BaseRule.process_rule() takes 2 positional arguments but 3 were given
+2024-11-29 10:11:55,772 - fastapi_server - INFO - In event consumption loop.
+2024-11-29 10:11:55,776 - fastapi_server - INFO - ** can message, user_id: 1
+2024-11-29 10:11:55,776 - fastapi_server - INFO - user data: User ID: 1
+Scam Message Flags: 1
+Credit Cards: {'card_62': '96582'}
+Total Credit Cards: 1
+Unique Zip Codes: {'96582'}
+Total Spend: 0.0
+Total Chargebacks: 216.0
+Access Flags: {'can_message': True, 'can_purchase': True}
+Last Login Time: None
+2024-11-29 10:11:55,777 - fastapi_server - INFO - ** can purchase, user_id: 1
+2024-11-29 10:11:55,777 - fastapi_server - INFO - user data: User ID: 1
+Scam Message Flags: 1
+Credit Cards: {'card_62': '96582'}
+Total Credit Cards: 1
+Unique Zip Codes: {'96582'}
+Total Spend: 0.0
+Total Chargebacks: 216.0
+Access Flags: {'can_message': True, 'can_purchase': True}
+Last Login Time: None

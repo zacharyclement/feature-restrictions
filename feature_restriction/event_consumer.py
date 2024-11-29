@@ -1,18 +1,25 @@
 import threading
 from queue import Queue
+from typing import Dict
 
+from .event_handlers import (
+    BaseEventHandler,
+    ChargebackOccurredHandler,
+    CreditCardAddedHandler,
+    ScamMessageFlaggedHandler,
+)
 from .models import Event
-from .utils import event_handler_registry, logger
+from .utils import logger
 
 
 class EventConsumer:
     """
-    Manages event consumption and processing.
+    Manages event consumption, processing, and event handler registration.
     """
 
     def __init__(self, event_queue: Queue, user_manager, tripwire_manager):
         """
-        Initialize the EventConsumer.
+        Initialize the EventConsumer and register event handlers.
         :param event_queue: The queue holding incoming events.
         :param user_manager: The UserManager instance for managing user data.
         :param tripwire_manager: The TripWireManager instance for managing tripwires.
@@ -22,6 +29,49 @@ class EventConsumer:
         self.tripwire_manager = tripwire_manager
         self.consumer_thread = None
         self._stop_event = threading.Event()  # Event to signal the thread to stop
+
+        # Local registry for event handlers
+        self.event_handler_registry: Dict[str, BaseEventHandler] = {}
+
+        # Register default event handlers
+        self.register_default_event_handlers()
+
+    def register_event_handler(self, event_handler_instance: "BaseEventHandler"):
+        """
+        Register an event handler instance in the local event handler registry.
+
+        :param event_handler_instance: An instance of a class inheriting from BaseEventHandler.
+        :raises ValueError: If a handler for the same event_name is already registered.
+        """
+        event_name = getattr(event_handler_instance, "event_name", None)
+        if not event_name:
+            raise ValueError(
+                f"The event handler '{event_handler_instance.__class__.__name__}' must have an 'event_name' attribute."
+            )
+
+        if event_name in self.event_handler_registry:
+            raise ValueError(
+                f"An event handler for '{event_name}' is already registered."
+            )
+
+        self.event_handler_registry[event_name] = event_handler_instance
+        logger.info(f"Registered handler for event: {event_name}")
+
+    def register_default_event_handlers(self):
+        """
+        Register default event handlers for known events.
+        """
+        logger.info("Registering default event handlers...")
+        self.register_event_handler(
+            CreditCardAddedHandler(self.tripwire_manager, self.user_manager)
+        )
+        self.register_event_handler(
+            ScamMessageFlaggedHandler(self.tripwire_manager, self.user_manager)
+        )
+        self.register_event_handler(
+            ChargebackOccurredHandler(self.tripwire_manager, self.user_manager)
+        )
+        logger.info("Default event handlers registered successfully.")
 
     def process_event(self, event: Event):
         """
@@ -37,7 +87,7 @@ class EventConsumer:
         user_data = self.user_manager.get_user(user_id)
 
         # Retrieve the appropriate handler for the event
-        handler = event_handler_registry.get(event.name)
+        handler = self.event_handler_registry.get(event.name)
         if not handler:
             logger.error(f"No handler registered for event: {event.name}")
             return
@@ -52,9 +102,9 @@ class EventConsumer:
         """
         Continuously consume events from the queue and process them.
         """
-        logger.info("entering while loop.")
+        logger.info("Entering event consumption loop.")
         while not self._stop_event.is_set():
-            logger.info("in while loop")
+            logger.info("In event consumption loop.")
             try:
                 # Get the next event from the queue
                 event = self.event_queue.get()  # Timeout to allow stop check

@@ -1,7 +1,8 @@
 import logging
 from queue import Queue
+from typing import Annotated
 
-from fastapi import FastAPI, HTTPException
+from fastapi import Depends, FastAPI, HTTPException
 
 from feature_restriction.event_consumer import EventConsumer
 from feature_restriction.event_handlers import (
@@ -12,11 +13,7 @@ from feature_restriction.event_handlers import (
 from feature_restriction.models import Event
 from feature_restriction.tripwire_manager import TripWireManager
 from feature_restriction.user_manager import UserManager
-from feature_restriction.utils import (
-    event_handler_registry,
-    logger,
-    register_event_handler,
-)
+from feature_restriction.utils import logger
 
 # Instantiate FastAPI app
 app = FastAPI()
@@ -29,15 +26,18 @@ user_manager = UserManager()
 tripwire_manager = TripWireManager()
 
 # Create a global event queue
+# used to enqueue incoming events
 event_queue = Queue()
 
 # Instantiate and start the EventConsumer
+# running on separate thread
+# pulls off events from the queue
 event_consumer = EventConsumer(event_queue, user_manager, tripwire_manager)
 
-# register event handlers
-register_event_handler(CreditCardAddedHandler(tripwire_manager, user_manager))
-register_event_handler(ScamMessageFlaggedHandler(tripwire_manager, user_manager))
-register_event_handler(ChargebackOccurredHandler(tripwire_manager, user_manager))
+# # register event handlers
+# register_event_handler(CreditCardAddedHandler(tripwire_manager, user_manager))
+# register_event_handler(ScamMessageFlaggedHandler(tripwire_manager, user_manager))
+# register_event_handler(ChargebackOccurredHandler(tripwire_manager, user_manager))
 
 
 @app.on_event("startup")
@@ -50,6 +50,7 @@ def start_consumer():
 
 
 @app.post("/event")
+# def read_items(commons: Annotated[CommonQueryParams, Depends(CommonQueryParams)]):
 async def handle_event(event: Event):
     """
     Endpoint to handle incoming events and enqueue them for processing.
