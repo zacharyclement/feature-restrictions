@@ -22,6 +22,15 @@ class UserManager:
             Retrieve and format all the data associated with a given user for display purposes.
     """
 
+    _instance = None
+
+    def __new__(cls, *args, **kwargs):
+        # If no instance exists, create one
+        if not cls._instance:
+            cls._instance = super().__new__(cls, *args, **kwargs)
+            cls._instance.users = {}  # Initialize the shared state
+        return cls._instance
+
     def __init__(self):
         self.users = {}
 
@@ -35,9 +44,12 @@ class UserManager:
         Returns:
             UserData: The UserData object associated with the given user ID.
         """
+        logger.info(f"Retrieving user from UserManager with id: {id(self)}")
         if user_id not in self.users:
             logger.info(f"Creating new user with ID '{user_id}'.")
+            logger.info(f"Initializing UserManager with id: {id(self)}")
             self.users[user_id] = UserData(user_id)
+
         return self.users[user_id]
 
     def display_user_data(self, user_id: str):
@@ -65,3 +77,9 @@ class UserManager:
             f"Access Flags: {user_data.access_flags}\n"
             f"Last Login Time: {user_data.last_login_time}"
         )
+
+    def reset(self):
+        """
+        Clear the state of the singleton (useful for testing).
+        """
+        self.users.clear()

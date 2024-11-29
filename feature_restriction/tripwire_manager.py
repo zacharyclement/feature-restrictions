@@ -1,17 +1,16 @@
-# tripwire_manager.py
-
 import time
-from typing import Dict, Set
+from typing import Dict
 
 from .utils import logger
 
 
 class TripWireManager:
     """
-        automatically disables a rule if too many users are affected within a specified time window
-        Manages state for rules, including tripwires and disabling.
-        Example affect_users data structure:
-        {
+    Automatically disables a rule if too many users are affected within a specified time window.
+    Manages state for rules, including tripwires and disabling.
+
+    Example `affected_users` data structure:
+    {
         "scam_message_rule": {
             "user_1": 1698183437.453,  # Timestamp when this user was affected
             "user_2": 1698183438.678
@@ -20,10 +19,21 @@ class TripWireManager:
             "user_3": 1698183445.123
         }
     }
-
     """
 
-    def __init__(self):
+    _instance = None  # Class-level attribute to store the singleton instance
+
+    def __new__(cls, *args, **kwargs):
+        # Ensure only one instance is created
+        if not cls._instance:
+            cls._instance = super().__new__(cls)
+            cls._instance._initialize()  # Initialize instance variables
+        return cls._instance
+
+    def _initialize(self):
+        """
+        Initialize instance variables. Called only once during the singleton creation.
+        """
         self.tripwire_disabled_rules: Dict[str, bool] = {}
         self.affected_users: Dict[str, Dict[str, float]] = {}
         self.time_window: int = 300  # Time window in seconds (e.g., 5 minutes)
@@ -31,27 +41,31 @@ class TripWireManager:
 
     def is_rule_disabled_via_tripwire(self, rule_name: str) -> bool:
         """
-        is rule diabled or not
+        Check if a rule is disabled via the tripwire.
+
+        :param rule_name: The name of the rule to check.
+        :return: True if the rule is disabled, False otherwise.
         """
         disabled = self.tripwire_disabled_rules.get(rule_name, False)
-        logger.info(f"rule '{rule_name}' is disabled: {disabled}")
+        logger.info(f"Rule '{rule_name}' is disabled: {disabled}")
         return disabled
 
     def apply_tripwire_if_needed(
         self, rule_name: str, user_id: str, total_users: int
     ) -> None:
         """
-        the tripwire disables the rule if too many users are affected within a specified time window.
-        This method updates the affected_users structure when a rule is applied to a user.
-        And determine if the rule should be disabled.
-        """
+        Apply the tripwire logic to disable a rule if too many users are affected
+        within a specified time window.
 
+        :param rule_name: The name of the rule.
+        :param user_id: The ID of the user triggering the rule.
+        :param total_users: Total number of users in the system.
+        """
         current_time = time.time()
-        # If the rule (rule_name) is not already in self.affected_users, initialize it as an empty dictionary.
         affected_users = self.affected_users.setdefault(rule_name, {})
         logger.info(f"self.affected_users: {self.affected_users}")
 
-        # Remove entries outside the time window
+        # Remove expired entries
         expired_users = [
             uid
             for uid, timestamp in affected_users.items()
@@ -84,7 +98,7 @@ class TripWireManager:
 
     def clear_rules(self) -> None:
         """
-        Clear all rule-related state.
+        Clear all tripwire states and affected user data.
         """
         logger.info("Clearing all tripwire states and affected user data.")
         self.tripwire_disabled_rules.clear()

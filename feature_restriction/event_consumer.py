@@ -9,6 +9,7 @@ from .event_handlers import (
     ScamMessageFlaggedHandler,
 )
 from .models import Event
+from .tripwire_manager import TripWireManager
 from .utils import logger
 
 
@@ -17,7 +18,7 @@ class EventConsumer:
     Manages event consumption, processing, and event handler registration.
     """
 
-    def __init__(self, event_queue: Queue, user_manager, tripwire_manager):
+    def __init__(self, event_queue: Queue, user_manager):
         """
         Initialize the EventConsumer and register event handlers.
         :param event_queue: The queue holding incoming events.
@@ -26,7 +27,7 @@ class EventConsumer:
         """
         self.event_queue = event_queue
         self.user_manager = user_manager
-        self.tripwire_manager = tripwire_manager
+        self.tripwire_manager = TripWireManager()
         self.consumer_thread = None
         self._stop_event = threading.Event()  # Event to signal the thread to stop
 

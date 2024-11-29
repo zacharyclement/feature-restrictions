@@ -1,6 +1,5 @@
 import logging
 from queue import Queue
-from typing import Annotated
 
 from fastapi import Depends, FastAPI, HTTPException
 
@@ -17,27 +16,24 @@ from feature_restriction.utils import logger
 
 # Instantiate FastAPI app
 app = FastAPI()
-# Attach user_manager to app state
 
 logger.info("****************************************")
 logger.info("****************************************")
+
 # Instantiate managers
 user_manager = UserManager()
-tripwire_manager = TripWireManager()
-
-# Create a global event queue
-# used to enqueue incoming events
 event_queue = Queue()
 
 # Instantiate and start the EventConsumer
-# running on separate thread
-# pulls off events from the queue
-event_consumer = EventConsumer(event_queue, user_manager, tripwire_manager)
+event_consumer = EventConsumer(event_queue, user_manager)
 
-# # register event handlers
-# register_event_handler(CreditCardAddedHandler(tripwire_manager, user_manager))
-# register_event_handler(ScamMessageFlaggedHandler(tripwire_manager, user_manager))
-# register_event_handler(ChargebackOccurredHandler(tripwire_manager, user_manager))
+
+def get_user_manager():
+    return user_manager
+
+
+def get_event_queue():
+    return event_queue
 
 
 @app.on_event("startup")
@@ -45,13 +41,11 @@ def start_consumer():
     """
     Start the event consumer thread when the application starts.
     """
-
     event_consumer.start()
 
 
 @app.post("/event")
-# def read_items(commons: Annotated[CommonQueryParams, Depends(CommonQueryParams)]):
-async def handle_event(event: Event):
+def handle_event(event: Event, event_queue: Queue = Depends(get_event_queue)):
     """
     Endpoint to handle incoming events and enqueue them for processing.
     """
@@ -59,12 +53,13 @@ async def handle_event(event: Event):
 
     # Enqueue the event for processing
     event_queue.put(event)
+    logger.info("Event added to queue: %s", event)
 
     return {"status": "Event enqueued for processing."}
 
 
 @app.get("/canmessage")
-def can_message(user_id: str):
+def can_message(user_id: str, user_manager: UserManager = Depends(get_user_manager)):
     """
     Endpoint to check if a user has access to send/receive messages.
     """
@@ -81,7 +76,7 @@ def can_message(user_id: str):
 
 
 @app.get("/canpurchase")
-def can_purchase(user_id: str):
+def can_purchase(user_id: str, user_manager: UserManager = Depends(get_user_manager)):
     """
     Endpoint to check if a user has access to bid/purchase.
     """
@@ -102,7 +97,6 @@ async def shutdown():
     Clean up resources during application shutdown.
     """
     logger.info("Shutting down FastAPI app.")
-    # consumer = app.state.event_consumer
 
     # Stop the consumer
     if event_consumer:

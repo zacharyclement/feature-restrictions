@@ -53,7 +53,7 @@ class CreditCardAddedHandler(BaseEventHandler):
         logger.info(
             f"user data before processing: {self.user_manager.display_user_data(user_data.user_id)}"
         )
-        unique_zip_code_rule.process_rule(user_data, event)
+        unique_zip_code_rule.process_rule(user_data)
         logger.info(
             f"user data after processing: {self.user_manager.display_user_data(user_data.user_id)}"
         )
@@ -75,7 +75,7 @@ class ScamMessageFlaggedHandler(BaseEventHandler):
         logger.info(
             f"user data before processing: {self.user_manager.display_user_data(user_data.user_id)}"
         )
-        scam_message_rule.process_rule(user_data, event)
+        scam_message_rule.process_rule(user_data)
         logger.info(
             f"user data after processing: {self.user_manager.display_user_data(user_data.user_id)}"
         )
@@ -102,7 +102,7 @@ class ChargebackOccurredHandler(BaseEventHandler):
         logger.info(
             f"user data before processing: {self.user_manager.display_user_data(user_data.user_id)}"
         )
-        chargeback_ratio_rule.process_rule(user_data, event)
+        chargeback_ratio_rule.process_rule(user_data)
         logger.info(
             f"user data after processing: {self.user_manager.display_user_data(user_data.user_id)}"
         )
