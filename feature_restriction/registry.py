@@ -1,6 +1,7 @@
 from feature_restriction.event_handlers import (
     ChargebackOccurredHandler,
     CreditCardAddedHandler,
+    PurchaseMadeHandler,
     ScamMessageFlaggedHandler,
 )
 
@@ -58,4 +59,7 @@ class EventHandlerRegistry:
         )
         self.register_event_handler(
             ChargebackOccurredHandler(tripwire_manager, redis_user_manager)
+        )
+        self.register_event_handler(
+            PurchaseMadeHandler(tripwire_manager, redis_user_manager)
         )

@@ -102,3 +102,27 @@ class ChargebackOccurredHandler(BaseEventHandler):
         # Save the updated user data back to Redis
         self.user_manager.save_user(user_data)
         logger.info(f"User data saved after processing {self.event_name}")
+
+
+class PurchaseMadeHandler(BaseEventHandler):
+    event_name = "purchase_made"
+
+    def handle(self, event: Event, user_data: UserData):
+        """
+        Handle the 'purchase_made' event.
+        """
+        logger.info(f"Handling {self.event_name}")
+
+        # Get the purchase amount from the event
+        amount = event.event_properties.get("amount")
+        if amount is None:
+            raise ValueError("'amount' is required.")
+
+        # Update the user's total spend
+        logger.info(f"Total spend before: {user_data.total_spend}")
+        user_data.total_spend += amount
+        logger.info(f"Total spend after: {user_data.total_spend}")
+
+        # Save the updated user data back to Redis
+        self.user_manager.save_user(user_data)
+        logger.info(f"User data saved after processing {self.event_name}")

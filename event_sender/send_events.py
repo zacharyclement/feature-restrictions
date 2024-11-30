@@ -17,7 +17,6 @@ class EventSender:
         :param event_name: Name of the event (e.g., "scam_message_flagged").
         :param event_properties: Dictionary of event properties (e.g., {"user_id": "user123"}).
         """
-        print("user_id type: ", type(user_id))
         url = f"{self.base_url}/event"
         payload = {"name": event_name, "event_properties": event_properties}
         try:
@@ -33,7 +32,6 @@ class EventSender:
         Check if a user can send/receive messages.
         :param user_id: User ID to check.
         """
-        print("user_id type: ", type(user_id))
         url = f"{self.base_url}/canmessage"
         params = {"user_id": user_id}
         try:
@@ -49,7 +47,6 @@ class EventSender:
         Check if a user can bid/purchase.
         :param user_id: User ID to check.
         """
-        print("user_id type: ", type(user_id))
         url = f"{self.base_url}/canpurchase"
         params = {"user_id": user_id}
         try:
@@ -88,7 +85,13 @@ if __name__ == "__main__":
         # Send a 'chargeback_occurred' event
         sender.send_event(
             "chargeback_occurred",
-            {"user_id": user_id, "amount": random.randint(50, 1000)},
+            {"user_id": user_id, "amount": round(random.uniform(10.0, 500.0), 2)},
+        )
+
+        # Send a 'purchase_made' event
+        sender.send_event(
+            "purchase_made",
+            {"user_id": user_id, "amount": round(random.uniform(10.0, 500.0), 2)},
         )
 
         # Check if the user can send/receive messages
