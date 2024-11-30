@@ -1,5 +1,5 @@
 import threading
-from queue import Queue
+from queue import Empty, Queue
 from typing import Dict
 
 from .event_handlers import (
@@ -9,6 +9,7 @@ from .event_handlers import (
     ScamMessageFlaggedHandler,
 )
 from .models import Event
+from .redis_user_manager import RedisUserManager
 from .tripwire_manager import TripWireManager
 from .utils import logger
 
@@ -18,16 +19,14 @@ class EventConsumer:
     Manages event consumption, processing, and event handler registration.
     """
 
-    def __init__(self, event_queue: Queue, user_manager):
+    def __init__(self, event_queue: Queue):
         """
         Initialize the EventConsumer and register event handlers.
         :param event_queue: The queue holding incoming events.
-        :param user_manager: The UserManager instance for managing user data.
-        :param tripwire_manager: The TripWireManager instance for managing tripwires.
         """
         self.event_queue = event_queue
-        self.user_manager = user_manager
-        self.tripwire_manager = TripWireManager()
+        self.redis_user_manager = RedisUserManager()  # Handles user data persistence
+        self.tripwire_manager = TripWireManager()  # Handles rule tripwires
         self.consumer_thread = None
         self._stop_event = threading.Event()  # Event to signal the thread to stop
 
@@ -64,13 +63,13 @@ class EventConsumer:
         """
         logger.info("Registering default event handlers...")
         self.register_event_handler(
-            CreditCardAddedHandler(self.tripwire_manager, self.user_manager)
+            CreditCardAddedHandler(self.tripwire_manager, self.redis_user_manager)
         )
         self.register_event_handler(
-            ScamMessageFlaggedHandler(self.tripwire_manager, self.user_manager)
+            ScamMessageFlaggedHandler(self.tripwire_manager, self.redis_user_manager)
         )
         self.register_event_handler(
-            ChargebackOccurredHandler(self.tripwire_manager, self.user_manager)
+            ChargebackOccurredHandler(self.tripwire_manager, self.redis_user_manager)
         )
         logger.info("Default event handlers registered successfully.")
 
@@ -84,8 +83,11 @@ class EventConsumer:
             logger.error("'user_id' is required in event properties.")
             return
 
-        # Retrieve or create user data
-        user_data = self.user_manager.get_user(user_id)
+        # Retrieve or create user data from Redis
+        user_data = self.redis_user_manager.get_user(user_id)
+        logger.info(
+            f"user data before: {self.redis_user_manager.display_user_data(user_id)}"
+        )
 
         # Retrieve the appropriate handler for the event
         handler = self.event_handler_registry.get(event.name)
@@ -96,6 +98,10 @@ class EventConsumer:
         # Process the event
         try:
             handler.handle(event, user_data)
+            logger.info(
+                f"user data after: {self.redis_user_manager.display_user_data(user_id)}"
+            )
+
         except Exception as e:
             logger.error(f"An error occurred while processing the event: {str(e)}")
 
@@ -105,11 +111,10 @@ class EventConsumer:
         """
         logger.info("Entering event consumption loop.")
         while not self._stop_event.is_set():
-            logger.info("In event consumption loop.")
             try:
-                # Get the next event from the queue
-                event = self.event_queue.get()  # Timeout to allow stop check
-
+                # logger.info("In event consumption loop.")
+                # Wait for an event with a timeout to allow graceful stop checks
+                event = self.event_queue.get(timeout=1)
                 logger.info(f"Processing event: {event}")
 
                 # Process the event
@@ -117,6 +122,8 @@ class EventConsumer:
 
                 # Mark the task as done
                 self.event_queue.task_done()
+            except Empty:  # If no event is received within timeout
+                continue
             except Exception as e:
                 logger.error(f"Error processing event: {e}")
 
@@ -138,6 +145,11 @@ class EventConsumer:
         if self.consumer_thread:
             logger.info("Stopping event consumer thread...")
             self._stop_event.set()  # Signal the thread to stop
-            self.consumer_thread.join()  # Wait for the thread to finish
+            self.consumer_thread.join(
+                timeout=5
+            )  # Wait for the thread to finish with a timeout
+            if self.consumer_thread.is_alive():
+                logger.warning("Event consumer thread did not stop in time!")
+            else:
+                logger.info("Event consumer thread stopped successfully.")
             self.consumer_thread = None
-            logger.info("Event consumer thread stopped.")

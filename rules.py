@@ -1,8 +1,8 @@
 from abc import ABC, abstractmethod
 
 from feature_restriction.models import Event, UserData
+from feature_restriction.redis_user_manager import UserManager
 from feature_restriction.tripwire_manager import TripWireManager
-from feature_restriction.user_manager import UserManager
 from feature_restriction.utils import logger
 
 

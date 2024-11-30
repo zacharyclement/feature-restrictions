@@ -2,7 +2,7 @@ import pytest
 from fastapi.testclient import TestClient
 
 from app import app
-from feature_restriction.user_manager import UserManager
+from feature_restriction.redis_user_manager import UserManager
 
 
 def test_tripwire_disables_rule(

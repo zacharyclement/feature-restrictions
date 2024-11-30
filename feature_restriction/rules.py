@@ -1,8 +1,8 @@
 from abc import ABC, abstractmethod
 
 from .models import Event, UserData
+from .redis_user_manager import RedisUserManager
 from .tripwire_manager import TripWireManager
-from .user_manager import UserManager
 from .utils import logger
 
 
@@ -13,7 +13,9 @@ class BaseRule(ABC):
 
     name: str  # Unique identifier for the rule
 
-    def __init__(self, tripwire_manager: TripWireManager, user_manager: UserManager):
+    def __init__(
+        self, tripwire_manager: TripWireManager, user_manager: RedisUserManager
+    ):
         self.tripwire_manager = tripwire_manager
         self.user_manager = user_manager
 
@@ -39,11 +41,19 @@ class BaseRule(ABC):
             # Apply rule, flip user data flags to false
             self.apply_rule(user_data)
             logger.info(f"rule {self.name} applied to user {user_data.user_id}")
+
+            # Get the total number of users from Redis
+            total_users = self.user_manager.get_user_count()
+
             # Update affected users for tripwire logic
-            total_users = len(self.user_manager.users)
             self.tripwire_manager.apply_tripwire_if_needed(
                 self.name, user_data.user_id, total_users
             )
+
+            # Save the updated user data back to Redis
+            self.user_manager.save_user(user_data)
+            logger.info(f"User data saved after processing rule: {self.name}")
+
         logger.info(
             f"tripwire disabled rules, after processing: {self.tripwire_manager.tripwire_disabled_rules}"
         )
