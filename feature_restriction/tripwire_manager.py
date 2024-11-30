@@ -63,7 +63,7 @@ class TripWireManager:
         """
         current_time = time.time()
         affected_users = self.affected_users.setdefault(rule_name, {})
-        logger.info(f"self.affected_users: {self.affected_users}")
+        logger.info(f"self.affected_users before applying: {self.affected_users}")
 
         # Remove expired entries
         expired_users = [
@@ -76,6 +76,7 @@ class TripWireManager:
 
         # Add or update the current user
         affected_users[user_id] = current_time
+        logger.info(f"self.affected_users after applied: {self.affected_users}")
 
         # Calculate the percentage of affected users
         affected_count = len(affected_users)

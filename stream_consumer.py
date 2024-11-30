@@ -14,10 +14,7 @@ from feature_restriction.models import Event
 from feature_restriction.redis_user_manager import RedisUserManager
 from feature_restriction.registry import EventHandlerRegistry
 from feature_restriction.tripwire_manager import TripWireManager
-
-# Configure logging
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+from feature_restriction.utils import logger
 
 
 class RedisStreamConsumer:

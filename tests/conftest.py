@@ -1,53 +1,77 @@
-# from queue import Queue
+import threading
 
-# import pytest
-# from fastapi.testclient import TestClient
+import pytest
+import redis
+from fastapi.testclient import TestClient
 
-# from app import app  # Import your FastAPI app here
-# from feature_restriction.event_consumer import EventConsumer
-# from feature_restriction.tripwire_manager import TripWireManager
-# from feature_restriction.user_manager import UserManager
-
-# # @pytest.fixture
-# # def consumer_with_queue():
-# #     """
-# #     Fixture to manage the event consumer lifecycle during tests.
-# #     """
-# #     event_queue = Queue()
-# #     user_manager = UserManager()
-# #     tripwire_manager = TripWireManager()
-# #     consumer = EventConsumer(event_queue, user_manager, tripwire_manager)
-
-# #     # Start the consumer
-# #     consumer.start()
-
-# #     yield consumer  # Ensure the consumer is running during the test
-
-# #     # Stop the consumer after the test
-# #     consumer.stop()
+from app import app  # Import your FastAPI app
+from feature_restriction.config import (
+    EVENT_STREAM_KEY,
+    REDIS_DB_STREAM,
+    REDIS_DB_USER,
+    REDIS_HOST,
+    REDIS_PORT,
+)
+from stream_consumer import RedisStreamConsumer
 
 
-# @pytest.fixture
-# def client():
-#     """
-#     Fixture to provide a TestClient instance for testing.
-#     """
-#     return TestClient(app)
+@pytest.fixture(scope="function")
+def redis_stream():
+    """
+    Fixture to provide a clean Redis instance for stream testing.
+    """
+    client = redis.StrictRedis(
+        host=REDIS_HOST, port=REDIS_PORT, db=REDIS_DB_STREAM, decode_responses=True
+    )
+    client.flushdb()  # Clear the Redis database
+    yield client
+    client.flushdb()  # Clean up after the test
 
 
-# @pytest.fixture
-# def reset_user_manager():
-#     """
-#     Provides a fresh instance of UserManager for each test.
-#     """
-#     return UserManager()
+@pytest.fixture(scope="function")
+def redis_user():
+    """
+    Fixture to provide a clean Redis instance for user management testing.
+    """
+    client = redis.StrictRedis(
+        host=REDIS_HOST, port=REDIS_PORT, db=REDIS_DB_USER, decode_responses=True
+    )
+    client.flushdb()  # Clear the Redis database
+    yield client
+    client.flushdb()  # Clean up after the test
 
 
-# @pytest.fixture
-# def reset_tripwire_manager():
-#     """
-#     Fixture to reset the tripwire manager for tests.
-#     """
-#     tripwire_manager = TripWireManager()
-#     tripwire_manager.clear_rules()
-#     return tripwire_manager
+@pytest.fixture(scope="function")
+def test_client():
+    """
+    Fixture to provide a FastAPI test client.
+    """
+    return TestClient(app)
+
+
+@pytest.fixture(scope="function")
+def stream_consumer(redis_client):
+    """
+    Fixture for the RedisStreamConsumer.
+    """
+    consumer_group = "test_group"
+    consumer_name = "test_consumer"
+    consumer = RedisStreamConsumer(
+        redis_client=redis_client,
+        stream_key=EVENT_STREAM_KEY,
+        consumer_group=consumer_group,
+        consumer_name=consumer_name,
+    )
+
+    # Run the consumer in a separate thread
+    consumer_thread = threading.Thread(target=consumer.start, daemon=True)
+    consumer_thread.start()
+
+    # Yield control to the test
+    yield consumer
+
+    # Stop the consumer and wait for the thread to finish
+    consumer.redis_client.xgroup_destroy(
+        EVENT_STREAM_KEY, consumer_group
+    )  # Clean up group
+    consumer_thread.join(timeout=5)  # Ensure the thread stops within 5 seconds

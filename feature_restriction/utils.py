@@ -11,6 +11,4 @@ logging.basicConfig(
     ],
 )
 
-logger = logging.getLogger(
-    "fastapi_server"
-)  # Create a specific logger for the FastAPI app
+logger = logging.getLogger("app")  # Create a specific logger for the FastAPI app
