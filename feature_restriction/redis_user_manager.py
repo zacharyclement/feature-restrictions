@@ -1,5 +1,6 @@
 import redis
 
+from .config import REDIS_DB_USER, REDIS_HOST, REDIS_PORT
 from .models import UserData
 from .utils import logger
 
@@ -9,41 +10,48 @@ class RedisUserManager:
     A manager for handling user data stored in a Redis database.
     """
 
-    def __init__(self, redis_host="localhost", redis_port=6379, db=0):
+    def __init__(self):
         """
         Initialize the RedisUserManager with a Redis connection.
-
-        :param redis_host: The Redis server hostname.
-        :param redis_port: The Redis server port.
-        :param db: The Redis database index.
         """
         self.redis_client = redis.StrictRedis(
-            host=redis_host, port=redis_port, db=db, decode_responses=True
+            host=REDIS_HOST, port=REDIS_PORT, db=REDIS_DB_USER, decode_responses=True
         )
-        logger.info(f"user count in redis: {self.get_user_count}")
 
     def get_user(self, user_id: str) -> UserData:
         """
-        Retrieve a user by their ID. If the user does not exist, initialize with default values.
+        Retrieve an existing user by their ID.
 
         :param user_id: The unique ID of the user to retrieve.
         :return: A UserData object representing the user's data.
+        :raises KeyError: If the user does not exist.
         """
         try:
             user_data_json = self.redis_client.get(user_id)
             if user_data_json:
-                # Use Pydantic's parse_raw to create a UserData object from JSON
                 logger.info(f"Retrieved existing user with ID '{user_id}'.")
                 return UserData.parse_raw(user_data_json)
+            else:
+                raise KeyError(f"User ID '{user_id}' not found.")
+        except Exception as e:
+            logger.error(f"Error in get_user for user_id '{user_id}': {e}")
+            raise
 
-            # If user doesn't exist, create a default UserData object
-            logger.info(f"User ID '{user_id}' not found. Creating new user.")
+    def create_user(self, user_id: str) -> UserData:
+        """
+        Create a new user with default values.
+
+        :param user_id: The unique ID of the user to create.
+        :return: A UserData object representing the newly created user's data.
+        """
+        try:
+            logger.info(f"Creating new user with ID '{user_id}'.")
             default_user = UserData(user_id=user_id)
             self.save_user(default_user)
             logger.info(f"New user with ID '{user_id}' created and saved.")
             return default_user
         except Exception as e:
-            logger.error(f"Error in get_user for user_id '{user_id}': {e}")
+            logger.error(f"Error in create_user for user_id '{user_id}': {e}")
             raise
 
     def save_user(self, user_data: UserData):
@@ -53,7 +61,6 @@ class RedisUserManager:
         :param user_data: The UserData object to save.
         """
         try:
-            # Use Pydantic's json() to serialize the UserData object
             self.redis_client.set(user_data.user_id, user_data.json())
             logger.info(f"User ID '{user_data.user_id}' saved to Redis.")
         except Exception as e:
@@ -101,15 +108,18 @@ class RedisUserManager:
             logger.error(f"Error clearing all user data from Redis: {e}")
             raise
 
-    def display_user_data(self, user_id: str) -> str:
+    def display_user_data(self, user_id: str, user_data: UserData = None) -> str:
         """
         Display all the data associated with a given user in a human-readable format.
 
         :param user_id: The unique identifier for the user whose data is to be displayed.
+        :param user_data: Optional pre-fetched UserData object to avoid redundant lookups.
         :return: A formatted string containing all the user's data or a message if the user is not found.
         """
         try:
-            user_data = self.get_user(user_id)
+            if not user_data:
+                user_data = self.get_user(user_id)  # Only fetch if not provided
+
             return (
                 f"User ID: {user_data.user_id}\n"
                 f"Scam Message Flags: {user_data.scam_message_flags}\n"
@@ -120,6 +130,8 @@ class RedisUserManager:
                 f"Total Chargebacks: {user_data.total_chargebacks}\n"
                 f"Access Flags: {user_data.access_flags}\n"
             )
+        except KeyError:
+            return f"User ID '{user_id}' not found."
         except Exception as e:
             logger.error(f"Error displaying data for user_id '{user_id}': {e}")
             return f"Error displaying data for user_id '{user_id}'."

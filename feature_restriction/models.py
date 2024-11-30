@@ -1,6 +1,6 @@
 # model.py
 
-from typing import Any, Dict, Set
+from typing import Any, Dict, Optional, Set
 
 from pydantic import BaseModel
 
@@ -8,11 +8,6 @@ from pydantic import BaseModel
 class Event(BaseModel):
     name: str
     event_properties: Dict[str, Any]
-
-
-from typing import Dict, Optional, Set
-
-from pydantic import BaseModel
 
 
 class UserData(BaseModel):
