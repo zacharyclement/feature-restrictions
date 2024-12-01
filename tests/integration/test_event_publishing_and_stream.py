@@ -1,7 +1,10 @@
 import json
 import time
 
+import pytest
+
 from feature_restriction.config import EVENT_STREAM_KEY
+from feature_restriction.models import Event
 from feature_restriction.publisher import EventPublisher
 from feature_restriction.redis_user_manager import RedisUserManager
 
@@ -95,23 +98,25 @@ def test_event_publishing_and_consuming(
     # Arrange
     publisher = EventPublisher()  # Uses redis_stream via EventPublisher
     user_manager = RedisUserManager()
-    event_payload = {
-        "name": "credit_card_added",
-        "event_properties": {
+
+    # Create an Event object to mirror the API flow
+    event = Event(
+        name="credit_card_added",
+        event_properties={
             "user_id": "12345",
             "card_id": "card_001",
             "zip_code": "54321",
         },
-    }
+    )
 
     # Act: Publish the event using EventPublisher
-    publisher.add_event_to_stream(event_payload)
+    publisher.add_event_to_stream(event)
 
     # Allow time for the consumer to process
-    time.sleep(2)  # Adjust timing based on system speed
+    time.sleep(2)  # Adjust timing based on system performance
 
     # Assert: Verify the user data was updated by RedisStreamConsumer
-    user_id = event_payload["event_properties"]["user_id"]
+    user_id = event.event_properties["user_id"]
     user_data = user_manager.get_user(user_id)
 
     assert user_data.total_credit_cards == 1
