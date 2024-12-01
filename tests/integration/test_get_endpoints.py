@@ -38,7 +38,7 @@ def test_can_message_enabled(redis_user, redis_stream, test_client):
 
 
 def test_can_purchase_disabled(
-    redis_user, redis_stream, test_client, stream_consumer_subprocess
+    redis_user, redis_stream, test_client, stream_consumer_subprocess, redis_tripwire
 ):
     """
     Test the /canpurchase endpoint when the user is restricted from making purchases.
@@ -82,7 +82,7 @@ def test_can_purchase_disabled(
 
 
 def test_can_message_disabled(
-    redis_user, redis_stream, test_client, stream_consumer_subprocess
+    redis_user, redis_stream, test_client, stream_consumer_subprocess, redis_tripwire
 ):
     """
     Test the /canmessage endpoint when the user is restricted from sending/receiving messages.

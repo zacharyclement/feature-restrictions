@@ -1,5 +1,5 @@
+import os
 import subprocess
-import threading
 import time
 
 import pytest
@@ -8,7 +8,6 @@ from fastapi.testclient import TestClient
 
 from app import app  # Import your FastAPI app
 from feature_restriction.config import (
-    EVENT_STREAM_KEY,
     REDIS_DB_STREAM,
     REDIS_DB_TRIPWIRE,
     REDIS_DB_USER,
@@ -49,21 +48,6 @@ def test_client():
     Fixture to provide a FastAPI test client.
     """
     return TestClient(app)
-
-
-import os
-import subprocess
-import time
-
-import pytest
-import redis
-
-from feature_restriction.config import (
-    EVENT_STREAM_KEY,
-    REDIS_DB_STREAM,
-    REDIS_HOST,
-    REDIS_PORT,
-)
 
 
 @pytest.fixture(scope="function")

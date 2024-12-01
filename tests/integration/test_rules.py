@@ -4,7 +4,7 @@ from feature_restriction.redis_user_manager import RedisUserManager
 
 
 def test_unique_zip_code_rule(
-    redis_user, redis_stream, test_client, stream_consumer_subprocess
+    redis_user, redis_stream, test_client, stream_consumer_subprocess, redis_tripwire
 ):
     """
     Test if the UniqueZipCodeRule disables 'can_purchase' when the threshold is exceeded.
@@ -12,7 +12,6 @@ def test_unique_zip_code_rule(
     # Arrange
     user_id = "user_123"
     user_manager = RedisUserManager()
-    user_data = user_manager.create_user(user_id)
 
     # Add an initial credit card
     event_payload_1 = {
@@ -45,7 +44,7 @@ def test_unique_zip_code_rule(
 
 
 def test_scam_message_rule(
-    redis_user, redis_stream, test_client, stream_consumer_subprocess
+    redis_user, redis_stream, test_client, stream_consumer_subprocess, redis_tripwire
 ):
     """
     Test if the ScamMessageRule disables 'can_message' after the scam message flag threshold is reached.
@@ -53,7 +52,6 @@ def test_scam_message_rule(
     # Arrange
     user_id = "user_456"
     user_manager = RedisUserManager()
-    user_data = user_manager.create_user(user_id)
 
     # Flag the first scam message
     event_payload_1 = {
@@ -78,7 +76,7 @@ def test_scam_message_rule(
 
 
 def test_chargeback_ratio_rule(
-    redis_user, redis_stream, test_client, stream_consumer_subprocess
+    redis_user, redis_stream, test_client, stream_consumer_subprocess, redis_tripwire
 ):
     """
     Test if the ChargebackRatioRule disables 'can_purchase' when the chargeback-to-spend ratio exceeds the limit.
@@ -86,7 +84,6 @@ def test_chargeback_ratio_rule(
     # Arrange
     user_id = "user_789"
     user_manager = RedisUserManager()
-    user_data = user_manager.create_user(user_id)
 
     # Add a purchase event to set the spend amount
     purchase_event = {

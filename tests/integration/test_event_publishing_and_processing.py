@@ -8,7 +8,7 @@ from feature_restriction.redis_user_manager import RedisUserManager
 
 
 def test_scam_message_flagged_event(
-    redis_stream, redis_user, stream_consumer_subprocess
+    redis_stream, redis_user, stream_consumer_subprocess, redis_tripwire
 ):
     """
     Test that RedisStreamConsumer processes 'scam_message_flagged' events.
@@ -30,7 +30,7 @@ def test_scam_message_flagged_event(
 
 
 def test_event_publishing_and_consuming(
-    redis_stream, redis_user, stream_consumer_subprocess
+    redis_stream, redis_user, stream_consumer_subprocess, redis_tripwire
 ):
     """
     Test the integration between EventPublisher and RedisStreamConsumer.
@@ -65,7 +65,7 @@ def test_event_publishing_and_consuming(
 
 
 def test_event_processing_via_consumer(
-    redis_stream, redis_user, stream_consumer_subprocess
+    redis_stream, redis_user, stream_consumer_subprocess, redis_tripwire
 ):
     """
     Test that RedisStreamConsumer processes events from the stream and updates user data.
@@ -95,7 +95,7 @@ def test_event_processing_via_consumer(
 
 
 def test_chargeback_occurred_event(
-    redis_stream, redis_user, stream_consumer_subprocess
+    redis_stream, redis_user, stream_consumer_subprocess, redis_tripwire
 ):
     """
     Test that RedisStreamConsumer processes 'chargeback_occurred' events.
@@ -120,7 +120,7 @@ def test_chargeback_occurred_event(
 
 
 def test_e2e_concurrent_events(
-    test_client, redis_stream, redis_user, stream_consumer_subprocess
+    test_client, redis_stream, redis_user, stream_consumer_subprocess, redis_tripwire
 ):
     """
     Test the end-to-end flow for concurrent events affecting multiple users.
@@ -159,7 +159,9 @@ from feature_restriction.config import EVENT_STREAM_KEY
 from feature_restriction.redis_user_manager import RedisUserManager
 
 
-def test_event_publishing_to_stream(test_client, redis_stream):
+def test_event_publishing_to_stream(
+    test_client, redis_stream, redis_tripwire, redis_user, stream_consumer_subprocess
+):
     """
     Test if events are successfully added to the Redis stream.
     """

@@ -28,7 +28,7 @@ class BaseRule(ABC):
         """
         logger.info(f"Processing rule: {self.name}")
         logger.info(
-            f"Tripwire disabled rules, after processing: {self.tripwire_manager.get_disabled_rules()}"
+            f"Tripwire disabled rules, before processing: {self.tripwire_manager.get_disabled_rules()}"
         )
 
         if self.tripwire_manager.is_rule_disabled_via_tripwire(self.name):
