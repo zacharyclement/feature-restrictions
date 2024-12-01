@@ -19,13 +19,6 @@ class EventPublisher:
     """
 
     def __init__(self):
-        """
-        Initialize the EventStreamHandler with Redis connection details.
-
-        :param redis_host: Redis server hostname.
-        :param redis_port: Redis server port.
-        :param stream_key: Redis stream key for storing events.
-        """
         self.redis_client = redis.StrictRedis(
             host=REDIS_HOST, port=REDIS_PORT, db=REDIS_DB_STREAM, decode_responses=True
         )
@@ -41,6 +34,10 @@ class EventPublisher:
         try:
             logger.info(f"Received event: {event}")
 
+            # Validate event fields
+            if not event.name or not event.event_properties or not event.user_id:
+                raise ValueError("Event is missing required fields")
+
             # Convert the Pydantic model to a dict and serialize event_properties
             event_data = event.dict()
             event_data["event_properties"] = json.dumps(event_data["event_properties"])
@@ -49,7 +46,10 @@ class EventPublisher:
             self.redis_client.xadd(EVENT_STREAM_KEY, event_data)
 
             logger.info(f"Added event to Redis stream: {event_data}")
-            return {"status": "Event added to the stream."}
+            return {"status": f"Event '{event.name}' added to the stream."}
+        except ValueError as ve:
+            logger.error(f"Validation error: {ve}")
+            raise HTTPException(status_code=400, detail=f"Validation error: {ve}")
         except Exception as e:
             logger.error(f"Failed to add event to Redis stream: {e}")
             raise HTTPException(

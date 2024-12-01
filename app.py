@@ -57,8 +57,8 @@ async def handle_event(event: Event):
     """
     Add the incoming event to the Redis stream.
     """
-    EventPublisher().add_event_to_stream(event)
-    return {"status": "Event added to the stream."}
+    response = EventPublisher().add_event_to_stream(event)
+    return response
 
 
 @app.get("/canmessage")

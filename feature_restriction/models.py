@@ -9,6 +9,16 @@ class Event(BaseModel):
     name: str
     event_properties: Dict[str, Any]
 
+    @property
+    def user_id(self) -> str:
+        """
+        Extracts and validates the user_id from event_properties.
+        """
+        user_id = self.event_properties.get("user_id")
+        if not user_id or not isinstance(user_id, str):
+            raise ValueError("Event is missing a valid 'user_id' in event_properties")
+        return user_id
+
 
 class UserData(BaseModel):
     user_id: str
