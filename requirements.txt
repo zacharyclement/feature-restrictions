@@ -3,3 +3,4 @@ requests==2.32.3
 pytest==8.3.3
 redis==5.2.0 
 locust==2.32.3
+python-dotenv==1.0.1

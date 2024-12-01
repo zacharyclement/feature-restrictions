@@ -1,12 +1,7 @@
 import random
 import string
-from threading import Lock
 
-from locust import FastHttpUser, HttpUser, constant_pacing, task
-
-# Shared list for storing user IDs
-user_ids = []
-user_ids_lock = Lock()
+from locust import HttpUser, between, task
 
 
 def random_user_id():
@@ -14,40 +9,33 @@ def random_user_id():
     return "".join(random.choices(string.ascii_letters + string.digits, k=8))
 
 
-class FeatureRestrictionServiceUser(FastHttpUser):
+class FeatureRestrictionServiceUser(HttpUser):
     """
-    Simulates a single user interacting with the service.
+    Simulates a user interacting with the service, sending events and requesting feature restrictions.
     """
 
-    wait_time = constant_pacing(1 / 2000)  # 1,500 RPS per task
+    wait_time = between(0.01, 0.1)  # Simulate very little think time
 
-    @task(1)  # Task for sending events
+    @task(3)  # 3x more likely to send an event than request a restriction
     def send_event(self):
-        """
-        Simulate sending an event to the /event endpoint.
-        """
-        # Generate a random user ID and store it
-        user_id = random_user_id()
-        with user_ids_lock:
-            user_ids.append(user_id)
-
+        """Simulate posting a new event."""
         event_types = [
             {
                 "name": "credit_card_added",
                 "event_properties": {
-                    "user_id": user_id,
+                    "user_id": random_user_id(),
                     "card_id": f"card_{random.randint(1, 100)}",
                     "zip_code": f"{random.randint(10000, 99999)}",
                 },
             },
             {
                 "name": "scam_message_flagged",
-                "event_properties": {"user_id": user_id},
+                "event_properties": {"user_id": random_user_id()},
             },
             {
                 "name": "purchase_made",
                 "event_properties": {
-                    "user_id": user_id,
+                    "user_id": random_user_id(),
                     "amount": round(random.uniform(10, 100), 2),
                 },
             },
@@ -55,22 +43,16 @@ class FeatureRestrictionServiceUser(FastHttpUser):
         event = random.choice(event_types)
         self.client.post("/event", json=event)
 
-    @task(1)  # Task for /canmessage
-    def check_can_message(self):
-        """
-        Simulate checking the /canmessage endpoint for existing users.
-        """
-        with user_ids_lock:
-            if user_ids:
-                user_id = random.choice(user_ids)  # Use an existing user ID
-                self.client.get(f"/canmessage?user_id={user_id}")
+    @task(1)  # Less frequent than event posting
+    def check_feature_restriction(self):
+        """Simulate checking a user's feature restriction."""
+        user_id = random_user_id()
+        endpoints = [
+            f"/canmessage?user_id={user_id}",
+            f"/canpurchase?user_id={user_id}",
+        ]
+        self.client.get(random.choice(endpoints))
 
-    @task(1)  # Task for /canpurchase
-    def check_can_purchase(self):
-        """
-        Simulate checking the /canpurchase endpoint for existing users.
-        """
-        with user_ids_lock:
-            if user_ids:
-                user_id = random.choice(user_ids)  # Use an existing user ID
-                self.client.get(f"/canpurchase?user_id={user_id}")
+
+# Set the host for Locust to the Docker service name
+FeatureRestrictionServiceUser.host = "http://fastapi-app:8000"
