@@ -1,14 +1,27 @@
-version: '3.8'
+vversion: '3.8'
 
 services:
-  user_access_service:
-    build:
-      context: .
-      dockerfile: Dockerfile
+  fastapi-app:
+    build: .
+    container_name: fastapi_app
     ports:
-      - "5001:5000"
+      - "8000:8000"  # Expose FastAPI on localhost:8000
     environment:
-      - FLASK_ENV=development
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_DB_USER=0
+      - REDIS_DB_STREAM=1
+      - REDIS_DB_TRIPWIRE=2
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:6.2
+    container_name: redis_service
+    ports:
+      - "6379:6379"  # Expose Redis on localhost:6379
+    volumes:
+      - redis_data:/data
 
   event_sender:
     build:
@@ -16,3 +29,9 @@ services:
       dockerfile: Dockerfile
     depends_on:
       - user_access_service
+
+volumes:
+  redis_data:
+
+
+  

@@ -1,23 +1,22 @@
-# Use the official Python image
+# Base image
 FROM python:3.10-slim
 
-# Set the working directory
-WORKDIR /usr/src/app
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
 
-# Copy the requirements file
-COPY requirements.txt ./
+# Set working directory
+WORKDIR /app
 
-# Install any required dependencies
+# Install dependencies
+COPY requirements.txt /app/
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the current directory contents into the container at /usr/src/app
-COPY . .
+# Copy application code
+COPY . /app/
 
-# Expose the port the app runs on
-EXPOSE 5000
+# Expose port for FastAPI
+EXPOSE 8000
 
-# Define environment variable
-ENV FLASK_ENV=development
-
-# Run the command to start the app
-CMD ["python", "app.py"]
+# Run both FastAPI server and Redis stream consumer
+CMD ["sh", "-c", "uvicorn app:app --host 0.0.0.0 --port 8000 --workers 4 & python stream_consumer.py"]
