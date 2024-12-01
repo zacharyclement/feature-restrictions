@@ -1,5 +1,6 @@
 import json
 import logging
+import threading
 import time
 
 import redis
@@ -53,58 +54,41 @@ class RedisStreamConsumer:
             tripwire_manager=TripWireManager(),
             redis_user_manager=self.redis_user_manager,
         )
+        # self._stop_event = threading.Event()  #
 
     def process_event(self, event_id, event_data):
-        """
-        Process an individual event from the stream.
-        """
         try:
-            # Deserialize event_properties in place
-            event_data["event_properties"] = json.loads(
-                event_data["event_properties"]
-            )  # Deserialize event_properties
-
-            # Ensure user_id is treated as a string
+            # Deserialize event properties
+            event_data["event_properties"] = json.loads(event_data["event_properties"])
             event_data["event_properties"]["user_id"] = str(
                 event_data["event_properties"]["user_id"]
             )
-
-            # Create an Event object from the updated data
             event = Event(**event_data)
 
+            # Retrieve or create the user
             user_id = str(event.event_properties["user_id"])
             try:
                 user_data = self.redis_user_manager.get_user(user_id)
-            except KeyError:
+            except KeyError:  # If user doesn't exist, create a new one
                 user_data = self.redis_user_manager.create_user(user_id)
+
             logger.info(
-                f"User data before processing: {self.redis_user_manager.display_user_data(user_id, user_data)}"
+                f"user data before: {self.redis_user_manager.display_user_data(user_id)}"
             )
 
-            # Find the appropriate handler for the event
+            # Get the appropriate handler and process the event
             handler = self.event_handler_registry.get_event_handler(event.name)
-            if not handler:
+            if handler:
+                handler.handle(event, user_data)
+            else:
                 logger.error(f"No handler registered for event: {event.name}")
-                return
-
-            # Handle the event
-            handler.handle(event, user_data)
             logger.info(
-                f"User data after processing: {self.redis_user_manager.display_user_data(user_id, user_data)}"
-            )
-
-            logger.info(f"Processed event '{event.name}' with ID '{event_id}'.")
-        except json.JSONDecodeError as e:
-            logger.error(
-                f"Failed to decode event properties for event '{event_id}': {e}"
+                f"user data after: {self.redis_user_manager.display_user_data(user_id)}"
             )
         except Exception as e:
             logger.error(f"Error processing event '{event_id}': {e}")
 
     def start(self):
-        """
-        Start consuming events from the Redis stream.
-        """
         logger.info(f"Starting Redis Stream Consumer on stream: {self.stream_key}")
         while True:
             try:
@@ -113,18 +97,23 @@ class RedisStreamConsumer:
                     consumername=self.consumer_name,
                     streams={self.stream_key: ">"},
                     count=10,
-                    block=5000,
+                    block=1000,
                 )
                 for stream, event_list in events:
                     for event_id, event_data in event_list:
                         self.process_event(event_id, event_data)
-
-                        # Acknowledge the event
                         self.redis_client.xack(
                             self.stream_key, self.consumer_group, event_id
                         )
             except Exception as e:
                 logger.error(f"Error consuming events: {e}")
+
+    def stop(self):
+        """
+        Signal the consumer to stop and perform cleanup.
+        """
+        logger.info("Stopping Redis Stream Consumer...")
+        self._stop_event.set()
 
 
 if __name__ == "__main__":

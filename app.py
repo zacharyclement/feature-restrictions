@@ -12,13 +12,14 @@ from feature_restriction.config import (
     REDIS_PORT,
 )
 from feature_restriction.models import Event
+from feature_restriction.publisher import EventPublisher
 from feature_restriction.redis_user_manager import RedisUserManager
 from feature_restriction.utils import logger
 
 # Initialize FastAPI app
 app = FastAPI()
 
-# Redis setup, needs stream access to write during post event
+# Redis stream client, for testing connection on start
 redis_client_stream = redis.StrictRedis(
     host=REDIS_HOST, port=REDIS_PORT, db=REDIS_DB_STREAM, decode_responses=True
 )
@@ -56,21 +57,8 @@ async def handle_event(event: Event):
     """
     Add the incoming event to the Redis stream.
     """
-    try:
-        logger.info(f"Received event: {event}")
-
-        # Convert the Pydantic model to a dict and serialize event_properties
-        event_data = event.dict()
-        event_data["event_properties"] = json.dumps(event_data["event_properties"])
-
-        # Add the event to the Redis stream
-        redis_client_stream.xadd(EVENT_STREAM_KEY, event_data)
-
-        logger.info(f"Added event to Redis stream: {event_data}")
-        return {"status": "Event added to the stream."}
-    except Exception as e:
-        logger.error(f"Failed to add event to Redis stream: {e}")
-        raise HTTPException(status_code=500, detail="Failed to add event to the stream")
+    EventPublisher().add_event_to_stream(event)
+    return {"status": "Event added to the stream."}
 
 
 @app.get("/canmessage")

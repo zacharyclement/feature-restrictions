@@ -1,4 +1,6 @@
+import subprocess
 import threading
+import time
 
 import pytest
 import redis
@@ -12,7 +14,6 @@ from feature_restriction.config import (
     REDIS_HOST,
     REDIS_PORT,
 )
-from stream_consumer import RedisStreamConsumer
 
 
 @pytest.fixture(scope="function")
@@ -49,29 +50,53 @@ def test_client():
     return TestClient(app)
 
 
+import os
+import subprocess
+import time
+
+import pytest
+import redis
+
+from feature_restriction.config import (
+    EVENT_STREAM_KEY,
+    REDIS_DB_STREAM,
+    REDIS_HOST,
+    REDIS_PORT,
+)
+
+
 @pytest.fixture(scope="function")
-def stream_consumer(redis_client):
+def stream_consumer_subprocess():
     """
-    Fixture for the RedisStreamConsumer.
+    Fixture to run the Redis stream consumer as a subprocess.
     """
-    consumer_group = "test_group"
-    consumer_name = "test_consumer"
-    consumer = RedisStreamConsumer(
-        redis_client=redis_client,
-        stream_key=EVENT_STREAM_KEY,
-        consumer_group=consumer_group,
-        consumer_name=consumer_name,
+    # Calculate the path to the consumer script
+    script_dir = os.path.dirname(
+        os.path.dirname(os.path.abspath(__file__))
+    )  # Navigate up from ./tests
+    script_path = os.path.join(script_dir, "stream_consumer.py")
+
+    # Verify the script exists
+    if not os.path.exists(script_path):
+        raise FileNotFoundError(f"Consumer script not found at {script_path}")
+
+    # Start the consumer as a subprocess
+    process = subprocess.Popen(
+        ["python", script_path], stdout=subprocess.PIPE, stderr=subprocess.PIPE
     )
+    print("consumer running as subprocess")
+    # Wait for the consumer to initialize
+    time.sleep(1)  # Adjust based on startup time
 
-    # Run the consumer in a separate thread
-    consumer_thread = threading.Thread(target=consumer.start, daemon=True)
-    consumer_thread.start()
+    yield process  # Yield the subprocess for testing
 
-    # Yield control to the test
-    yield consumer
+    # Terminate the subprocess
+    process.terminate()
+    process.wait(timeout=5)  # Wait for the process to exit
+    if process.poll() is None:  # Check if still running
+        process.kill()  # Force kill if it hasn't exited
 
-    # Stop the consumer and wait for the thread to finish
-    consumer.redis_client.xgroup_destroy(
-        EVENT_STREAM_KEY, consumer_group
-    )  # Clean up group
-    consumer_thread.join(timeout=5)  # Ensure the thread stops within 5 seconds
+    # Optionally log any captured output for debugging
+    stdout, stderr = process.communicate()
+    print("Consumer STDOUT:", stdout.decode())
+    print("Consumer STDERR:", stderr.decode())
