@@ -1,8 +1,6 @@
 import json
 import time
 
-import pytest
-
 from feature_restriction.config import EVENT_STREAM_KEY
 from feature_restriction.models import Event
 from feature_restriction.publisher import EventPublisher

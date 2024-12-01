@@ -1,11 +1,5 @@
-import json
 import time
 
-import pytest
-
-from feature_restriction.config import EVENT_STREAM_KEY
-from feature_restriction.models import Event
-from feature_restriction.publisher import EventPublisher
 from feature_restriction.redis_user_manager import RedisUserManager
 
 
