@@ -2,10 +2,8 @@ import json
 
 import redis
 from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
 
 from feature_restriction.config import (
-    EVENT_STREAM_KEY,
     REDIS_DB_STREAM,
     REDIS_DB_USER,
     REDIS_HOST,
@@ -69,7 +67,9 @@ def can_message(user_id: str):
     try:
         redis_user_manager = RedisUserManager()
         user_data = redis_user_manager.get_user(user_id)
-        return {"can_message": user_data.access_flags.get("can_message", True)}
+        reply = user_data.access_flags.get("can_message", True)
+        logger.info(f"User with ID '{user_id}': {reply}.")
+        return reply
     except KeyError:
         # Handle case where user does not exist
         logger.error(f"User with ID '{user_id}' not found.")
@@ -88,7 +88,9 @@ def can_purchase(user_id: str):
     try:
         redis_user_manager = RedisUserManager()
         user_data = redis_user_manager.get_user(user_id)
-        return {"can_purchase": user_data.access_flags.get("can_purchase", True)}
+        reply = user_data.access_flags.get("can_message", True)
+        logger.info(f"User with ID '{user_id}': {reply}.")
+        return {"can_purchase": reply}
     except KeyError:
         # Handle case where user does not exist
         logger.error(f"User with ID '{user_id}' not found.")
