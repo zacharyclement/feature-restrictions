@@ -28,9 +28,11 @@ class BaseRule(ABC):
         """
         logger.info(f"Processing rule: {self.name}")
         logger.info(
-            f"tripwire disabled rules, before processing: {self.tripwire_manager.tripwire_disabled_rules}"
+            f"Tripwire disabled rules, after processing: {self.tripwire_manager.get_disabled_rules()}"
         )
+
         if self.tripwire_manager.is_rule_disabled_via_tripwire(self.name):
+            logger.info(f"Rule '{self.name}' is currently disabled via tripwire.")
             return False  # Rule is disabled, no action taken
 
         # Evaluate the rule, should we modify the data?
@@ -55,7 +57,7 @@ class BaseRule(ABC):
             logger.info(f"User data saved after processing rule: {self.name}")
 
         logger.info(
-            f"tripwire disabled rules, after processing: {self.tripwire_manager.tripwire_disabled_rules}"
+            f"Tripwire disabled rules, after processing: {self.tripwire_manager.get_disabled_rules()}"
         )
         return condition_met
 

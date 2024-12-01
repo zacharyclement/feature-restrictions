@@ -10,6 +10,7 @@ from app import app  # Import your FastAPI app
 from feature_restriction.config import (
     EVENT_STREAM_KEY,
     REDIS_DB_STREAM,
+    REDIS_DB_TRIPWIRE,
     REDIS_DB_USER,
     REDIS_HOST,
     REDIS_PORT,
@@ -63,6 +64,19 @@ from feature_restriction.config import (
     REDIS_HOST,
     REDIS_PORT,
 )
+
+
+@pytest.fixture(scope="function")
+def redis_tripwire():
+    """
+    Fixture to provide a clean Redis instance for the TripWireManager.
+    """
+    client = redis.StrictRedis(
+        host=REDIS_HOST, port=REDIS_PORT, db=REDIS_DB_TRIPWIRE, decode_responses=True
+    )
+    client.flushdb()  # Clear the Redis database
+    yield client
+    client.flushdb()  # Clean up after the test
 
 
 @pytest.fixture(scope="function")
