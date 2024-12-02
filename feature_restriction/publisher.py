@@ -35,7 +35,7 @@ class EventPublisher:
             logger.info(f"Received event: {event}")
 
             # Validate event fields
-            if not event.name or not event.event_properties or not event.user_id:
+            if not event.name or not event.event_properties:
                 raise ValueError("Event is missing required fields")
 
             # Convert the Pydantic model to a dict and serialize event_properties

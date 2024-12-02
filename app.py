@@ -69,7 +69,7 @@ def can_message(user_id: str):
         user_data = redis_user_manager.get_user(user_id)
         reply = user_data.access_flags.get("can_message", True)
         logger.info(f"User with ID '{user_id}': {reply}.")
-        return reply
+        return {"can_message": reply}
     except KeyError:
         # Handle case where user does not exist
         logger.error(f"User with ID '{user_id}' not found.")
