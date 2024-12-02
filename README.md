@@ -1,6 +1,4 @@
-Below is an updated README to include the Docker setup and instructions, alongside the previously defined sections.
 
----
 
 # Feature Restriction Service
 
@@ -173,3 +171,27 @@ docker logs <container_name>
 ---
 
 This README now accommodates Docker instructions and ensures the service is easy to set up, test, and load test.
+
+
+.
+├── app.py                       # FastAPI application entry point
+├── stream_consumer.py           # Redis Stream Consumer script
+├── requirements.txt             # Python dependencies
+├── Dockerfile                   # Dockerfile for the FastAPI app
+├── docker-compose.yml           # Docker Compose file for all services
+├── feature_restriction/         # Application modules
+│   ├── __init__.py              # Package initialization
+│   ├── config.py                # Configuration settings (e.g., Redis DBs)
+│   ├── models.py                # Pydantic models for events and user data
+│   ├── redis_user_manager.py    # User data management logic
+│   ├── tripwire_manager.py      # Tripwire management logic
+│   ├── rules.py                 # Business rules for events
+│   ├── utils.py                 # Utility functions and helpers
+│   ├── registry.py              # Event handler registry
+│   ├── publisher.py             # EventPublisher class
+├── tests/                       # Test suite
+│   ├── unit/                    # Unit tests
+│   ├── integration/             # Integration tests
+│   ├── load/                    # Load testing scripts
+│   │   ├── locustfile.py        # Locust configuration for load testing
+├── .env                         # Environment variables (optional)
