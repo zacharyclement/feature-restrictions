@@ -1,17 +1,12 @@
+Here’s the revised README with your specifications:
 
+---
 
 # Feature Restriction Service
 
 ## Overview
 
 The **Feature Restriction Service** is a high-performance system designed to manage user-based feature restrictions. It leverages FastAPI for the backend, Redis for real-time data storage, and a consumer to process Redis streams. The system can scale to handle high request rates and supports various rules with a tripwire mechanism to manage rule thresholds. It is able to ingest 100 to 1K (valley to peak) new events per second & respond to 100 to 1K requests for feature restrictions.
-
-### Components
-
-1. **FastAPI Application**: Handles REST API requests for event posting and feature restriction queries.
-2. **Redis Database**: Stores user data, tripwire states, and events for real-time processing.
-3. **Stream Consumer**: Reads events from Redis streams and processes them with business logic and rules.
-4. **Locust Load Testing**: Simulates high-load scenarios to test system scalability and performance.
 
 ---
 
@@ -26,19 +21,131 @@ The **Feature Restriction Service** is a high-performance system designed to man
    - Applies business rules based on event data.
    - Updates user data and tripwire states in Redis.
 
-3. **Event Handling, Rules, and Tripwires
-    - When an event is pulled off the stream, it is then processed according to the event_name
-    - Processing the event includes update the users data
-    - The users data is assessed agains various rules. If rules are broken, access is restricted.
-    - The rules being applied are assessed to know if the tripwire should be thrown.
+3. **Event Handling, Rules, and Tripwires**:
+    - Events are processed based on their `name` field, updating user data.
+    - User data is assessed against various rules. If a rule is violated, feature access is restricted.
+    - Rules are evaluated for potential tripwire activation. Tripwires disable rules when thresholds are exceeded.
 
-3. **Feature Restriction Queries**:
+4. **Feature Restriction Queries**:
    - Clients query endpoints such as `/canmessage` or `/canpurchase` to check feature availability for users.
-   - Responses are determined by the processed user data in Redis.
+   - Responses are determined by processed user data in Redis.
 
 ---
-## Project Structure
 
+
+## Setup, Starting, and Using the System
+
+### Prerequisites
+
+1. **Docker**: Ensure Docker and Docker Compose are installed.
+   - [Install Docker](https://docs.docker.com/get-docker/)
+   - [Install Docker Compose](https://docs.docker.com/compose/install/)
+
+2. **Postman or Curl**: For testing API endpoints.
+
+---
+
+### Starting the System
+
+1. **Start Services**:
+   ```bash
+   docker-compose up --build
+   ```
+
+2. **Verify Running Services**:
+   - FastAPI app: [http://localhost:8000](http://localhost:8000)
+   - Redis: Runs internally within the Docker network.
+
+3. **Stop Services**:
+   ```bash
+   docker-compose down
+   ```
+
+---
+
+### Using the System
+
+#### Available Endpoints
+
+1. **POST /event**: Add an event to the system.
+   - Example payload for `scam_message_flagged`:
+     ```json
+     {
+       "name": "scam_message_flagged",
+       "event_properties": {
+         "user_id": "12345"
+       }
+     }
+     ```
+
+2. **GET /canmessage?user_id={user_id}**: Check if the user can send messages.
+
+3. **GET /canpurchase?user_id={user_id}**: Check if the user can make purchases.
+
+---
+
+## Running Tests
+
+### Prerequisites
+
+1. **Python Environment**:
+   - Install Conda: [Miniconda Installation](https://docs.conda.io/en/latest/miniconda.html).
+   - Create a Conda environment:
+     ```bash
+     conda create -n feature-restriction python=3.10
+     conda activate feature-restriction
+     ```
+   - Install dependencies:
+     ```bash
+     pip install -r requirements.txt
+     ```
+
+2. **Redis Server**: Ensure a Redis instance is running locally:
+   ```bash
+   redis-server
+   ```
+
+---
+
+### Integration Tests
+
+1. Start the required services (Redis and FastAPI).
+2. Run the integration tests:
+   ```bash
+   pytest tests/integration
+   ```
+
+---
+
+### Load Tests with Locust
+
+1. Start the Docker containers:
+   ```bash
+   docker-compose up
+   ```
+
+2. Run Locust:
+   ```bash
+   locust -f tests/load/locustfile.py
+   ```
+
+3. Open the Locust web interface: [http://localhost:8089](http://localhost:8089).
+
+---
+
+## Environment Variables
+
+### Required Environment Variables
+
+| Variable       | Default Value | Description                              |
+|----------------|---------------|------------------------------------------|
+| `REDIS_HOST`   | `redis`       | Redis hostname within the Docker network.|
+
+All other settings (Redis ports and DB indexes) are defined in `feature_restriction/config.py`.
+
+---
+
+## Project Structure
 
 ```text
 .
@@ -64,114 +171,3 @@ The **Feature Restriction Service** is a high-performance system designed to man
 ```
 
 ---
-## Setup and Starting the System
-
-### Prerequisites
-1. **Docker**: Ensure Docker and Docker Compose are installed.
-   - [Install Docker](https://docs.docker.com/get-docker/)
-   - [Install Docker Compose](https://docs.docker.com/compose/install/)
-
-
-### Start the System with Docker Compose
-
-1. Build and start the containers:
-   ```bash
-   docker-compose up --build
-   ```
-
-2. Verify that the services are running:
-   - FastAPI app: [http://localhost:8000](http://localhost:8000)
-   - Redis database: Running internally within the Docker network.
-
-3. Stop the containers:
-   ```bash
-   docker-compose down
-   ```
-
----
-
-## Running Tests
-
-### Prerequisites
-1. **Python Environment** (optional, for local development):
-   - Python 3.10+
-   - Install dependencies with `pip install -r requirements.txt`.
-
-
-### Integration Tests
-Run the integration tests to verify system functionality:
-```bash
-pytest tests/integration
-```
-
-### Load Tests with Locust
-1. Start the Docker containers (`docker-compose up`).
-2. Run Locust for load testing:
-   ```bash
-   locust -f tests/load/locustfile.py
-   ```
-3. Access the Locust web interface at [http://localhost:8089](http://localhost:8089).
-
----
-
-## Environment Variables
-
-The following environment variables are used in the system. These are set in the `docker-compose.yml` file:
-
-| Variable       | Default Value | Description                              |
-|----------------|---------------|------------------------------------------|
-| `REDIS_HOST`   | `redis`       | Redis hostname within the Docker network. |
-| `REDIS_PORT`   | `6379`        | Redis port.                             |
-| `REDIS_DB_USER`| `0`           | Redis database for user data.           |
-| `REDIS_DB_STREAM`| `1`         | Redis database for streams.             |
-| `REDIS_DB_TRIPWIRE`| `2`       | Redis database for tripwire data.       |
-
----
-
-## API Endpoints
-
-### Event Endpoints
-- **POST /event**: Add an event to the system.
-  - Example payload for a `scam_message_flagged` event:
-    ```json
-    {
-      "name": "scam_message_flagged",
-      "event_properties": {
-        "user_id": "12345"
-      }
-    }
-    ```
-
-### Feature Restriction Endpoints
-- **GET /canmessage?user_id={user_id}**
-- **GET /canpurchase?user_id={user_id}**
-
-These endpoints return a boolean value indicating whether the feature is available.
-
----
-
-## Development Workflow
-
-### Run Locally Without Docker
-1. Start Redis manually:
-   ```bash
-   redis-server
-   ```
-2. Run the FastAPI app:
-   ```bash
-   uvicorn app:app --reload
-   ```
-3. Start the Stream Consumer:
-   ```bash
-   python stream_consumer.py
-   ```
-
-### Logs
-To view logs for each service in Docker:
-```bash
-docker logs <container_name>
-```
-
----
-
-#
