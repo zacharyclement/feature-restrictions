@@ -8,6 +8,9 @@ Here’s the revised README with your specifications:
 
 The **Feature Restriction Service** is a high-performance system designed to manage user-based feature restrictions. It leverages FastAPI for the backend, Redis for real-time data storage, and a consumer to process Redis streams. The system can scale to handle high request rates and supports various rules with a tripwire mechanism to manage rule thresholds. It is able to ingest 100 to 1K (valley to peak) new events per second & respond to 100 to 1K requests for feature restrictions.
 
+![Architecture Diagram](images/architecture.png)
+
+
 ---
 
 ## Data Flow Description
