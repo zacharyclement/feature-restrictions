@@ -130,9 +130,8 @@ The **Feature Restriction Service** is a high-performance system designed to man
    ```bash
    locust -f tests/load/locustfile.py
    ```
-   **note**: tests run with 100 users and 50 ramp up for 30 seconds.
 
-3. Open the Locust web interface: [http://localhost:8089](http://localhost:8089).
+3. Open the Locust web interface: [http://localhost:8089](http://localhost:8089).  **Note**: tests run with 100 users and 50 ramp up for 30 seconds.
 
 ---
 
