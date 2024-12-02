@@ -46,7 +46,6 @@ def test_can_purchase_disabled(
     # Arrange
     user_id = "user_456"
     user_manager = RedisUserManager()
-    user_data = user_manager.create_user(user_id)
 
     # Trigger a rule to disable purchase
     event_payload = {
@@ -70,11 +69,23 @@ def test_can_purchase_disabled(
     }
     test_client.post("/event", json=event_payload_2)
 
+    # Add another unique zip code to trigger the rule
+    event_payload_3 = {
+        "name": "credit_card_added",
+        "event_properties": {
+            "user_id": user_id,
+            "card_id": "card_003",
+            "zip_code": "67891",
+        },
+    }
+    test_client.post("/event", json=event_payload_3)
+
     # Allow time for the consumer to process
-    time.sleep(1)
+    time.sleep(3)
 
     # Act: Query the /canpurchase endpoint
     response = test_client.get("/canpurchase", params={"user_id": user_id})
+    print("response", response.json())
 
     # Assert
     assert response.status_code == 200

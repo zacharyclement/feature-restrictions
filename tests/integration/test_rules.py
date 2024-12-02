@@ -35,6 +35,17 @@ def test_unique_zip_code_rule(
     }
     test_client.post("/event", json=event_payload_2)
 
+    # Add an initial credit card
+    event_payload_3 = {
+        "name": "credit_card_added",
+        "event_properties": {
+            "user_id": user_id,
+            "card_id": "card_003",
+            "zip_code": "45678",
+        },
+    }
+    test_client.post("/event", json=event_payload_3)
+
     # Allow time for the consumer to process
     time.sleep(1)
 

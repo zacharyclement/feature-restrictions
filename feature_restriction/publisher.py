@@ -38,6 +38,13 @@ class EventPublisher:
             if not event.name or not event.event_properties:
                 raise ValueError("Event is missing required fields")
 
+            # Explicitly validate user_id
+            try:
+                user_id = event.user_id  # This will trigger the property validation
+            except ValueError as ve:
+                logger.error(f"Validation error in user_id: {ve}")
+                raise HTTPException(status_code=400, detail=f"Validation error: {ve}")
+
             # Convert the Pydantic model to a dict and serialize event_properties
             event_data = event.dict()
             event_data["event_properties"] = json.dumps(event_data["event_properties"])
@@ -47,11 +54,11 @@ class EventPublisher:
 
             logger.info(f"Added event to Redis stream: {event_data}")
             return {"status": f"Event '{event.name}' added to the stream."}
-        except ValueError as ve:
-            logger.error(f"Validation error: {ve}")
-            raise HTTPException(status_code=400, detail=f"Validation error: {ve}")
+        except HTTPException:
+            # Re-raise already handled exceptions
+            raise
         except Exception as e:
-            logger.error(f"Failed to add event to Redis stream: {e}")
+            logger.error(f"Unexpected error in add_event_to_stream: {e}")
             raise HTTPException(
-                status_code=500, detail="Failed to add event to the stream"
+                status_code=500, detail="Unexpected error occurred while adding event"
             )

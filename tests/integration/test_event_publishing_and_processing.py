@@ -254,26 +254,25 @@ def test_event_with_missing_data_via_endpoint(
     Test the behavior of the system when processing an event with missing data via the endpoint.
     """
     # Arrange
-    # Invalid event: missing user_id in event_properties
     invalid_event = {
         "name": "credit_card_added",
         "event_properties": {"card_id": "card_001", "zip_code": "54321"},  # No user_id
     }
 
-    # Act: Send the invalid event to the endpoint
+    # Act
     response = test_client.post("/event", json=invalid_event)
 
-    # Assert: Verify response indicates failure
+    # Assert
     assert response.status_code == 400  # Bad Request
     assert "Validation error" in response.json()["detail"]
 
     # Allow time for the consumer to process
     time.sleep(1)
 
-    # Assert: Verify that no user data was created or updated
+    # Assert no user data created
     all_keys = redis_user.keys("*")
     assert len(all_keys) == 0  # Ensure no user was added
 
     # Check logs for error handling
     assert "Validation error" in caplog.text
-    assert "Event is missing" in caplog.text
+    assert "Event is missing a valid 'user_id' in event_properties" in caplog.text

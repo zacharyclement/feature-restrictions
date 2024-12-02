@@ -75,7 +75,7 @@ def can_message(user_id: str):
     try:
         redis_user_manager = RedisUserManager()
         user_data = redis_user_manager.get_user(user_id)
-        reply = user_data.access_flags.get("can_message", True)
+        reply = user_data.access_flags.get("can_message")
         logger.info(f"User with ID '{user_id}': {reply}.")
         return {"can_message": reply}
     except KeyError:
@@ -96,7 +96,7 @@ def can_purchase(user_id: str):
     try:
         redis_user_manager = RedisUserManager()
         user_data = redis_user_manager.get_user(user_id)
-        reply = user_data.access_flags.get("can_message", True)
+        reply = user_data.access_flags.get("can_purchase")
         logger.info(f"User with ID '{user_id}': {reply}.")
         return {"can_purchase": reply}
     except KeyError:
