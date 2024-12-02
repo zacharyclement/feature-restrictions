@@ -234,7 +234,7 @@ def test_multiple_event_handling_via_endpoint(
         }
 
     # Allow time for the consumer to process
-    time.sleep(2)
+    time.sleep(3)
 
     # Assert: Validate user data
     user_data = user_manager.get_user(user_id)

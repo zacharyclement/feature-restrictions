@@ -85,13 +85,13 @@ if __name__ == "__main__":
         # Send a 'chargeback_occurred' event
         sender.send_event(
             "chargeback_occurred",
-            {"user_id": user_id, "amount": round(random.uniform(10.0, 500.0), 2)},
+            {"user_id": user_id, "amount": round(random.uniform(10.0, 100.0), 2)},
         )
 
         # Send a 'purchase_made' event
         sender.send_event(
             "purchase_made",
-            {"user_id": user_id, "amount": round(random.uniform(10.0, 500.0), 2)},
+            {"user_id": user_id, "amount": round(random.uniform(100.0, 500.0), 2)},
         )
 
         # Check if the user can send/receive messages

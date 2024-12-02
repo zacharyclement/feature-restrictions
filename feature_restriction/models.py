@@ -15,10 +15,8 @@ class Event(BaseModel):
         Extracts and validates the user_id from event_properties.
         """
         user_id = self.event_properties.get("user_id")
-        if not user_id:
-            raise ValueError("Event is missing 'user_id' in event_properties")
-        if not isinstance(user_id, str):
-            raise ValueError(f"user_id must be a string, got {type(user_id).__name__}")
+        if not user_id or not isinstance(user_id, str):
+            raise ValueError("Event is missing a valid 'user_id' in event_properties")
         return user_id
 
 

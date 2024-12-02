@@ -5,6 +5,7 @@ from fastapi import FastAPI, HTTPException
 
 from feature_restriction.config import (
     REDIS_DB_STREAM,
+    REDIS_DB_TRIPWIRE,
     REDIS_DB_USER,
     REDIS_HOST,
     REDIS_PORT,
@@ -28,6 +29,11 @@ redis_client_user = redis.StrictRedis(
 )
 
 
+redis_client_tripwire = redis.StrictRedis(
+    host=REDIS_HOST, port=REDIS_PORT, db=REDIS_DB_TRIPWIRE, decode_responses=True
+)
+
+
 # Logger setup
 logger.info("*********************************")
 logger.info("*********************************")
@@ -45,6 +51,8 @@ async def startup_event():
         logger.info("Connected to Redis user successfully!")
         user_count = len(redis_client_user.keys("*"))
         logger.info(f"Number of users currently in Redis: {user_count}")
+        tripwire_count = len(redis_client_tripwire.keys("*"))
+        logger.info(f"Number of tripwires currently in Redis: {tripwire_count}")
     except redis.ConnectionError as e:
         logger.error(f"Failed to connect to Redis: {e}")
         raise e
@@ -109,5 +117,11 @@ async def shutdown_event():
     try:
         redis_client_user.flushdb()
         logger.info("Cleared Redis user database.")
+    except Exception as e:
+        logger.error(f"Error during Redis cleanup: {e}")
+
+    try:
+        redis_client_tripwire.flushdb()
+        logger.info("Cleared Redis tripwire database.")
     except Exception as e:
         logger.error(f"Error during Redis cleanup: {e}")

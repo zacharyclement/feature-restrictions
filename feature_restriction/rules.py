@@ -82,11 +82,13 @@ class UniqueZipCodeRule(BaseRule):
 
     def evaluate_rule(self, user_data: UserData) -> bool:
         """
-        Evaluates whether the ratio of unique zip codes to total credit cards exceeds 0.75.
+        Evaluates whether the ratio of unique zip codes to total credit cards exceeds 0.75,
+        but only applies when the user has at least two credit cards.
         """
-        # Ensure there are credit cards
-        if user_data.total_credit_cards == 0:
-            return False
+        # Ensure there are at least two credit cards
+        if user_data.total_credit_cards <= 2:
+            logger.info("Not enough credit cards to evaluate the rule")
+            return False  # Not enough data to evaluate the rule
 
         # Calculate the ratio directly from updated user data
         ratio = len(user_data.unique_zip_codes) / user_data.total_credit_cards
