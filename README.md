@@ -4,7 +4,7 @@
 
 ## Overview
 
-The **Feature Restriction Service** is a high-performance system designed to manage user-based feature restrictions. It leverages FastAPI for the backend, Redis for real-time data storage, and a consumer to process Redis streams. The system can scale to handle high request rates and supports various rules with a tripwire mechanism to manage rule thresholds.
+The **Feature Restriction Service** is a high-performance system designed to manage user-based feature restrictions. It leverages FastAPI for the backend, Redis for real-time data storage, and a consumer to process Redis streams. The system can scale to handle high request rates and supports various rules with a tripwire mechanism to manage rule thresholds. It is able to ingest 100 to 1K (valley to peak) new events per second & respond to 100 to 1K requests for feature restrictions.
 
 ### Components
 
@@ -25,6 +25,12 @@ The **Feature Restriction Service** is a high-performance system designed to man
    - The Stream Consumer reads events from the Redis stream.
    - Applies business rules based on event data.
    - Updates user data and tripwire states in Redis.
+
+3. **Event Handling, Rules, and Tripwires
+    - When an event is pulled off the stream, it is then processed according to the event_name
+    - Processing the event includes update the users data
+    - The users data is assessed agains various rules. If rules are broken, access is restricted.
+    - The rules being applied are assessed to know if the tripwire should be thrown.
 
 3. **Feature Restriction Queries**:
    - Clients query endpoints such as `/canmessage` or `/canpurchase` to check feature availability for users.
@@ -65,9 +71,6 @@ The **Feature Restriction Service** is a high-performance system designed to man
    - [Install Docker](https://docs.docker.com/get-docker/)
    - [Install Docker Compose](https://docs.docker.com/compose/install/)
 
-2. **Python Environment** (optional, for local development):
-   - Python 3.10+
-   - Install dependencies with `pip install -r requirements.txt`.
 
 ### Start the System with Docker Compose
 
@@ -88,6 +91,12 @@ The **Feature Restriction Service** is a high-performance system designed to man
 ---
 
 ## Running Tests
+
+### Prerequisites
+1. **Python Environment** (optional, for local development):
+   - Python 3.10+
+   - Install dependencies with `pip install -r requirements.txt`.
+
 
 ### Integration Tests
 Run the integration tests to verify system functionality:
