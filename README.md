@@ -82,6 +82,8 @@ The **Feature Restriction Service** is a high-performance system designed to man
 
 3. **GET /canpurchase?user_id={user_id}**: Check if the user can make purchases.
 
+**note**: with container running, see link for swagger docs: http://127.0.0.1:8000/docs#/
+
 ---
 
 ## Running Tests
@@ -128,6 +130,7 @@ The **Feature Restriction Service** is a high-performance system designed to man
    ```bash
    locust -f tests/load/locustfile.py
    ```
+   **note**: tests run with 100 users and 50 ramp up for 30 seconds.
 
 3. Open the Locust web interface: [http://localhost:8089](http://localhost:8089).
 
