@@ -4,6 +4,46 @@ from feature_restriction.event_handlers import (
     PurchaseMadeHandler,
     ScamMessageFlaggedHandler,
 )
+from feature_restriction.rules import (
+    ChargebackRatioRule,
+    ScamMessageRule,
+    UniqueZipCodeRule,
+)
+
+
+class RuleRegistry:
+    """
+    Manages the registration and retrieval of rules.
+    """
+
+    def __init__(self):
+        self.rules = {}
+
+    def register_rule(self, rule_instance):
+        rule_name = getattr(rule_instance, "name", None)
+        if not rule_name:
+            raise ValueError(
+                f"Rule '{rule_instance.__class__.__name__}' must have a 'name' attribute."
+            )
+        if rule_name in self.rules:
+            raise ValueError(
+                f"A rule with the name '{rule_name}' is already registered."
+            )
+        self.rules[rule_name] = rule_instance
+
+    def get_rule(self, rule_name):
+        """
+        Retrieve a rule by its name.
+        """
+        return self.rules.get(rule_name)
+
+    def register_default_rules(self, tripwire_manager, user_manager):
+        """
+        Register default rules.
+        """
+        self.register_rule(UniqueZipCodeRule(tripwire_manager, user_manager))
+        self.register_rule(ScamMessageRule(tripwire_manager, user_manager))
+        self.register_rule(ChargebackRatioRule(tripwire_manager, user_manager))
 
 
 class EventHandlerRegistry:
@@ -12,54 +52,40 @@ class EventHandlerRegistry:
     """
 
     def __init__(self):
-        """
-        Initialize the registry for event handlers.
-        """
         self.event_handler_registry = {}
+        self.event_rules_mapping = {}
 
-    def register_event_handler(self, event_handler_instance):
-        """
-        Register an event handler for specific event types.
-
-        :param event_handler_instance: An instance of a class inheriting from BaseEventHandler.
-        :raises ValueError: If the handler does not have an `event_name` attribute.
-        """
+    def register_event_handler(self, event_handler_instance, rule_names=None):
         event_name = getattr(event_handler_instance, "event_name", None)
         if not event_name:
             raise ValueError(
-                f"The event handler '{event_handler_instance.__class__.__name__}' must have an 'event_name' attribute."
-            )
-        if event_name in self.event_handler_registry:
-            raise ValueError(
-                f"An event handler for '{event_name}' is already registered."
+                f"Handler '{event_handler_instance.__class__.__name__}' must have 'event_name' attribute."
             )
         self.event_handler_registry[event_name] = event_handler_instance
+        self.event_rules_mapping[event_name] = rule_names or []
 
     def get_event_handler(self, event_name):
-        """
-        Retrieve an event handler by its name.
-
-        :param event_name: The name of the event.
-        :return: The corresponding event handler, or None if not found.
-        """
         return self.event_handler_registry.get(event_name)
 
-    def register_default_event_handlers(self, tripwire_manager, redis_user_manager):
-        """
-        Register the default event handlers.
+    def get_rules_for_event(self, event_name):
+        return self.event_rules_mapping.get(event_name, [])
 
-        :param tripwire_manager: Instance of TripWireManager.
-        :param redis_user_manager: Instance of RedisUserManager.
+    def register_default_event_handlers(self, tripwire_manager, user_manager):
+        """
+        Register default event handlers and their associated rules.
         """
         self.register_event_handler(
-            CreditCardAddedHandler(tripwire_manager, redis_user_manager)
+            CreditCardAddedHandler(tripwire_manager, user_manager),
+            rule_names=["unique_zip_code_rule"],
         )
         self.register_event_handler(
-            ScamMessageFlaggedHandler(tripwire_manager, redis_user_manager)
+            ScamMessageFlaggedHandler(tripwire_manager, user_manager),
+            rule_names=["scam_message_rule"],
         )
         self.register_event_handler(
-            ChargebackOccurredHandler(tripwire_manager, redis_user_manager)
+            ChargebackOccurredHandler(tripwire_manager, user_manager),
+            rule_names=["chargeback_ratio_rule"],
         )
         self.register_event_handler(
-            PurchaseMadeHandler(tripwire_manager, redis_user_manager)
+            PurchaseMadeHandler(tripwire_manager, user_manager), rule_names=[]
         )

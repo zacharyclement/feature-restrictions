@@ -10,6 +10,7 @@ from feature_restriction.config import (
     REDIS_HOST,
     REDIS_PORT,
 )
+from feature_restriction.endpoint_access import EndpointAccess
 from feature_restriction.models import Event
 from feature_restriction.publisher import EventPublisher
 from feature_restriction.redis_user_manager import RedisUserManager
@@ -72,20 +73,8 @@ def can_message(user_id: str):
     """
     Check if a user has access to send/receive messages.
     """
-    try:
-        redis_user_manager = RedisUserManager()
-        user_data = redis_user_manager.get_user(user_id)
-        reply = user_data.access_flags.get("can_message")
-        logger.info(f"User with ID '{user_id}': {reply}.")
-        return {"can_message": reply}
-    except KeyError:
-        # Handle case where user does not exist
-        logger.error(f"User with ID '{user_id}' not found.")
-        return {"error": f"No user found with ID '{user_id}'"}
-    except Exception as e:
-        # Log unexpected errors
-        logger.error(f"Unexpected error in 'canmessage' endpoint: {e}")
-        raise HTTPException(status_code=500, detail="An unexpected error occurred.")
+    endpoint_access = EndpointAccess()
+    return endpoint_access.check_access(user_id, "can_message")
 
 
 @app.get("/canpurchase")
@@ -93,20 +82,8 @@ def can_purchase(user_id: str):
     """
     Check if a user has access to make purchases.
     """
-    try:
-        redis_user_manager = RedisUserManager()
-        user_data = redis_user_manager.get_user(user_id)
-        reply = user_data.access_flags.get("can_purchase")
-        logger.info(f"User with ID '{user_id}': {reply}.")
-        return {"can_purchase": reply}
-    except KeyError:
-        # Handle case where user does not exist
-        logger.error(f"User with ID '{user_id}' not found.")
-        return {"error": f"No user found with ID '{user_id}'"}
-    except Exception as e:
-        # Log unexpected errors
-        logger.error(f"Unexpected error in 'canpurchase' endpoint: {e}")
-        raise HTTPException(status_code=500, detail="An unexpected error occurred.")
+    endpoint_access = EndpointAccess()
+    return endpoint_access.check_access(user_id, "can_purchase")
 
 
 @app.on_event("shutdown")

@@ -65,7 +65,7 @@ if __name__ == "__main__":
     sender = EventSender(base_url)
 
     # Example user IDs
-    user_ids = [i for i in range(1, 2)]
+    user_ids = [str(i) for i in range(1, 2)]
 
     # Send multiple events for testing
     for user_id in user_ids:
@@ -81,17 +81,16 @@ if __name__ == "__main__":
                 "zip_code": f"{random.randint(10000, 99999)}",
             },
         )
+        # Send a 'purchase_made' event
+        sender.send_event(
+            "purchase_made",
+            {"user_id": user_id, "amount": round(random.uniform(100.0, 500.0), 2)},
+        )
 
         # Send a 'chargeback_occurred' event
         sender.send_event(
             "chargeback_occurred",
             {"user_id": user_id, "amount": round(random.uniform(10.0, 100.0), 2)},
-        )
-
-        # Send a 'purchase_made' event
-        sender.send_event(
-            "purchase_made",
-            {"user_id": user_id, "amount": round(random.uniform(100.0, 500.0), 2)},
         )
 
         # Check if the user can send/receive messages

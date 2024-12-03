@@ -46,15 +46,9 @@ class CreditCardAddedHandler(BaseEventHandler):
             user_data.unique_zip_codes.add(zip_code)
             logger.info(f"Total credit cards after: {user_data.total_credit_cards}")
 
-        # Process the rule
-        unique_zip_code_rule = UniqueZipCodeRule(
-            self.tripwire_manager, self.user_manager
-        )
-        unique_zip_code_rule.process_rule(user_data)
-
         # Save the updated user data back to Redis
         self.user_manager.save_user(user_data)
-        logger.info(f"User data saved after processing {self.event_name}")
+        logger.info(f"User data saved after event handling {self.event_name}")
 
 
 class ScamMessageFlaggedHandler(BaseEventHandler):
@@ -69,13 +63,9 @@ class ScamMessageFlaggedHandler(BaseEventHandler):
         # Increment the scam message flag count
         user_data.scam_message_flags += 1
 
-        # Process the rule
-        scam_message_rule = ScamMessageRule(self.tripwire_manager, self.user_manager)
-        scam_message_rule.process_rule(user_data)
-
         # Save the updated user data back to Redis
         self.user_manager.save_user(user_data)
-        logger.info(f"User data saved after processing {self.event_name}")
+        logger.info(f"User data saved after event handling {self.event_name}")
 
 
 class ChargebackOccurredHandler(BaseEventHandler):
@@ -93,15 +83,9 @@ class ChargebackOccurredHandler(BaseEventHandler):
         # Update the user's total chargebacks
         user_data.total_chargebacks += amount
 
-        # Process the rule
-        chargeback_ratio_rule = ChargebackRatioRule(
-            self.tripwire_manager, self.user_manager
-        )
-        chargeback_ratio_rule.process_rule(user_data)
-
         # Save the updated user data back to Redis
         self.user_manager.save_user(user_data)
-        logger.info(f"User data saved after processing {self.event_name}")
+        logger.info(f"User data saved after event handling {self.event_name}")
 
 
 class PurchaseMadeHandler(BaseEventHandler):
@@ -125,4 +109,4 @@ class PurchaseMadeHandler(BaseEventHandler):
 
         # Save the updated user data back to Redis
         self.user_manager.save_user(user_data)
-        logger.info(f"User data saved after processing {self.event_name}")
+        logger.info(f"User data saved after event handling {self.event_name}")

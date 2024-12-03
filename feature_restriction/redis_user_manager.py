@@ -45,10 +45,8 @@ class RedisUserManager:
         :return: A UserData object representing the newly created user's data.
         """
         try:
-            logger.info(f"Creating new user with ID '{user_id}'.")
             default_user = UserData(user_id=user_id)
             self.save_user(default_user)
-            logger.info(f"New user with ID '{user_id}' created and saved.")
             return default_user
         except Exception as e:
             logger.error(f"Error in create_user for user_id '{user_id}': {e}")

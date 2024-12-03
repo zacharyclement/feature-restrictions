@@ -13,30 +13,17 @@ from feature_restriction.config import (
 )
 from feature_restriction.models import Event
 from feature_restriction.redis_user_manager import RedisUserManager
-from feature_restriction.registry import EventHandlerRegistry
+from feature_restriction.registry import EventHandlerRegistry, RuleRegistry
 from feature_restriction.tripwire_manager import TripWireManager
 from feature_restriction.utils import logger
 
 
 class RedisStreamConsumer:
-    """
-    Reads and processes events from a Redis stream.
-    """
-
-    def __init__(
-        self,
-        redis_client,
-        stream_key="event_stream",
-        consumer_group="group1",
-        consumer_name="consumer1",
-    ):
-        """
-        Initialize the RedisStreamConsumer.
-        """
+    def __init__(self, redis_client):
         self.redis_client = redis_client
-        self.stream_key = stream_key
-        self.consumer_group = consumer_group
-        self.consumer_name = consumer_name
+        self.stream_key = EVENT_STREAM_KEY
+        self.consumer_group = "group1"
+        self.consumer_name = "consumer1"
 
         # Ensure the consumer group exists
         try:
@@ -46,45 +33,54 @@ class RedisStreamConsumer:
         except redis.exceptions.ResponseError:
             logger.info(f"Consumer group '{self.consumer_group}' already exists.")
 
-        self.redis_user_manager = RedisUserManager()
+        # Initialize user manager, tripwire manager, and registries
+        self.user_manager = RedisUserManager()
+        self.tripwire_manager = TripWireManager()
+        self.rule_registry = RuleRegistry()
+        self.event_registry = EventHandlerRegistry()
 
-        # Use the EventHandlerRegistry for managing handlers
-        self.event_handler_registry = EventHandlerRegistry()
-        self.event_handler_registry.register_default_event_handlers(
-            tripwire_manager=TripWireManager(),
-            redis_user_manager=self.redis_user_manager,
+        # Register defaults
+        self.rule_registry.register_default_rules(
+            self.tripwire_manager, self.user_manager
         )
-        # self._stop_event = threading.Event()  #
+        self.event_registry.register_default_event_handlers(
+            self.tripwire_manager, self.user_manager
+        )
 
     def process_event(self, event_id, event_data):
         try:
-            # Deserialize event properties
+            logger.info(f"Processing event: {event_data.get('name')}")
             event_data["event_properties"] = json.loads(event_data["event_properties"])
-            event_data["event_properties"]["user_id"] = str(
-                event_data["event_properties"]["user_id"]
-            )
             event = Event(**event_data)
 
-            # Retrieve or create the user
-            user_id = str(event.event_properties["user_id"])
+            user_id = event.event_properties["user_id"]
             try:
-                user_data = self.redis_user_manager.get_user(user_id)
-            except KeyError:  # If user doesn't exist, create a new one
-                user_data = self.redis_user_manager.create_user(user_id)
+                user_data = self.user_manager.get_user(user_id)
+            except KeyError:
+                user_data = self.user_manager.create_user(user_id)
 
             logger.info(
-                f"user data before: {self.redis_user_manager.display_user_data(user_id)}"
+                f"display user data before handler: {self.user_manager.display_user_data(user_id)}"
             )
-
-            # Get the appropriate handler and process the event
-            handler = self.event_handler_registry.get_event_handler(event.name)
+            handler = self.event_registry.get_event_handler(event.name)
             if handler:
                 handler.handle(event, user_data)
-            else:
-                logger.error(f"No handler registered for event: {event.name}")
+
             logger.info(
-                f"user data after: {self.redis_user_manager.display_user_data(user_id)}"
+                f"display user data after handler: {self.user_manager.display_user_data(user_id)}"
             )
+
+            rule_names = self.event_registry.get_rules_for_event(event.name)
+            for rule_name in rule_names:
+                rule = self.rule_registry.get_rule(rule_name)
+                if rule:
+                    rule.process_rule(user_data)
+
+            logger.info(
+                f"display user data after rule: {self.user_manager.display_user_data(user_id)}"
+            )
+            logger.info(f"Event '{event.name}' processed successfully.")
+
         except Exception as e:
             logger.error(f"Error processing event '{event_id}': {e}")
 
@@ -123,19 +119,13 @@ if __name__ == "__main__":
     redis_client = redis.StrictRedis(
         host=REDIS_HOST, port=REDIS_PORT, db=REDIS_DB_STREAM, decode_responses=True
     )
-    stream_key = EVENT_STREAM_KEY
-    consumer_group = "group1"
-    consumer_name = "consumer1"
 
     while True:
         try:
-            consumer = RedisStreamConsumer(
-                redis_client, stream_key, consumer_group, consumer_name
-            )
+            consumer = RedisStreamConsumer(redis_client)
             consumer.start()
         except redis.ConnectionError as e:
-            logger.error(f"Redis connection error: {e}. Retrying in 5 seconds...")
-            time.sleep(5)
+            logger.error(f"Redis connection error: {e}")
         except KeyboardInterrupt:
             logger.info("Shutting down Redis Stream Consumer.")
             break
