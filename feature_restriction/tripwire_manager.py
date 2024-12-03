@@ -113,35 +113,6 @@ class TripWireManager:
                     f"Tripwire disengaged: Rule '{rule_name}' re-enabled: {affected_count}/{total_users} users affected ({percentage:.2%})."
                 )
 
-    def clear_rules(self) -> None:
-        """
-        Clear all tripwire states and affected user data.
-        """
-        logger.info("Clearing all tripwire states and affected user data.")
-        self.redis_client.delete(self.tripwire_states_key)
-        keys = self.redis_client.keys(f"{self.affected_users_prefix}*")
-        if keys:
-            self.redis_client.delete(*keys)
-
-    def get_tripwire_state(self, rule_name: str) -> bool:
-        """
-        Get the current state of a rule's tripwire (enabled/disabled).
-
-        :param rule_name: The name of the rule.
-        :return: True if the tripwire is currently disabled, False otherwise.
-        """
-        return self.redis_client.hget(self.tripwire_states_key, rule_name) == "1"
-
-    def get_affected_users(self, rule_name: str) -> Dict[str, float]:
-        """
-        Get the affected users for a specific rule.
-
-        :param rule_name: The name of the rule.
-        :return: A dictionary of user IDs and their timestamps.
-        """
-        affected_users_key = f"{self.affected_users_prefix}{rule_name}"
-        return self.redis_client.hgetall(affected_users_key)
-
     def get_disabled_rules(self) -> Dict[str, bool]:
         """
         Retrieve all rules and their disabled states from Redis.

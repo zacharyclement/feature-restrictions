@@ -152,6 +152,88 @@ The **Feature Restriction Service** is a high-performance system designed to man
 
 ---
 
+
+---
+
+### Adding New Event Handlers and Rules
+
+The system is designed to be extensible. Follow these steps to add new rules and event handlers.
+
+---
+
+#### **1. Adding a New Rule**
+
+**File**: `feature_restriction/rules.py`
+
+Create a new rule by subclassing `BaseRule` and implementing the `evaluate_rule` and `apply_rule` methods.
+
+##### Example:
+```python
+from feature_restriction.rules import BaseRule
+
+class NewRule(BaseRule):
+    name = "new_rule"
+
+    def evaluate_rule(self, user_data):
+        pass  # Logic for evaluating the rule condition
+
+    def apply_rule(self, user_data):
+        pass  # Logic for applying the rule
+```
+
+---
+
+**File**: `feature_restriction/registry.py`
+
+Register the new rule in the `register_default_rules` method of the `RuleRegistry`:
+```python
+def register_default_rules(self, tripwire_manager, user_manager):
+    self.register_rule(NewRule(tripwire_manager, user_manager))
+```
+
+---
+
+#### **2. Adding a New Event Handler**
+
+**File**: `feature_restriction/event_handlers.py`
+
+Create a new event handler by subclassing `BaseEventHandler` and implementing the `handle` method.
+
+##### Example:
+```python
+from feature_restriction.event_handlers import BaseEventHandler
+
+class NewEventHandler(BaseEventHandler):
+    event_name = "new_event"
+
+    def handle(self, event, user_data):
+        pass  # Logic for handling the event
+```
+
+---
+
+**File**: `feature_restriction/registry.py`
+
+Register the new event handler in the `register_default_event_handlers` method of the `EventHandlerRegistry`:
+```python
+def register_default_event_handlers(self, tripwire_manager, user_manager):
+    self.register_event_handler(
+        NewEventHandler(tripwire_manager, user_manager),
+        rule_names=["new_rule"]  # Associate with any applicable rules
+    )
+```
+
+---
+
+#### **3. Processing Events and Rules**
+
+The `RedisStreamConsumer` automatically processes registered event handlers and their associated rules.
+
+**No changes required** to the stream consumer logic, as it dynamically retrieves the handlers and rules from the registries.
+
+---
+
+
 ## Environment Variables
 
 ### Required Environment Variables
@@ -202,3 +284,7 @@ Sometimes a redis server is left running. To kill it:
 ```bash
   kill PID
    ```
+
+
+
+ 

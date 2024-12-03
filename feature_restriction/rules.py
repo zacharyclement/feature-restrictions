@@ -47,8 +47,9 @@ class BaseRule(ABC):
 
         if self.evaluate_rule(user_data):
             self.apply_rule(user_data)
-            logger.info(f"rule {self.name} applied to user {user_data.user_id}")
+            logger.info(f"applied rule {self.name} to user {user_data.user_id}")
             total_users = self.user_manager.get_user_count()
+            logger.info(f"disabled rules: {self.tripwire_manager.get_disabled_rules()}")
             self.tripwire_manager.apply_tripwire_if_needed(
                 self.name, user_data.user_id, total_users
             )
@@ -63,7 +64,9 @@ class UniqueZipCodeRule(BaseRule):
 
     def evaluate_rule(self, user_data: UserData) -> bool:
         if user_data.total_credit_cards <= 2:
-            logger.info("Not enough credit cards to evaluate the rule.")
+            logger.info(
+                f"Not enough credit cards to evaluate the rule. total_cards: {user_data.total_credit_cards}"
+            )
             return False
         ratio = len(user_data.unique_zip_codes) / user_data.total_credit_cards
         return ratio > 0.75

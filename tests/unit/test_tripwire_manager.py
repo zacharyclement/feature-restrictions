@@ -40,47 +40,6 @@ def test_apply_tripwire_if_needed(tripwire_manager, mock_redis):
     mock_redis.hset.assert_any_call("tripwire:states", "test_rule", "1")
 
 
-def test_clear_rules(tripwire_manager, mock_redis):
-    """
-    Test the clear_rules method.
-    """
-    mock_redis.keys.return_value = ["tripwire:affected_users:test_rule"]
-    tripwire_manager.clear_rules()
-
-    mock_redis.delete.assert_any_call("tripwire:states")
-    mock_redis.delete.assert_any_call("tripwire:affected_users:test_rule")
-
-
-def test_get_tripwire_state(tripwire_manager, mock_redis):
-    """
-    Test the get_tripwire_state method.
-    """
-    mock_redis.hget.return_value = "1"
-    assert tripwire_manager.get_tripwire_state("test_rule") is True
-
-    mock_redis.hget.return_value = "0"
-    assert tripwire_manager.get_tripwire_state("test_rule") is False
-
-
-def test_get_affected_users(tripwire_manager, mock_redis):
-    """
-    Test the get_affected_users method.
-    """
-    # Mock Redis response
-    timestamp = time.time()
-    mock_redis.hgetall.return_value = {"user_1": f"{timestamp}"}
-
-    # Act
-    affected_users = tripwire_manager.get_affected_users("test_rule")
-
-    # Validate
-    mock_redis.hgetall.assert_called_with("tripwire:affected_users:test_rule")
-    assert "user_1" in affected_users
-    assert (
-        abs(float(affected_users["user_1"]) - timestamp) < 0.1
-    ), "Timestamps do not match within tolerance."
-
-
 def test_get_disabled_rules(tripwire_manager, mock_redis):
     """
     Test the get_disabled_rules method.
