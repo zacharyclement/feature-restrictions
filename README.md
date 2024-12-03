@@ -231,18 +231,7 @@ The `RedisStreamConsumer` automatically processes registered event handlers and 
 
 **No changes required** to the stream consumer logic, as it dynamically retrieves the handlers and rules from the registries.
 
----
 
-
-## Environment Variables
-
-### Required Environment Variables
-
-| Variable       | Default Value | Description                              |
-|----------------|---------------|------------------------------------------|
-| `REDIS_HOST`   | `redis`       | Redis hostname within the Docker network.|
-
-All other settings (Redis ports and DB indexes) are defined in `feature_restriction/config.py`.
 
 ---
 
@@ -261,6 +250,7 @@ All other settings (Redis ports and DB indexes) are defined in `feature_restrict
 │   ├── utils.py                 # Utility functions and helpers
 │   ├── registry.py              # Event handler registry
 │   ├── publisher.py             # EventPublisher class
+│   ├── endpoint_access.py       # Abstraction of get access logic
 ├── tests/                       # Test suite
 │   ├── unit/                    # Unit tests
 │   ├── integration/             # Integration tests
