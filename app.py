@@ -48,8 +48,6 @@ async def startup_event():
     try:
         redis_client_stream.ping()
         logger.info("Connected to Redis stream successfully!")
-        redis_client_user.ping()
-        logger.info("Connected to Redis user successfully!")
         user_count = len(redis_client_user.keys("*"))
         logger.info(f"Number of users currently in Redis: {user_count}")
         tripwire_count = len(redis_client_tripwire.keys("*"))

@@ -190,3 +190,15 @@ All other settings (Redis ports and DB indexes) are defined in `feature_restrict
 ```
 
 ---
+
+### Kill Redis
+Sometimes a redis server is left running. To kill it:
+1. Find Redis Process ID:
+   ```bash
+   ps aux | grep redis
+   ```
+
+2. kill {insert PID from previous step}
+```bash
+  kill PID
+   ```
