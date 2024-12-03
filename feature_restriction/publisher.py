@@ -54,6 +54,10 @@ class EventPublisher:
 
             logger.info(f"Added event to Redis stream: {event_data}")
             return {"status": f"Event '{event.name}' added to the stream."}
+        except ValueError as ve:
+            # Handle validation errors explicitly
+            logger.error(f"Validation error: {ve}")
+            raise HTTPException(status_code=400, detail=str(ve))
         except HTTPException:
             # Re-raise already handled exceptions
             raise

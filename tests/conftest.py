@@ -1,12 +1,11 @@
 import os
 import subprocess
 import time
+from unittest.mock import MagicMock, patch
 
 import pytest
 import redis
 from fastapi.testclient import TestClient
-from unittest.mock import MagicMock, patch
-
 
 from app import app  # Import your FastAPI app
 from feature_restriction.config import (
@@ -16,69 +15,107 @@ from feature_restriction.config import (
     REDIS_HOST,
     REDIS_PORT,
 )
-
-
-import pytest
-from unittest.mock import MagicMock
-from feature_restriction.tripwire_manager import TripWireManager
+from feature_restriction.models import Event, UserData
+from feature_restriction.publisher import EventPublisher
 from feature_restriction.redis_user_manager import RedisUserManager
-from feature_restriction.models import UserData
+from feature_restriction.registry import EventHandlerRegistry
+from feature_restriction.tripwire_manager import TripWireManager
+from stream_consumer import RedisStreamConsumer
 
 
-# @pytest.fixture
-# def mock_redis():
-#     """
-#     Fixture to create a mocked Redis instance.
-#     """
-#     mock_redis = MagicMock()
-#     return mock_redis
+@pytest.fixture
+def event_publisher(mock_redis):
+    """
+    Fixture to provide an instance of EventPublisher with mocked Redis.
+    """
+    return EventPublisher()
 
 
-# @pytest.fixture
-# def tripwire_manager(mock_redis):
-#     """
-#     Fixture to initialize the TripWireManager with a mocked Redis instance.
-#     """
-#     manager = TripWireManager()
-#     manager.redis_client = mock_redis
-#     return manager
-
-# @pytest.fixture
-# def mock_redis():
-#     """
-#     Create a mock Redis client.
-#     """
-#     with patch(
-#         "feature_restriction.redis_user_manager.redis.StrictRedis"
-#     ) as mock_redis_cls:
-#         mock_redis_instance = MagicMock()
-#         mock_redis_cls.return_value = mock_redis_instance
-#         yield mock_redis_instance
+@pytest.fixture
+def valid_event():
+    """
+    Fixture to provide a valid Event instance.
+    """
+    return Event(
+        name="credit_card_added",
+        event_properties={
+            "user_id": "test_user",
+            "card_id": "card_001",
+            "zip_code": "12345",
+        },
+    )
 
 
-# @pytest.fixture
-# def user_manager(mock_redis):
-#     """
-#     Provide an instance of RedisUserManager with a mocked Redis client.
-#     """
-#     return RedisUserManager()
+@pytest.fixture
+def stream_consumer(mock_redis, tripwire_manager, user_manager):
+    """
+    Fixture to provide an instance of RedisStreamConsumer with mocked dependencies.
+    """
+    consumer = RedisStreamConsumer(
+        redis_client=mock_redis,
+        stream_key="test_event_stream",
+        consumer_group="test_group",
+        consumer_name="test_consumer",
+    )
+    consumer.redis_user_manager = user_manager
+    consumer.event_handler_registry = MagicMock()
+    return consumer
 
 
-# @pytest.fixture
-# def sample_user_data():
-#     """
-#     Create sample user data for testing.
-#     """
-#     return UserData(
-#         user_id="test_user",
-#         scam_message_flags=1,
-#         credit_cards={"card_001": "12345"},
-#         total_credit_cards=1,
-#         unique_zip_codes={"12345"},
-#         total_spend=100.0,
-#         total_chargebacks=5.0,
-#         access_flags={"can_message": True, "can_purchase": True},
-#     )
+@pytest.fixture
+def registry():
+    """
+    Provide an instance of EventHandlerRegistry for testing.
+    """
+    return EventHandlerRegistry()
+
+
+@pytest.fixture
+def mock_redis():
+    """
+    Create a mock Redis client for testing.
+    """
+    with patch("redis.StrictRedis") as mock_redis_cls:
+        mock_redis_instance = MagicMock()
+        mock_redis_cls.return_value = mock_redis_instance
+        yield mock_redis_instance
+
+
+@pytest.fixture
+def tripwire_manager(mock_redis):
+    """
+    Provide a TripWireManager instance with a mocked Redis client.
+    """
+    manager = TripWireManager()
+    manager.redis_client = mock_redis
+    return manager
+
+
+@pytest.fixture
+def user_manager(mock_redis):
+    """
+    Provide a RedisUserManager instance with a mocked Redis client.
+    """
+    manager = RedisUserManager()
+    manager.redis_client = mock_redis
+    return manager
+
+
+@pytest.fixture
+def sample_user_data():
+    """
+    Create sample UserData for testing.
+    """
+    return UserData(
+        user_id="test_user",
+        scam_message_flags=1,
+        credit_cards={"card_001": "12345"},
+        total_credit_cards=1,
+        unique_zip_codes={"12345"},
+        total_spend=100.0,
+        total_chargebacks=5.0,
+        access_flags={"can_message": True, "can_purchase": True},
+    )
 
 
 ###### MOCKS FOR INTEGRATION TETS ######
