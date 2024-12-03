@@ -1,3 +1,4 @@
 server.log
 dump.rdb
 .env
+.coverage
