@@ -105,19 +105,33 @@ The **Feature Restriction Service** is a high-performance system designed to man
      pip install -r requirements.txt
      ```
 
-2. **Redis Server**: Ensure a Redis instance is running locally:
-   ```bash
-   redis-server
-   ```
 
 ---
 
 ### Integration Tests
 
+**Redis Server**: Ensure a Redis instance is running locally:
+   ```bash
+   redis-server
+   ```
+
 1. Start the required services (Redis and FastAPI).
 2. Run the integration tests:
    ```bash
    pytest tests/integration
+   ```
+
+---
+### Unit Tests
+
+1. To run the unit tests, use the following command:
+   ```bash
+   pytest tests/unit
+   ```
+
+2. To get a coverage report in your terminal:
+   ```bash
+   pytest --cov=feature_restriction tests/unit
    ```
 
 ---
