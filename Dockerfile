@@ -18,5 +18,5 @@ COPY . /app/
 # Expose port for FastAPI
 EXPOSE 8000
 
-# Run both FastAPI server and Redis stream consumer
-CMD ["sh", "-c", "uvicorn app:app --host 0.0.0.0 --port 8000 --workers 4 & python stream_consumer.py"]
+# Default command (can be overridden by docker-compose)
+#CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000"]

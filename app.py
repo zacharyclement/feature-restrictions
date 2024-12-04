@@ -48,13 +48,24 @@ async def startup_event():
     try:
         redis_client_stream.ping()
         logger.info("Connected to Redis stream successfully!")
-        user_count = len(redis_client_user.keys("*"))
-        logger.info(f"Number of users currently in Redis: {user_count}")
-        tripwire_count = len(redis_client_tripwire.keys("*"))
-        logger.info(f"Number of tripwires currently in Redis: {tripwire_count}")
     except redis.ConnectionError as e:
         logger.error(f"Failed to connect to Redis: {e}")
         raise e
+    try:
+        redis_client_user.flushdb()
+        logger.info("Cleared Redis user database.")
+        user_count = len(redis_client_user.keys("*"))
+        logger.info(f"Number of users currently in Redis: {user_count}")
+    except Exception as e:
+        logger.error(f"Error during Redis cleanup: {e}")
+
+    try:
+        redis_client_tripwire.flushdb()
+        logger.info("Cleared Redis tripwire database.")
+        tripwire_count = len(redis_client_tripwire.keys("*"))
+        logger.info(f"Number of tripwires currently in Redis: {tripwire_count}")
+    except Exception as e:
+        logger.error(f"Error during Redis cleanup: {e}")
 
 
 @app.post("/event")

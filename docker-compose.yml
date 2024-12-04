@@ -1,4 +1,5 @@
 version: "3.8"
+
 services:
   redis:
     image: redis:latest
@@ -9,12 +10,32 @@ services:
   fastapi_app:
     build:
       context: .
+    container_name: fastapi_app
     depends_on:
       - redis
     ports:
       - "8000:8000"
     environment:
       - REDIS_HOST=redis
+    command: ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "12"]
 
+  stream_consumer:
+    build:
+      context: .
+    container_name: stream_consumer
+    depends_on:
+      - redis
+    environment:
+      - REDIS_HOST=redis
+    command: ["python", "stream_consumer.py"]
 
-  
+  locust:
+    image: locustio/locust
+    container_name: locust
+    depends_on:
+      - fastapi_app
+    ports:
+      - "8089:8089"
+    volumes:
+      - ./tests/load:/mnt/locust
+    command: -f /mnt/locust/locustfile.py
