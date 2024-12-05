@@ -32,24 +32,34 @@ class RedisStreamConsumer:
         event_registry,
     ):
         self.redis_client_stream = redis_client
-        self.stream_key = EVENT_STREAM_KEY
-        self.consumer_group = CONSUMER_GROUP
-        self.consumer_name = CONSUMER_NAME
-
-        # Ensure the consumer group exists
-        try:
-            self.redis_client_stream.xgroup_create(
-                self.stream_key, self.consumer_group, id="0", mkstream=True
-            )
-        except redis.exceptions.ResponseError:
-            logger.info(f"Consumer group '{self.consumer_group}' already exists.")
-
-        # Initialize user manager, tripwire manager, and registries
         self.user_manager = user_manager
         self.tripwire_manager = tripwire_manager
         self.rule_registry = rule_registry
         self.event_registry = event_registry
 
+        self._initialize_consumer_group()
+        self._initialize_registries()
+
+    def _initialize_consumer_group(self) -> None:
+        try:
+            # Check if the stream exists
+            if not self.redis_client_stream.exists(EVENT_STREAM_KEY):
+                logger.info(f"Stream '{EVENT_STREAM_KEY}' does not exist. Creating it.")
+                self.redis_client_stream.xadd(
+                    EVENT_STREAM_KEY, {"message": "init"}, id="*"
+                )
+
+            # Create the consumer group if it doesn't exist
+            self.redis_client_stream.xgroup_create(
+                EVENT_STREAM_KEY, CONSUMER_GROUP, id="0", mkstream=True
+            )
+        except redis.exceptions.ResponseError as e:
+            if "BUSYGROUP Consumer Group name already exists" in str(e):
+                logger.info(f"Consumer group '{CONSUMER_GROUP}' already exists.")
+            else:
+                raise e
+
+    def _initialize_registries(self) -> None:
         # Register defaults
         self.rule_registry.register_default_rules(
             self.tripwire_manager, self.user_manager
@@ -91,18 +101,19 @@ class RedisStreamConsumer:
                 f"display user data after rule: {self.user_manager.display_user_data(user_id)}"
             )
             logger.info(f"Event '{event.name}' processed successfully.")
+            logger.info(f"*******************")
 
         except Exception as e:
             logger.error(f"Error processing event '{event_id}': {e}")
 
     def start(self):
-        logger.info(f"Starting Redis Stream Consumer on stream: {self.stream_key}")
+        logger.info(f"Starting Redis Stream Consumer on stream: {EVENT_STREAM_KEY}")
         while True:
             try:
                 events = self.redis_client_stream.xreadgroup(
-                    groupname=self.consumer_group,
-                    consumername=self.consumer_name,
-                    streams={self.stream_key: ">"},
+                    groupname=CONSUMER_GROUP,
+                    consumername=CONSUMER_NAME,
+                    streams={EVENT_STREAM_KEY: ">"},
                     count=10,
                     block=1000,
                 )
@@ -110,7 +121,7 @@ class RedisStreamConsumer:
                     for event_id, event_data in event_list:
                         self.process_event(event_id, event_data)
                         self.redis_client_stream.xack(
-                            self.stream_key, self.consumer_group, event_id
+                            EVENT_STREAM_KEY, CONSUMER_GROUP, event_id
                         )
             except Exception as e:
                 logger.error(f"Error consuming events: {e}")
@@ -139,18 +150,44 @@ if __name__ == "__main__":
     redis_client_tripwire = redis.StrictRedis(
         host=REDIS_HOST, port=REDIS_PORT, db=REDIS_DB_TRIPWIRE, decode_responses=True
     )
+
+    try:
+        # Test connection to Redis stream and user databases
+        redis_client_stream.ping()
+        redis_client_user.ping()
+        redis_client_tripwire.ping()
+        logger.info(
+            "Successfully connected to both Redis stream, user, and tripwire databases!"
+        )
+
+        # Clear the stream database
+        redis_client_stream.flushdb()
+        logger.info("Cleared Redis stream database.")
+
+        # Clear the user database
+        redis_client_user.flushdb()
+        logger.info("Cleared Redis user database.")
+
+        redis_client_tripwire.flushdb()
+        logger.info("Cleared Redis tripwire database.")
+
+        # Log the number of keys in each database after cleanup
+        stream_keys_count = len(redis_client_stream.keys("*"))
+        user_keys_count = len(redis_client_user.keys("*"))
+        tripwire_count = len(redis_client_tripwire.keys("*"))
+
+        logger.info(f"Number of keys in Redis stream database: {stream_keys_count}")
+        logger.info(f"Number of keys in Redis user database: {user_keys_count}")
+        logger.info(f"Number of tripwires currently in Redis: {tripwire_count}")
+
+    except redis.ConnectionError as e:
+        logger.error(f"Failed to connect to Redis: {e}")
+        raise e
+
     user_manager = RedisUserManager(redis_client_user)
     tripwire_manager = TripWireManager(redis_client_tripwire)
     rule_registry = RuleRegistry()
     event_registry = EventHandlerRegistry()
-
-    try:
-        redis_client_tripwire.flushdb()
-        logger.info("Cleared Redis tripwire database.")
-        tripwire_count = len(redis_client_tripwire.keys("*"))
-        logger.info(f"Number of tripwires currently in Redis: {tripwire_count}")
-    except Exception as e:
-        logger.error(f"Error during Redis cleanup: {e}")
 
     while True:
         try:
