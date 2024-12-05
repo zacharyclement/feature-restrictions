@@ -19,9 +19,8 @@ class FeatureRestrictionServiceUser(FastHttpUser):
     Simulates a single user interacting with the service.
     """
 
-    # host = "http://localhost:8000" #works with postman POST
-    host = "http://fastapi_app:8000"  # Use the service name defined in Docker Compose
-    # host = "http://fastapi-app:8000"
+    host = "http://localhost:8000"  # Works with postman POST
+    # host = "http://fastapi_app:8000"  # Use the service name defined in Docker Compose
     wait_time = constant_pacing(1 / 2000)  # 1,500 RPS per task
 
     @task(1)
