@@ -6,6 +6,8 @@ import time
 import redis
 
 from feature_restriction.config import (
+    CONSUMER_GROUP,
+    CONSUMER_NAME,
     EVENT_STREAM_KEY,
     REDIS_DB_STREAM,
     REDIS_DB_TRIPWIRE,
@@ -31,8 +33,8 @@ class RedisStreamConsumer:
     ):
         self.redis_client_stream = redis_client
         self.stream_key = EVENT_STREAM_KEY
-        self.consumer_group = "group1"
-        self.consumer_name = "consumer1"
+        self.consumer_group = CONSUMER_GROUP
+        self.consumer_name = CONSUMER_NAME
 
         # Ensure the consumer group exists
         try:

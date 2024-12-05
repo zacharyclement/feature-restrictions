@@ -19,7 +19,7 @@ class EventPublisher:
     """
 
     def __init__(self, redis_client):
-        self.redis_client = redis_client
+        self.redis_client_stream = redis_client
 
     def add_event_to_stream(self, event: Event) -> dict:
         """
@@ -48,7 +48,7 @@ class EventPublisher:
             event_data["event_properties"] = json.dumps(event_data["event_properties"])
 
             # Add the event to the Redis stream
-            self.redis_client.xadd(EVENT_STREAM_KEY, event_data)
+            self.redis_client_stream.xadd(EVENT_STREAM_KEY, event_data)
 
             logger.info(f"Added event to Redis stream: {event_data}")
             return {"status": f"Event '{event.name}' added to the stream."}
