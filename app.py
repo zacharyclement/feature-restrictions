@@ -28,6 +28,7 @@ redis_client_stream = redis.StrictRedis(
 redis_client_user = redis.StrictRedis(
     host=REDIS_HOST, port=REDIS_PORT, db=REDIS_DB_USER, decode_responses=True
 )
+user_manager = RedisUserManager(redis_client_user)
 
 
 redis_client_tripwire = redis.StrictRedis(
@@ -43,29 +44,35 @@ logger.info("*********************************")
 @app.on_event("startup")
 async def startup_event():
     """
-    Test Redis connection and log details on startup.
+    Perform Redis connection checks and cleanup for stream and user databases on application startup.
     """
     try:
+        # Test connection to Redis stream and user databases
         redis_client_stream.ping()
-        logger.info("Connected to Redis stream successfully!")
+        redis_client_user.ping()
+        logger.info("Successfully connected to both Redis stream and user databases!")
+
+        # Clear the stream database
+        redis_client_stream.flushdb()
+        logger.info("Cleared Redis stream database.")
+
+        # Clear the user database
+        redis_client_user.flushdb()
+        logger.info("Cleared Redis user database.")
+
+        # Log the number of keys in each database after cleanup
+        stream_keys_count = len(redis_client_stream.keys("*"))
+        user_keys_count = len(redis_client_user.keys("*"))
+        logger.info(f"Number of keys in Redis stream database: {stream_keys_count}")
+        logger.info(f"Number of keys in Redis user database: {user_keys_count}")
+
     except redis.ConnectionError as e:
         logger.error(f"Failed to connect to Redis: {e}")
         raise e
-    try:
-        redis_client_user.flushdb()
-        logger.info("Cleared Redis user database.")
-        user_count = len(redis_client_user.keys("*"))
-        logger.info(f"Number of users currently in Redis: {user_count}")
-    except Exception as e:
-        logger.error(f"Error during Redis cleanup: {e}")
 
-    try:
-        redis_client_tripwire.flushdb()
-        logger.info("Cleared Redis tripwire database.")
-        tripwire_count = len(redis_client_tripwire.keys("*"))
-        logger.info(f"Number of tripwires currently in Redis: {tripwire_count}")
     except Exception as e:
-        logger.error(f"Error during Redis cleanup: {e}")
+        logger.error(f"An unexpected error occurred during Redis cleanup: {e}")
+        raise e
 
 
 @app.post("/event")
@@ -73,7 +80,7 @@ async def handle_event(event: Event):
     """
     Add the incoming event to the Redis stream.
     """
-    response = EventPublisher().add_event_to_stream(event)
+    response = EventPublisher(redis_client_stream).add_event_to_stream(event)
     return response
 
 
@@ -82,7 +89,7 @@ def can_message(user_id: str):
     """
     Check if a user has access to send/receive messages.
     """
-    endpoint_access = EndpointAccess()
+    endpoint_access = EndpointAccess(user_manager)
     return endpoint_access.check_access(user_id, "can_message")
 
 
@@ -91,7 +98,7 @@ def can_purchase(user_id: str):
     """
     Check if a user has access to make purchases.
     """
-    endpoint_access = EndpointAccess()
+    endpoint_access = EndpointAccess(user_manager)
     return endpoint_access.check_access(user_id, "can_purchase")
 
 
@@ -107,7 +114,7 @@ async def shutdown_event():
         logger.error(f"Error during Redis cleanup: {e}")
 
     try:
-        redis_client_tripwire.flushdb()
-        logger.info("Cleared Redis tripwire database.")
+        redis_client_stream.flushdb()
+        logger.info("Cleared Redis stream database.")
     except Exception as e:
         logger.error(f"Error during Redis cleanup: {e}")

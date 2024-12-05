@@ -38,16 +38,11 @@ class TripWireManager:
 
     """
 
-    def __init__(self):
+    def __init__(self, redis_client: redis.StrictRedis):
         """
         Initialize the TripWireManager with a dedicated Redis connection and configuration.
         """
-        self.redis_client = redis.StrictRedis(
-            host=REDIS_HOST,
-            port=REDIS_PORT,
-            db=REDIS_DB_TRIPWIRE,
-            decode_responses=True,
-        )
+        self.redis_client = redis_client
         self.time_window = 300  # Time window in seconds (e.g., 5 minutes)
         self.threshold = 0.05  # 5% of total users
 

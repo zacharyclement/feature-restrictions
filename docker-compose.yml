@@ -28,14 +28,3 @@ services:
     environment:
       - REDIS_HOST=redis
     command: ["python", "stream_consumer.py"]
-
-  locust:
-    image: locustio/locust
-    container_name: locust
-    depends_on:
-      - fastapi_app
-    ports:
-      - "8089:8089"
-    volumes:
-      - ./tests/load:/mnt/locust
-    command: -f /mnt/locust/locustfile.py

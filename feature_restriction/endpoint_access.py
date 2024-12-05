@@ -9,8 +9,8 @@ class EndpointAccess:
     Handles user access logic for the 'can_message' and 'can_purchase' endpoints.
     """
 
-    def __init__(self):
-        self.redis_user_manager = RedisUserManager()
+    def __init__(self, redis_user_manager: RedisUserManager):
+        self.redis_user_manager = redis_user_manager
 
     def check_access(self, user_id: str, access_key: str) -> dict:
         """

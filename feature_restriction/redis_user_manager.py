@@ -10,13 +10,11 @@ class RedisUserManager:
     A manager for handling user data stored in a Redis database.
     """
 
-    def __init__(self):
+    def __init__(self, redis_client):
         """
         Initialize the RedisUserManager with a Redis connection.
         """
-        self.redis_client = redis.StrictRedis(
-            host=REDIS_HOST, port=REDIS_PORT, db=REDIS_DB_USER, decode_responses=True
-        )
+        self.redis_client = redis_client
 
     def get_user(self, user_id: str) -> UserData:
         """

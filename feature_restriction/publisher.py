@@ -18,10 +18,8 @@ class EventPublisher:
     Handles adding events to a Redis stream.
     """
 
-    def __init__(self):
-        self.redis_client = redis.StrictRedis(
-            host=REDIS_HOST, port=REDIS_PORT, db=REDIS_DB_STREAM, decode_responses=True
-        )
+    def __init__(self, redis_client):
+        self.redis_client = redis_client
 
     def add_event_to_stream(self, event: Event) -> dict:
         """
