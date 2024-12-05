@@ -31,11 +31,6 @@ redis_client_user = redis.StrictRedis(
 user_manager = RedisUserManager(redis_client_user)
 
 
-redis_client_tripwire = redis.StrictRedis(
-    host=REDIS_HOST, port=REDIS_PORT, db=REDIS_DB_TRIPWIRE, decode_responses=True
-)
-
-
 # Logger setup
 logger.info("*********************************")
 logger.info("*********************************")

@@ -142,7 +142,6 @@ if __name__ == "__main__":
         host=REDIS_HOST, port=REDIS_PORT, db=REDIS_DB_STREAM, decode_responses=True
     )
 
-    # Needs user access to delete all users on shutdown
     redis_client_user = redis.StrictRedis(
         host=REDIS_HOST, port=REDIS_PORT, db=REDIS_DB_USER, decode_responses=True
     )

@@ -14,8 +14,8 @@ def test_scam_message_flagged_event(
     Test that RedisStreamConsumer processes 'scam_message_flagged' events.
     """
     # Arrange
-    publisher = EventPublisher()
-    user_manager = RedisUserManager()
+    publisher = EventPublisher(redis_stream)
+    user_manager = RedisUserManager(redis_user)
 
     event = Event(name="scam_message_flagged", event_properties={"user_id": "12345"})
 
@@ -36,8 +36,8 @@ def test_event_publishing_and_consuming(
     Test the integration between EventPublisher and RedisStreamConsumer.
     """
     # Arrange
-    publisher = EventPublisher()  # Uses redis_stream via EventPublisher
-    user_manager = RedisUserManager()
+    publisher = EventPublisher(redis_stream)  # Uses redis_stream via EventPublisher
+    user_manager = RedisUserManager(redis_user)
 
     # Create an Event object to mirror the API flow
     event = Event(
@@ -71,8 +71,8 @@ def test_event_processing_via_consumer(
     Test that RedisStreamConsumer processes events from the stream and updates user data.
     """
     # Arrange
-    publisher = EventPublisher()  # Uses redis_stream via EventPublisher
-    user_manager = RedisUserManager()
+    publisher = EventPublisher(redis_stream)  # Uses redis_stream via EventPublisher
+    user_manager = RedisUserManager(redis_user)
 
     # Create an Event object to simulate a realistic API call
     event = Event(name="scam_message_flagged", event_properties={"user_id": "12345"})
@@ -101,8 +101,8 @@ def test_chargeback_occurred_event(
     Test that RedisStreamConsumer processes 'chargeback_occurred' events.
     """
     # Arrange
-    publisher = EventPublisher()
-    user_manager = RedisUserManager()
+    publisher = EventPublisher(redis_stream)
+    user_manager = RedisUserManager(redis_user)
 
     event = Event(
         name="chargeback_occurred",
@@ -126,7 +126,7 @@ def test_e2e_concurrent_events(
     Test the end-to-end flow for concurrent events affecting multiple users.
     """
     # Arrange
-    user_manager = RedisUserManager()
+    user_manager = RedisUserManager(redis_user)
     users = [
         {"user_id": "12345", "card_id": "card_001", "zip_code": "54321"},
         {"user_id": "67890", "card_id": "card_002", "zip_code": "98765"},
@@ -165,6 +165,9 @@ def test_event_publishing_to_stream(
     """
     Test if events are successfully added to the Redis stream.
     """
+    # must delele because the initilization of the stream adds an init message like this
+    # [('1733373899511-0', {'message': 'init'}), ('1733373900356-0', {'event_properties': '{"user_id": "12345", "card_id": "card_678", "zip_code": "12345"}', 'name': 'credit_card_added'})]
+    redis_stream.delete(EVENT_STREAM_KEY)
     # Arrange
     event_payload = {
         "name": "credit_card_added",
@@ -203,7 +206,7 @@ def test_multiple_event_handling_via_endpoint(
     Test the processing of multiple events in sequence via the endpoint.
     """
     # Arrange
-    user_manager = RedisUserManager()
+    user_manager = RedisUserManager(redis_user)
     user_id = "12345"
 
     events = [

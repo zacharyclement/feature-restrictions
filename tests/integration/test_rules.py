@@ -11,7 +11,7 @@ def test_unique_zip_code_rule(
     """
     # Arrange
     user_id = "user_123"
-    user_manager = RedisUserManager()
+    user_manager = RedisUserManager(redis_user)
 
     # Add an initial credit card
     event_payload_1 = {
@@ -62,7 +62,7 @@ def test_scam_message_rule(
     """
     # Arrange
     user_id = "user_456"
-    user_manager = RedisUserManager()
+    user_manager = RedisUserManager(redis_user)
 
     # Flag the first scam message
     event_payload_1 = {
@@ -94,7 +94,7 @@ def test_chargeback_ratio_rule(
     """
     # Arrange
     user_id = "user_789"
-    user_manager = RedisUserManager()
+    user_manager = RedisUserManager(redis_user)
 
     # Add a purchase event to set the spend amount
     purchase_event = {

@@ -9,7 +9,7 @@ def test_tripwire_disables_rule_when_threshold_exceeded(redis_tripwire):
     Test that a rule is disabled via the tripwire when the affected user percentage exceeds the threshold.
     """
     # Arrange
-    tripwire_manager = TripWireManager()
+    tripwire_manager = TripWireManager(redis_tripwire)
     total_users = 100  # Total users in the system
     rule_name = "scam_message_rule"
 
@@ -37,7 +37,7 @@ def test_tripwire_removes_expired_users(redis_tripwire):
     Test that expired affected users are removed from the tripwire's affected user list.
     """
     # Arrange
-    tripwire_manager = TripWireManager()
+    tripwire_manager = TripWireManager(redis_tripwire)
     rule_name = "unique_zip_code_rule"
     total_users = 100
     current_time = time.time()
@@ -66,7 +66,7 @@ def test_tripwire_reactivates_rule_below_threshold(redis_tripwire):
     Test that a disabled rule is re-enabled when the percentage of affected users drops below the threshold.
     """
     # Arrange
-    tripwire_manager = TripWireManager()
+    tripwire_manager = TripWireManager(redis_tripwire)
     total_users = 100
     rule_name = "chargeback_ratio_rule"
 
@@ -94,14 +94,13 @@ def test_tripwire_and_rule_integration_stepwise(
     """
     Test the integration of rules, tripwire, and access flags via stepwise event posting.
     """
+    # Simulate the TripWireManager in Redis
+    tripwire_manager = TripWireManager(redis_tripwire)
     # Arrange
     user_1_id = "12345"
     user_2_id = "67890"
     total_users = 100  # Simulate total users in the system
     rule_name = "scam_message_rule"
-
-    # Simulate the TripWireManager in Redis
-    tripwire_manager = TripWireManager()
 
     # Prepare event payloads
     event_payload_user_1 = {
@@ -124,7 +123,7 @@ def test_tripwire_and_rule_integration_stepwise(
     time.sleep(0.5)  # Allow the consumer to process the event
 
     # Assert user_1's access after the first event
-    user_manager = RedisUserManager()
+    user_manager = RedisUserManager(redis_user)
     user_1_data = user_manager.get_user(user_1_id)
     assert user_1_data.scam_message_flags == 1  # Only one event processed
     assert user_1_data.access_flags["can_message"]  # Rule not yet triggered

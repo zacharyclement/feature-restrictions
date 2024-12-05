@@ -9,7 +9,7 @@ def test_can_purchase_enabled(redis_user, redis_stream, test_client):
     """
     # Arrange
     user_id = "user_123"
-    user_manager = RedisUserManager()
+    user_manager = RedisUserManager(redis_user)
     user_data = user_manager.create_user(user_id)
 
     # Act: Query the /canpurchase endpoint
@@ -26,7 +26,7 @@ def test_can_message_enabled(redis_user, redis_stream, test_client):
     """
     # Arrange
     user_id = "user_789"
-    user_manager = RedisUserManager()
+    user_manager = RedisUserManager(redis_user)
     user_data = user_manager.create_user(user_id)
 
     # Act: Query the /canmessage endpoint
@@ -45,7 +45,7 @@ def test_can_purchase_disabled(
     """
     # Arrange
     user_id = "user_456"
-    user_manager = RedisUserManager()
+    user_manager = RedisUserManager(redis_user)
 
     # Trigger a rule to disable purchase
     event_payload = {
@@ -100,7 +100,7 @@ def test_can_message_disabled(
     """
     # Arrange
     user_id = "user_101"
-    user_manager = RedisUserManager()
+    user_manager = RedisUserManager(redis_user)
 
     # Trigger the ScamMessageRule
     event_payload = {

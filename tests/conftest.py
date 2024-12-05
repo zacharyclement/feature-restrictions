@@ -18,7 +18,7 @@ from feature_restriction.config import (
 from feature_restriction.models import Event, UserData
 from feature_restriction.publisher import EventPublisher
 from feature_restriction.redis_user_manager import RedisUserManager
-from feature_restriction.registry import EventHandlerRegistry
+from feature_restriction.registry import EventHandlerRegistry, RuleRegistry
 from feature_restriction.tripwire_manager import TripWireManager
 from stream_consumer import RedisStreamConsumer
 
@@ -121,6 +121,14 @@ def sample_user_data():
 ###### MOCKS FOR INTEGRATION TETS ######
 #######################################################################################
 @pytest.fixture(scope="function")
+def test_client():
+    """
+    Fixture to provide a FastAPI test client.
+    """
+    return TestClient(app)
+
+
+@pytest.fixture(scope="function")
 def redis_stream():
     """
     Fixture to provide a clean Redis instance for stream testing.
@@ -144,14 +152,6 @@ def redis_user():
     client.flushdb()  # Clear the Redis database
     yield client
     client.flushdb()  # Clean up after the test
-
-
-@pytest.fixture(scope="function")
-def test_client():
-    """
-    Fixture to provide a FastAPI test client.
-    """
-    return TestClient(app)
 
 
 @pytest.fixture(scope="function")
@@ -202,3 +202,17 @@ def stream_consumer_subprocess():
     stdout, stderr = process.communicate()
     print("Consumer STDOUT:", stdout.decode())
     print("Consumer STDERR:", stderr.decode())
+
+
+# @pytest.fixture(scope="function")
+# def redis_consumer(redis_stream, redis_user, redis_tripwire):
+#     """Provide an instance of the RedisStreamConsumer for testing."""
+#     user_manager = RedisUserManager(redis_user)
+#     tripwire_manager = TripWireManager(redis_tripwire)
+#     rule_registry = RuleRegistry()
+#     event_registry = EventHandlerRegistry()
+
+#     consumer = RedisStreamConsumer(
+#         redis_stream, user_manager, tripwire_manager, rule_registry, event_registry
+#     )
+#     yield consumer

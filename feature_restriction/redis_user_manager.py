@@ -32,7 +32,9 @@ class RedisUserManager:
             else:
                 raise KeyError(f"User ID '{user_id}' not found.")
         except Exception as e:
-            logger.warning(f"Error in get_user for user_id '{user_id}': {e}")
+            logger.warning(
+                f"Error in get_user for user_id '{user_id}': {e}"
+            )  # this should be changed for production
             raise
 
     def create_user(self, user_id: str) -> UserData:
