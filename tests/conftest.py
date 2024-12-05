@@ -24,11 +24,81 @@ from stream_consumer import RedisStreamConsumer
 
 
 @pytest.fixture
+def mock_redis():
+    """
+    Create separate mock Redis clients for stream, user, and tripwire databases.
+    """
+    with patch("redis.StrictRedis") as mock_redis_cls:
+        stream_redis_mock = MagicMock()
+        user_redis_mock = MagicMock()
+        tripwire_redis_mock = MagicMock()
+
+        mock_redis_cls.side_effect = [
+            stream_redis_mock,
+            user_redis_mock,
+            tripwire_redis_mock,
+        ]
+        yield {
+            "stream": stream_redis_mock,
+            "user": user_redis_mock,
+            "tripwire": tripwire_redis_mock,
+        }
+
+
+@pytest.fixture
+def tripwire_manager(mock_redis):
+    """
+    Provide a TripWireManager instance with a mocked Redis client.
+    """
+    manager = TripWireManager(mock_redis["tripwire"])
+    return manager
+
+
+@pytest.fixture
+def user_manager(mock_redis):
+    """
+    Provide a RedisUserManager instance with a mocked Redis client.
+    """
+    manager = RedisUserManager(mock_redis["user"])
+    return manager
+
+
+@pytest.fixture
+def rule_registry():
+    """
+    Provide a mocked RuleRegistry instance.
+    """
+    return RuleRegistry()
+
+
+@pytest.fixture
+def event_registry():
+    """
+    Provide a mocked EventHandlerRegistry instance.
+    """
+    return EventHandlerRegistry()
+
+
+@pytest.fixture
+def stream_consumer(
+    mock_redis, user_manager, tripwire_manager, rule_registry, event_registry
+):
+    """
+    Provide an instance of RedisStreamConsumer with mocked dependencies.
+    """
+    return RedisStreamConsumer(
+        redis_client=mock_redis["stream"],
+        user_manager=user_manager,
+        tripwire_manager=tripwire_manager,
+        rule_registry=rule_registry,
+        event_registry=event_registry,
+    )
+
+
+@pytest.fixture
 def event_publisher(mock_redis):
-    """
-    Fixture to provide an instance of EventPublisher with mocked Redis.
-    """
-    return EventPublisher()
+    """Fixture to create an EventPublisher instance with a mock Redis client."""
+    return EventPublisher(redis_client=mock_redis["stream"])
 
 
 @pytest.fixture
@@ -47,61 +117,6 @@ def valid_event():
 
 
 @pytest.fixture
-def stream_consumer(mock_redis, tripwire_manager, user_manager):
-    """
-    Fixture to provide an instance of RedisStreamConsumer with mocked dependencies.
-    """
-    consumer = RedisStreamConsumer(
-        redis_client=mock_redis,
-        stream_key="test_event_stream",
-        consumer_group="test_group",
-        consumer_name="test_consumer",
-    )
-    consumer.redis_user_manager = user_manager
-    consumer.event_handler_registry = MagicMock()
-    return consumer
-
-
-@pytest.fixture
-def registry():
-    """
-    Provide an instance of EventHandlerRegistry for testing.
-    """
-    return EventHandlerRegistry()
-
-
-@pytest.fixture
-def mock_redis():
-    """
-    Create a mock Redis client for testing.
-    """
-    with patch("redis.StrictRedis") as mock_redis_cls:
-        mock_redis_instance = MagicMock()
-        mock_redis_cls.return_value = mock_redis_instance
-        yield mock_redis_instance
-
-
-@pytest.fixture
-def tripwire_manager(mock_redis):
-    """
-    Provide a TripWireManager instance with a mocked Redis client.
-    """
-    manager = TripWireManager()
-    manager.redis_client = mock_redis
-    return manager
-
-
-@pytest.fixture
-def user_manager(mock_redis):
-    """
-    Provide a RedisUserManager instance with a mocked Redis client.
-    """
-    manager = RedisUserManager()
-    manager.redis_client = mock_redis
-    return manager
-
-
-@pytest.fixture
 def sample_user_data():
     """
     Create sample UserData for testing.
@@ -116,6 +131,17 @@ def sample_user_data():
         total_chargebacks=5.0,
         access_flags={"can_message": True, "can_purchase": True},
     )
+
+
+# @pytest.fixture
+# def mock_redis():
+#     """
+#     Create a mock Redis client for testing.
+#     """
+#     with patch("redis.StrictRedis") as mock_redis_cls:
+#         mock_redis_instance = MagicMock()
+#         mock_redis_cls.return_value = mock_redis_instance
+#         yield mock_redis_instance
 
 
 ###### MOCKS FOR INTEGRATION TETS ######
@@ -202,17 +228,3 @@ def stream_consumer_subprocess():
     stdout, stderr = process.communicate()
     print("Consumer STDOUT:", stdout.decode())
     print("Consumer STDERR:", stderr.decode())
-
-
-# @pytest.fixture(scope="function")
-# def redis_consumer(redis_stream, redis_user, redis_tripwire):
-#     """Provide an instance of the RedisStreamConsumer for testing."""
-#     user_manager = RedisUserManager(redis_user)
-#     tripwire_manager = TripWireManager(redis_tripwire)
-#     rule_registry = RuleRegistry()
-#     event_registry = EventHandlerRegistry()
-
-#     consumer = RedisStreamConsumer(
-#         redis_stream, user_manager, tripwire_manager, rule_registry, event_registry
-#     )
-#     yield consumer

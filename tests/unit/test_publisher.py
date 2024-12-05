@@ -6,17 +6,6 @@ from fastapi import HTTPException
 from feature_restriction.models import Event
 
 
-@pytest.fixture
-def mock_redis():
-    """
-    Fixture to create a mock Redis instance.
-    """
-    with patch("feature_restriction.publisher.redis.StrictRedis") as mock_redis_cls:
-        mock_redis_instance = MagicMock()
-        mock_redis_cls.return_value = mock_redis_instance
-        yield mock_redis_instance
-
-
 def test_add_event_to_stream_success(event_publisher, mock_redis, valid_event):
     """
     Test adding a valid event to the Redis stream successfully.
@@ -25,7 +14,7 @@ def test_add_event_to_stream_success(event_publisher, mock_redis, valid_event):
     response = event_publisher.add_event_to_stream(valid_event)
 
     # Assert the Redis xadd method was called correctly
-    mock_redis.xadd.assert_called_once()
+    mock_redis["stream"].xadd.assert_called_once()
     assert "status" in response
     assert response["status"] == f"Event '{valid_event.name}' added to the stream."
 
@@ -61,7 +50,7 @@ def test_add_event_to_stream_redis_error(event_publisher, mock_redis, valid_even
     Test handling a Redis error when adding an event to the stream.
     """
     # Simulate a Redis error
-    mock_redis.xadd.side_effect = Exception("Redis connection error")
+    mock_redis["stream"].xadd.side_effect = Exception("Redis connection error")
 
     with pytest.raises(HTTPException) as exc_info:
         event_publisher.add_event_to_stream(valid_event)

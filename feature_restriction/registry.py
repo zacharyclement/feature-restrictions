@@ -56,11 +56,28 @@ class EventHandlerRegistry:
         self.event_rules_mapping = {}
 
     def register_event_handler(self, event_handler_instance, rule_names=None):
+        """
+        Registers an event handler with an optional list of rule names.
+
+        :param event_handler_instance: The instance of the event handler to register.
+        :param rule_names: Optional list of rule names associated with the event.
+        :raises ValueError: If the handler does not have an 'event_name' attribute or if the event name is already registered.
+        """
         event_name = getattr(event_handler_instance, "event_name", None)
         if not event_name:
             raise ValueError(
                 f"Handler '{event_handler_instance.__class__.__name__}' must have 'event_name' attribute."
             )
+
+        # Check for duplicate event name
+        if event_name in self.event_handler_registry:
+            existing_handler = self.event_handler_registry[
+                event_name
+            ].__class__.__name__
+            raise ValueError(
+                f"Duplicate event name detected: '{event_name}' is already registered by handler '{existing_handler}'."
+            )
+
         self.event_handler_registry[event_name] = event_handler_instance
         self.event_rules_mapping[event_name] = rule_names or []
 

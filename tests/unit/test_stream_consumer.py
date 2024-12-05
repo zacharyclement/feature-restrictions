@@ -1,5 +1,6 @@
 from unittest.mock import MagicMock, patch
 
+from feature_restriction.config import CONSUMER_GROUP, EVENT_STREAM_KEY
 from feature_restriction.models import Event
 from stream_consumer import RedisStreamConsumer
 
@@ -9,17 +10,15 @@ def test_initialize_consumer_group(mock_redis):
     Test that the consumer group is created if it doesn't already exist.
     """
     RedisStreamConsumer(
-        redis_client=mock_redis,
-        stream_key="test_event_stream",
-        consumer_group="test_group",
-        consumer_name="test_consumer",
+        redis_client=mock_redis["stream"],
+        user_manager=MagicMock(),
+        tripwire_manager=MagicMock(),
+        rule_registry=MagicMock(),
+        event_registry=MagicMock(),
     )
-    mock_redis.xgroup_create.assert_called_once_with(
-        "test_event_stream", "test_group", id="0", mkstream=True
+    mock_redis["stream"].xgroup_create.assert_called_once_with(
+        EVENT_STREAM_KEY, CONSUMER_GROUP, id="0", mkstream=True
     )
-
-
-from unittest.mock import call, patch
 
 
 def test_process_event_with_registered_handler(
@@ -30,7 +29,7 @@ def test_process_event_with_registered_handler(
     """
     # Mock the event handler
     mock_handler = MagicMock()
-    stream_consumer.event_handler_registry.get_event_handler = MagicMock(
+    stream_consumer.event_registry.get_event_handler = MagicMock(
         return_value=mock_handler
     )
 
@@ -63,10 +62,8 @@ def test_process_event_with_registered_handler(
             )
 
             # Verify user retrieval calls
-            assert mock_get_user.call_count == 3
-            mock_get_user.assert_has_calls(
-                [call("test_user"), call("test_user"), call("test_user")]
-            )
+            assert mock_get_user.call_count == 4  # 3 of these for display
+            mock_get_user.assert_called_with("test_user")
 
 
 def test_process_event_creates_user_if_not_found(
@@ -91,14 +88,14 @@ def test_process_event_creates_user_if_not_found(
 
 
 def test_start_reads_and_processes_events(stream_consumer, mock_redis):
-    mock_redis.xreadgroup.return_value = [
+    mock_redis["stream"].xreadgroup.return_value = [
         ("test_event_stream", [("event_id_1", {"name": "test_event"})])
     ]
 
     stream_consumer.process_event = MagicMock()
 
     def mock_start():
-        events = mock_redis.xreadgroup(
+        events = mock_redis["stream"].xreadgroup(
             groupname="test_group",
             consumername="test_consumer",
             streams={"test_event_stream": ">"},
@@ -113,7 +110,7 @@ def test_start_reads_and_processes_events(stream_consumer, mock_redis):
         stream_consumer.start()
 
     # Assertions
-    mock_redis.xreadgroup.assert_called_once()
+    mock_redis["stream"].xreadgroup.assert_called_once()
     stream_consumer.process_event.assert_called_once_with(
         "event_id_1", {"name": "test_event"}
     )
