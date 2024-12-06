@@ -16,22 +16,19 @@ from feature_restriction.publisher import EventPublisher
 from feature_restriction.redis_user_manager import RedisUserManager
 from feature_restriction.utils import logger
 
-# Initialize FastAPI app
 app = FastAPI()
 
-# Redis stream client, for testing connection on start
+
 redis_client_stream = redis.StrictRedis(
     host=REDIS_HOST, port=REDIS_PORT, db=REDIS_DB_STREAM, decode_responses=True
 )
 
-# Needs user access to delete all users on shutdown
 redis_client_user = redis.StrictRedis(
     host=REDIS_HOST, port=REDIS_PORT, db=REDIS_DB_USER, decode_responses=True
 )
 user_manager = RedisUserManager(redis_client_user)
 
 
-# Logger setup
 logger.info("*********************************")
 logger.info("*********************************")
 

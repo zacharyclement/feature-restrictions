@@ -10,6 +10,34 @@ The **Feature Restriction Service** is a high-performance system designed to man
 
 ![Architecture Diagram](images/architecture.png)
 
+---
+
+## Project Structure
+
+```text
+.
+├── app.py                       # FastAPI application entry point
+├── stream_consumer.py           # Redis Stream Consumer script
+├── feature_restriction/         # Application modules
+│   ├── config.py                # Configuration settings (e.g., Redis DBs)
+│   ├── models.py                # Pydantic models for events and user data
+│   ├── redis_user_manager.py    # User data management logic
+│   ├── tripwire_manager.py      # Tripwire management logic
+│   ├── rules.py                 # Business rules for events
+│   ├── utils.py                 # Utility functions and helpers
+│   ├── registry.py              # Event handler registry
+│   ├── publisher.py             # EventPublisher class
+│   ├── endpoint_access.py       # Abstraction of get access logic
+├── tests/                       # Test suite
+│   ├── unit/                    # Unit tests
+│   ├── integration/             # Integration tests
+│   ├── load/                    # Load testing scripts
+│   │   ├── locustfile.py        # Locust configuration for load testing
+├── requirements.txt             # Python dependencies
+├── Dockerfile                   # Dockerfile for the FastAPI app
+├── docker-compose.yml           # Docker Compose file for all services
+```
+
 
 ---
 
@@ -19,17 +47,13 @@ The **Feature Restriction Service** is a high-performance system designed to man
    - Events are posted to the FastAPI `/event` endpoint.
    - Events are stored in a Redis stream.
 
-2. **Stream Processing**:
+2. **Stream Processing - Event Handling, Rules, and Tripwires**:
    - The Stream Consumer reads events from the Redis stream.
-   - Applies business rules based on event data.
-   - Updates user data and tripwire states in Redis.
+   - Events are processed based on their `name` field, updating user data.
+   - User data is assessed against various rules. If a rule is violated, feature access is restricted.
+   - Rules are evaluated for potential tripwire activation. Tripwires disable rules when thresholds are exceeded.
 
-3. **Event Handling, Rules, and Tripwires**:
-    - Events are processed based on their `name` field, updating user data.
-    - User data is assessed against various rules. If a rule is violated, feature access is restricted.
-    - Rules are evaluated for potential tripwire activation. Tripwires disable rules when thresholds are exceeded.
-
-4. **Feature Restriction Queries**:
+3. **Feature Restriction Queries**:
    - Clients query endpoints such as `/canmessage` or `/canpurchase` to check feature availability for users.
    - Responses are determined by processed user data in Redis.
 
@@ -55,9 +79,8 @@ The **Feature Restriction Service** is a high-performance system designed to man
    docker-compose up --build
    ```
 
-2. **Verify Running Services**:
-   - FastAPI app: [http://localhost:8000](http://localhost:8000)
-   - Redis: Runs internally within the Docker network.
+2. **Endpoint**:
+   - Endpoint (publisher): [http://localhost:8000](http://localhost:8000) 
 
 3. **Stop Services**:
    ```bash
@@ -85,7 +108,7 @@ The **Feature Restriction Service** is a high-performance system designed to man
 
 3. **GET /canpurchase?user_id={user_id}**: Check if the user can make purchases.
 
-**note**: with container running, see link for swagger docs: http://127.0.0.1:8000/docs#/
+**note**: with container running, see link for swagger docs: http://localhost:8000/docs#/
 
 ---
 
@@ -104,18 +127,24 @@ The **Feature Restriction Service** is a high-performance system designed to man
      ```bash
      pip install -r requirements.txt
      ```
+   
 
 
 ---
 
 ### Integration Tests
 
+**edis must be installed on your system**
+      ```bash
+      brew install redis
+      ```
+
 **Redis Server**: Ensure a Redis instance is running locally:
    ```bash
    redis-server
    ```
 
-1. Start the required services (Redis and FastAPI).
+1. Start redis.
 2. Run the integration tests:
    ```bash
    pytest tests/integration
@@ -128,6 +157,7 @@ The **Feature Restriction Service** is a high-performance system designed to man
    ```bash
    pytest tests/unit
    ```
+   **note**: make sure redis is NOT running.
 
 2. To get a coverage report in your terminal:
    ```bash
@@ -149,8 +179,6 @@ The **Feature Restriction Service** is a high-performance system designed to man
    ```
 
 3. Open the Locust web interface: [http://localhost:8089](http://localhost:8089).  **Note**: tests run with 100 users and 50 ramp up for 30 seconds.
-
----
 
 
 ---
@@ -233,33 +261,7 @@ The `RedisStreamConsumer` automatically processes registered event handlers and 
 
 
 
----
 
-## Project Structure
-
-```text
-.
-├── app.py                       # FastAPI application entry point
-├── stream_consumer.py           # Redis Stream Consumer script
-├── feature_restriction/         # Application modules
-│   ├── config.py                # Configuration settings (e.g., Redis DBs)
-│   ├── models.py                # Pydantic models for events and user data
-│   ├── redis_user_manager.py    # User data management logic
-│   ├── tripwire_manager.py      # Tripwire management logic
-│   ├── rules.py                 # Business rules for events
-│   ├── utils.py                 # Utility functions and helpers
-│   ├── registry.py              # Event handler registry
-│   ├── publisher.py             # EventPublisher class
-│   ├── endpoint_access.py       # Abstraction of get access logic
-├── tests/                       # Test suite
-│   ├── unit/                    # Unit tests
-│   ├── integration/             # Integration tests
-│   ├── load/                    # Load testing scripts
-│   │   ├── locustfile.py        # Locust configuration for load testing
-├── requirements.txt             # Python dependencies
-├── Dockerfile                   # Dockerfile for the FastAPI app
-├── docker-compose.yml           # Docker Compose file for all services
-```
 
 ---
 
