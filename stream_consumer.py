@@ -2,6 +2,7 @@ import json
 import logging
 import threading
 import time
+from typing import List
 
 import redis
 
@@ -83,6 +84,7 @@ class RedisStreamConsumer:
             logger.info(
                 f"display user data before handler: {self.user_manager.display_user_data(user_id)}"
             )
+            # STEP !: process the event
             handler = self.event_registry.get_event_handler(event.name)
             if handler:
                 handler.handle(event, user_data)
@@ -91,11 +93,26 @@ class RedisStreamConsumer:
                 f"display user data after handler: {self.user_manager.display_user_data(user_id)}"
             )
 
-            rule_names = self.event_registry.get_rules_for_event(event.name)
+            # STEP 2: process the rules
+            rule_names: List[str] = self.event_registry.get_rules_for_event(event.name)
             for rule_name in rule_names:
                 rule = self.rule_registry.get_rule(rule_name)
                 if rule:
-                    rule.process_rule(user_data)
+                    rule_applied: bool = rule.process_rule(user_data)
+
+                    # Apply the tripwire logic after processing the rule
+
+                    if rule_applied:
+                        # STEP 3: apply tripwire if needed
+                        logger.info(
+                            f"disabled rules before: {self.tripwire_manager.get_disabled_rules()}"
+                        )
+                        self.tripwire_manager.apply_tripwire_if_needed(
+                            rule.name, user_data.user_id
+                        )
+                        logger.info(
+                            f"disabled rules after: {self.tripwire_manager.get_disabled_rules()}"
+                        )
 
             logger.info(
                 f"display user data after rule: {self.user_manager.display_user_data(user_id)}"

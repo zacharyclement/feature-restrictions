@@ -33,7 +33,7 @@ class BaseRule(ABC):
         """
         pass
 
-    def process_rule(self, user_data: UserData):
+    def process_rule(self, user_data: UserData) -> bool:
         """
         Process the rule:
         - Check if the rule is disabled.
@@ -43,20 +43,16 @@ class BaseRule(ABC):
         logger.info(f"Processing rule: {self.name}")
         if self.tripwire_manager.is_rule_disabled_via_tripwire(self.name):
             logger.info(f"Rule '{self.name}' is currently disabled via tripwire.")
-            return
+            return False
 
         if self.evaluate_rule(user_data):
             self.apply_rule(user_data)
             logger.info(f"applied rule {self.name} to user {user_data.user_id}")
-            total_users = self.user_manager.get_user_count()
-            logger.info(f"disabled rules: {self.tripwire_manager.get_disabled_rules()}")
-            self.tripwire_manager.apply_tripwire_if_needed(
-                self.name, user_data.user_id, total_users
-            )
-            logger.info(f"Rule '{self.name}' processed for user '{user_data.user_id}'.")
+
             # Save the updated user data back to Redis
             self.user_manager.save_user(user_data)
             logger.info(f"User data saved after processing rule: {self.name}")
+            return True
 
 
 class UniqueZipCodeRule(BaseRule):
