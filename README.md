@@ -112,20 +112,20 @@ The **Feature Restriction Service** is a high-performance system designed to man
 
 2. **GET /canmessage?user_id={user_id}**: Check if the user can send messages.
 
-- Response:
-     ```json
-      {
-         "can_message": true
-      }
-     ```
+   - Response:
+      ```json
+         {
+            "can_message": true
+         }
+      ```
 
 3. **GET /canpurchase?user_id={user_id}**: Check if the user can make purchases.
-- Response:
-     ```json
-      {
-         "can_purchase": true
-      }
-     ```
+   - Response:
+      ```json
+         {
+            "can_purchase": true
+         }
+      ```
 
 **note**: with container running, see link for swagger docs: http://localhost:8000/docs#/
 
