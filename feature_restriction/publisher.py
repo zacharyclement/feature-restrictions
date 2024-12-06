@@ -16,6 +16,11 @@ from feature_restriction.utils import logger
 class EventPublisher:
     """
     Handles adding events to a Redis stream.
+
+    Parameters
+    ----------
+    redis_client : redis.Redis
+        A Redis client instance connected to the appropriate Redis database.
     """
 
     def __init__(self, redis_client):
@@ -25,9 +30,24 @@ class EventPublisher:
         """
         Add an event to the Redis stream.
 
-        :param event: An Event object to be added to the stream.
-        :return: A success message if the event was added successfully.
-        :raises HTTPException: If the event could not be added to the stream.
+        Parameters
+        ----------
+        event : Event
+            An Event object to be added to the stream. Must contain a valid `name`, `event_properties`,
+            and a `user_id`.
+
+        Returns
+        -------
+        dict
+            A dictionary containing a success message if the event was added successfully.
+
+        Raises
+        ------
+        HTTPException
+            If the event could not be added to the stream due to missing fields, validation errors,
+            or unexpected issues.
+        ValueError
+            If the event is missing required fields.
         """
         try:
             logger.info(f"Received event: {event}")

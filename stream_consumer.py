@@ -24,6 +24,39 @@ from feature_restriction.utils import logger
 
 
 class RedisStreamConsumer:
+    """
+    A consumer for processing events from a Redis stream.
+
+    This class initializes a Redis stream consumer group, processes events from the stream, and applies
+    event handlers and rules for each event.
+
+    Parameters
+    ----------
+    redis_client : redis.StrictRedis
+        The Redis client connected to the event stream database.
+    user_manager : RedisUserManager
+        The manager for handling user-related operations in Redis.
+    tripwire_manager : TripWireManager
+        The manager for handling tripwire logic in Redis.
+    rule_registry : RuleRegistry
+        The registry for managing rules applied to events.
+    event_registry : EventHandlerRegistry
+        The registry for managing event handlers.
+
+    Attributes
+    ----------
+    redis_client_stream : redis.StrictRedis
+        The Redis client connected to the event stream database.
+    user_manager : RedisUserManager
+        The manager for handling user-related operations.
+    tripwire_manager : TripWireManager
+        The manager for tripwire logic.
+    rule_registry : RuleRegistry
+        The registry for managing rules.
+    event_registry : EventHandlerRegistry
+        The registry for managing event handlers.
+    """
+
     def __init__(
         self,
         redis_client,
@@ -42,6 +75,16 @@ class RedisStreamConsumer:
         self._initialize_registries()
 
     def _initialize_consumer_group(self) -> None:
+        """
+        Initializes the Redis stream consumer group.
+
+        Creates the consumer group if it does not already exist. If the stream does not exist, it is created.
+
+        Raises
+        ------
+        redis.exceptions.ResponseError
+            If there is an error creating the consumer group.
+        """
         try:
             # Check if the stream exists
             if not self.redis_client_stream.exists(EVENT_STREAM_KEY):
@@ -61,6 +104,9 @@ class RedisStreamConsumer:
                 raise e
 
     def _initialize_registries(self) -> None:
+        """
+        Registers default rules and event handlers in the corresponding registries.
+        """
         # Register defaults
         self.rule_registry.register_default_rules(
             self.tripwire_manager, self.user_manager
@@ -70,6 +116,23 @@ class RedisStreamConsumer:
         )
 
     def process_event(self, event_id, event_data):
+        """
+        Processes a single event from the Redis stream.
+
+        This method applies event handlers and rules associated with the event and updates the user data accordingly.
+
+        Parameters
+        ----------
+        event_id : str
+            The unique identifier of the event.
+        event_data : dict
+            The data associated with the event.
+
+        Raises
+        ------
+        Exception
+            If an error occurs during event processing.
+        """
         try:
             logger.info(f"Processing event: {event_data.get('name')}")
             event_data["event_properties"] = json.loads(event_data["event_properties"])
@@ -124,6 +187,11 @@ class RedisStreamConsumer:
             logger.error(f"Error processing event '{event_id}': {e}")
 
     def start(self):
+        """
+        Starts consuming events from the Redis stream.
+
+        Continuously reads events from the stream, processes them, and acknowledges them in the consumer group.
+        """
         logger.info(f"Starting Redis Stream Consumer on stream: {EVENT_STREAM_KEY}")
         while True:
             try:
@@ -145,7 +213,7 @@ class RedisStreamConsumer:
 
     def stop(self):
         """
-        Signal the consumer to stop and perform cleanup.
+        Signals the consumer to stop and performs cleanup operations.
         """
         logger.info("Stopping Redis Stream Consumer...")
         self._stop_event.set()

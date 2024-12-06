@@ -9,13 +9,36 @@ from feature_restriction.utils import logger
 
 class TripWireManager:
     """
-    Automatically disables a rule if too many users are affected within a specified time window.
-    Manages state for rules, including tripwires and affected users, using a dedicated Redis database.
-    Uses unix timestamps to track affected users and calculate the percentage of affected users.
+    Manages tripwire states and user activity for rules to prevent rules from affecting too many users.
+
+    This class uses a dedicated Redis database to track rule states and affected users. If the number of affected
+    users for a rule exceeds a certain threshold within a specified time window, the rule is disabled
+    (i.e., the tripwire is "thrown"). The rule can be re-enabled if the number of affected users falls below the threshold.
 
     Example Redis Keys:
-    - tripwire:states: Stores tripwire disabled states as a hash.
-    - tripwire:affected_users:{rule_name}: Stores affected users for a specific rule as a Redis hash.
+        - `tripwire:states`: Stores the disabled states of rules as a hash.
+        - `tripwire:affected_users:{rule_name}`: Tracks affected users for a specific rule as a Redis hash.
+
+    Attributes
+    ----------
+    redis_client : redis.StrictRedis
+        Redis connection used for managing tripwire states and affected users.
+    time_window : int
+        Time window (in seconds) for tracking affected users (default: 300 seconds).
+    threshold : float
+        Percentage threshold of affected users to disable a rule (default: 5%).
+    tripwire_states_key : str
+        Redis key for storing rule states.
+    affected_users_prefix : str
+        Prefix for Redis keys used to store affected user data.
+
+    Examples
+    --------
+    >>> redis_client = redis.StrictRedis(host='localhost', port=6379, db=0)
+    >>> manager = TripWireManager(redis_client)
+    >>> manager.apply_tripwire_if_needed('scam_message_rule', 'user_123')
+    >>> manager.is_rule_disabled_via_tripwire('scam_message_rule')
+    False
 
 
         tripwire:states
@@ -41,6 +64,11 @@ class TripWireManager:
     def __init__(self, redis_client: redis.StrictRedis):
         """
         Initialize the TripWireManager with a dedicated Redis connection and configuration.
+
+        Parameters
+        ----------
+        redis_client : redis.StrictRedis
+            Redis connection used for managing tripwire states and affected users.
         """
         self.redis_client = redis_client
         self.time_window = 300  # Time window in seconds (e.g., 5 minutes)
@@ -54,23 +82,38 @@ class TripWireManager:
         """
         Check if a rule is disabled via the tripwire.
 
-        :param rule_name: The name of the rule to check.
-        :return: True if the rule is disabled, False otherwise.
+        Parameters
+        ----------
+        rule_name : str
+            The name of the rule to check.
+
+        Returns
+        -------
+        bool
+            True if the rule is disabled, False otherwise.
         """
         disabled = self.redis_client.hget(self.tripwire_states_key, rule_name) == "1"
         logger.info(f"Rule '{rule_name}' is disabled: {disabled}")
         return disabled
 
     def apply_tripwire_if_needed(
-        self, rule_name: str, user_id: str, total_users: int
+        self,
+        rule_name: str,
+        user_id: str,
     ) -> None:
         """
-        Apply the tripwire logic to disable a rule if too many users are affected
-        within a specified time window.
+        Apply tripwire logic to disable a rule if too many users are affected within a time window.
 
-        :param rule_name: The name of the rule.
-        :param user_id: The ID of the user triggering the rule.
-        :param total_users: Total number of users in the system.
+        Parameters
+        ----------
+        rule_name : str
+            The name of the rule.
+        user_id : str
+            The ID of the user triggering the rule.
+
+        Returns
+        -------
+        None
         """
         current_time = time.time()
         affected_users_key = f"{self.affected_users_prefix}{rule_name}"
@@ -86,6 +129,9 @@ class TripWireManager:
 
         # Add or update the current user
         self.redis_client.hset(affected_users_key, user_id, current_time)
+
+        # Get the total number of users
+        total_users: int = self.user_manager.get_user_count()
 
         # Calculate the percentage of affected users
         affected_count = self.redis_client.hlen(affected_users_key)
@@ -112,7 +158,10 @@ class TripWireManager:
         """
         Retrieve all rules and their disabled states from Redis.
 
-        :return: A dictionary with rule names as keys and their disabled states (True/False) as values.
+        Returns
+        -------
+        Dict[str, bool]
+            A dictionary with rule names as keys and their disabled states (True/False) as values.
         """
 
         return self.redis_client.hgetall(self.tripwire_states_key)

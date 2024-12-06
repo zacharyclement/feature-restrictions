@@ -40,6 +40,18 @@ logger.info("*********************************")
 async def startup_event():
     """
     Perform Redis connection checks and cleanup for stream and user databases on application startup.
+
+    Performs the following:
+    - Tests connection to Redis stream and user databases.
+    - Clears the Redis stream and user databases.
+    - Logs the number of keys in each database after cleanup.
+
+    Raises
+    ------
+    redis.ConnectionError
+        If there is an issue connecting to Redis databases.
+    Exception
+        If an unexpected error occurs during Redis cleanup.
     """
     try:
         # Test connection to Redis stream and user databases
@@ -74,6 +86,21 @@ async def startup_event():
 async def handle_event(event: Event):
     """
     Add the incoming event to the Redis stream.
+
+    Parameters
+    ----------
+    event : Event
+        The event data to be added to the Redis stream.
+
+    Returns
+    -------
+    dict
+        The response from the event publisher.
+
+    Raises
+    ------
+    HTTPException
+        If there is an issue with adding the event to the stream.
     """
     response = EventPublisher(redis_client_stream).add_event_to_stream(event)
     return response
@@ -83,6 +110,21 @@ async def handle_event(event: Event):
 def can_message(user_id: str):
     """
     Check if a user has access to send/receive messages.
+
+    Parameters
+    ----------
+    user_id : str
+        The ID of the user.
+
+    Returns
+    -------
+    dict
+        The access status for messaging.
+
+    Raises
+    ------
+    HTTPException
+        If there is an error checking access.
     """
     endpoint_access = EndpointAccess(user_manager)
     return endpoint_access.check_access(user_id, "can_message")
@@ -92,6 +134,21 @@ def can_message(user_id: str):
 def can_purchase(user_id: str):
     """
     Check if a user has access to make purchases.
+
+    Parameters
+    ----------
+    user_id : str
+        The ID of the user.
+
+    Returns
+    -------
+    dict
+        The access status for purchasing.
+
+    Raises
+    ------
+    HTTPException
+        If there is an error checking access.
     """
     endpoint_access = EndpointAccess(user_manager)
     return endpoint_access.check_access(user_id, "can_purchase")
@@ -101,6 +158,15 @@ def can_purchase(user_id: str):
 async def shutdown_event():
     """
     Cleanup Redis on app shutdown.
+
+    Performs the following:
+    - Clears the Redis user database.
+    - Clears the Redis stream database.
+
+    Raises
+    ------
+    Exception
+        If an error occurs during Redis cleanup.
     """
     try:
         redis_client_user.flushdb()

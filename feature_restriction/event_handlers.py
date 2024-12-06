@@ -8,6 +8,13 @@ from .utils import logger
 class BaseEventHandler:
     """
     Base class for all event handlers.
+
+    Attributes
+    ----------
+    user_manager : RedisUserManager
+        Manager for handling user data in Redis.
+    tripwire_manager : TripWireManager
+        Manager for handling tripwire-related functionality.
     """
 
     def __init__(
@@ -15,22 +22,60 @@ class BaseEventHandler:
         tripwire_manager: TripWireManager,
         user_manager: RedisUserManager,
     ):
+        """
+        Initialize the BaseEventHandler.
+
+        Parameters
+        ----------
+        tripwire_manager : TripWireManager
+            Instance of the tripwire manager.
+        user_manager : RedisUserManager
+            Instance of the user manager for interacting with Redis.
+        """
         self.user_manager = user_manager
         self.tripwire_manager = tripwire_manager
 
     def handle(self, event: Event, user_data: UserData):
         """
         Handle the event. Must be overridden by subclasses.
+
+        Parameters
+        ----------
+        event : Event
+            The event to be handled.
+        user_data : UserData
+            The user data associated with the event.
+
+        Raises
+        ------
+        NotImplementedError
+            If the method is not implemented by the subclass.
         """
         raise NotImplementedError("Subclasses must implement this method.")
 
 
 class CreditCardAddedHandler(BaseEventHandler):
+    """
+    Handler for the 'credit_card_added' event.
+    """
+
     event_name = "credit_card_added"
 
     def handle(self, event: Event, user_data: UserData):
         """
         Handle the 'credit_card_added' event.
+
+        Parameters
+        ----------
+        event : Event
+            The event to be handled, containing event properties.
+        user_data : UserData
+            The user data associated with the event.
+
+        Raises
+        ------
+        ValueError
+            If required properties 'card_id' or 'zip_code' are missing.
         """
         logger.info(f"Handling {self.event_name}")
         card_id = event.event_properties.get("card_id")
@@ -52,11 +97,22 @@ class CreditCardAddedHandler(BaseEventHandler):
 
 
 class ScamMessageFlaggedHandler(BaseEventHandler):
+    """
+    Handler for the 'scam_message_flagged' event.
+    """
+
     event_name = "scam_message_flagged"
 
     def handle(self, event: Event, user_data: UserData):
         """
         Handle the 'scam_message_flagged' event.
+
+        Parameters
+        ----------
+        event : Event
+            The event to be handled, containing event properties.
+        user_data : UserData
+            The user data associated with the event.
         """
         logger.info(f"Handling {self.event_name}")
 
@@ -69,9 +125,28 @@ class ScamMessageFlaggedHandler(BaseEventHandler):
 
 
 class ChargebackOccurredHandler(BaseEventHandler):
+    """
+    Handler for the 'chargeback_occurred' event.
+    """
+
     event_name = "chargeback_occurred"
 
     def handle(self, event: Event, user_data: UserData):
+        """
+        Handle the 'chargeback_occurred' event.
+
+        Parameters
+        ----------
+        event : Event
+            The event to be handled, containing event properties.
+        user_data : UserData
+            The user data associated with the event.
+
+        Raises
+        ------
+        ValueError
+            If the required property 'amount' is missing.
+        """
         """
         Handle the 'chargeback_occurred' event.
         """
@@ -89,11 +164,27 @@ class ChargebackOccurredHandler(BaseEventHandler):
 
 
 class PurchaseMadeHandler(BaseEventHandler):
+    """
+    Handler for the 'purchase_made' event.
+    """
+
     event_name = "purchase_made"
 
     def handle(self, event: Event, user_data: UserData):
         """
         Handle the 'purchase_made' event.
+
+        Parameters
+        ----------
+        event : Event
+            The event to be handled, containing event properties.
+        user_data : UserData
+            The user data associated with the event.
+
+        Raises
+        ------
+        ValueError
+            If the required property 'amount' is missing.
         """
         logger.info(f"Handling {self.event_name}")
 

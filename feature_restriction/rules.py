@@ -9,6 +9,18 @@ from .utils import logger
 class BaseRule(ABC):
     """
     Abstract base class for all rules.
+
+    This class defines the structure for rules that evaluate user data
+    and apply specific actions based on defined conditions.
+
+    Attributes
+    ----------
+    name : str
+        Unique identifier for the rule.
+    tripwire_manager : TripWireManager
+        Manager to handle tripwires and check if rules are disabled.
+    user_manager : RedisUserManager
+        Manager to handle user data stored in Redis.
     """
 
     name: str  # Unique identifier for the rule
@@ -16,6 +28,16 @@ class BaseRule(ABC):
     def __init__(
         self, tripwire_manager: TripWireManager, user_manager: RedisUserManager
     ):
+        """
+        Initialize a BaseRule instance.
+
+        Parameters
+        ----------
+        tripwire_manager : TripWireManager
+            Manager to handle tripwire states.
+        user_manager : RedisUserManager
+            Manager to interact with user data stored in Redis.
+        """
         self.tripwire_manager = tripwire_manager
         self.user_manager = user_manager
 
@@ -23,6 +45,16 @@ class BaseRule(ABC):
     def evaluate_rule(self, user_data: UserData) -> bool:
         """
         Evaluate the rule based on user data.
+
+        Parameters
+        ----------
+        user_data : UserData
+            The user data object containing information for evaluation.
+
+        Returns
+        -------
+        bool
+            True if the rule condition is met, False otherwise.
         """
         pass
 
@@ -30,6 +62,11 @@ class BaseRule(ABC):
     def apply_rule(self, user_data: UserData):
         """
         Apply specific actions if the rule condition is met.
+
+        Parameters
+        ----------
+        user_data : UserData
+            The user data object to which actions are applied.
         """
         pass
 
@@ -37,8 +74,17 @@ class BaseRule(ABC):
         """
         Process the rule:
         - Check if the rule is disabled.
-        - Evaluate the rule.
-        - Update tripwires and take actions if the rule condition is met.
+        - Evaluate the rule and apply actions if necessary.
+
+        Parameters
+        ----------
+        user_data : UserData
+            The user data object to evaluate and modify.
+
+        Returns
+        -------
+        bool
+            True if the rule was successfully processed and applied, False otherwise.
         """
         logger.info(f"Processing rule: {self.name}")
         if self.tripwire_manager.is_rule_disabled_via_tripwire(self.name):
@@ -56,6 +102,15 @@ class BaseRule(ABC):
 
 
 class UniqueZipCodeRule(BaseRule):
+    """
+    Rule to check if the ratio of unique zip codes to total credit cards is above a threshold.
+
+    Attributes
+    ----------
+    name : str
+        Unique identifier for the rule.
+    """
+
     name = "unique_zip_code_rule"
 
     def evaluate_rule(self, user_data: UserData) -> bool:
@@ -72,6 +127,15 @@ class UniqueZipCodeRule(BaseRule):
 
 
 class ScamMessageRule(BaseRule):
+    """
+    Rule to check if the number of scam message flags exceeds a threshold.
+
+    Attributes
+    ----------
+    name : str
+        Unique identifier for the rule.
+    """
+
     name = "scam_message_rule"
 
     def evaluate_rule(self, user_data: UserData) -> bool:
@@ -82,6 +146,15 @@ class ScamMessageRule(BaseRule):
 
 
 class ChargebackRatioRule(BaseRule):
+    """
+    Rule to check if the chargeback ratio exceeds a threshold.
+
+    Attributes
+    ----------
+    name : str
+        Unique identifier for the rule.
+    """
+
     name = "chargeback_ratio_rule"
 
     def evaluate_rule(self, user_data: UserData) -> bool:

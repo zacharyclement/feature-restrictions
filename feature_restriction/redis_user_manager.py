@@ -20,9 +20,22 @@ class RedisUserManager:
         """
         Retrieve an existing user by their ID.
 
-        :param user_id: The unique ID of the user to retrieve.
-        :return: A UserData object representing the user's data.
-        :raises KeyError: If the user does not exist.
+        Parameters
+        ----------
+        user_id : str
+            The unique ID of the user to retrieve.
+
+        Returns
+        -------
+        UserData
+            A UserData object representing the user's data.
+
+        Raises
+        ------
+        KeyError
+            If the user does not exist in the Redis database.
+        Exception
+            If an error occurs during the retrieval process.
         """
         try:
             user_data_json = self.redis_client.get(user_id)
@@ -41,8 +54,20 @@ class RedisUserManager:
         """
         Create a new user with default values.
 
-        :param user_id: The unique ID of the user to create.
-        :return: A UserData object representing the newly created user's data.
+        Parameters
+        ----------
+        user_id : str
+            The unique ID of the user to create.
+
+        Returns
+        -------
+        UserData
+            A UserData object representing the newly created user's data.
+
+        Raises
+        ------
+        Exception
+            If an error occurs during user creation.
         """
         try:
             default_user = UserData(user_id=user_id)
@@ -56,7 +81,15 @@ class RedisUserManager:
         """
         Save a UserData object to Redis.
 
-        :param user_data: The UserData object to save.
+        Parameters
+        ----------
+        user_data : UserData
+            The UserData object to save.
+
+        Raises
+        ------
+        Exception
+            If an error occurs while saving the user data.
         """
         try:
             self.redis_client.set(user_data.user_id, user_data.json())
@@ -69,7 +102,15 @@ class RedisUserManager:
         """
         Delete a user from Redis.
 
-        :param user_id: The unique ID of the user to delete.
+        Parameters
+        ----------
+        user_id : str
+            The unique ID of the user to delete.
+
+        Raises
+        ------
+        Exception
+            If an error occurs during the deletion process.
         """
         try:
             self.redis_client.delete(user_id)
@@ -82,7 +123,15 @@ class RedisUserManager:
         """
         Get the total number of users in the Redis store.
 
-        :return: The number of users currently stored in Redis.
+        Returns
+        -------
+        int
+            The number of users currently stored in Redis.
+
+        Raises
+        ------
+        Exception
+            If an error occurs during the retrieval of the user count.
         """
         try:
             keys = self.redis_client.keys("*")
@@ -95,7 +144,26 @@ class RedisUserManager:
 
     def clear_all_users(self):
         """
-        Clear all user data from the Redis store.
+        Display all the data associated with a given user in a human-readable format.
+
+        Parameters
+        ----------
+        user_id : str
+            The unique identifier for the user whose data is to be displayed.
+        user_data : UserData, optional
+            An already fetched UserData object to avoid redundant lookups. Defaults to None.
+
+        Returns
+        -------
+        str
+            A formatted string containing all the user's data or a message if the user is not found.
+
+        Raises
+        ------
+        KeyError
+            If the user does not exist.
+        Exception
+            If an error occurs while retrieving or formatting the user data.
         """
         try:
             keys = self.redis_client.keys("*")
