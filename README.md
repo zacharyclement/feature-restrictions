@@ -153,12 +153,14 @@ The **Feature Restriction Service** is a high-performance system designed to man
 
 ### Integration Tests
 
-**edis must be installed on your system**
+**Redis** must be **installed** on your system:
+
       ```bash
       brew install redis
       ```
 
 **Redis Server**: Ensure a Redis instance is running locally:
+
    ```bash
    redis-server
    ```
