@@ -15,12 +15,21 @@ from feature_restriction.config import (
     REDIS_HOST,
     REDIS_PORT,
 )
+from feature_restriction.endpoint_access import RedisEndpointAccess
 from feature_restriction.models import Event, UserData
 from feature_restriction.publisher import RedisEventPublisher
 from feature_restriction.redis_user_manager import RedisUserManager
 from feature_restriction.registry import EventHandlerRegistry, RuleRegistry
 from feature_restriction.tripwire_manager import RedisTripwireManager
 from stream_consumer import RedisStreamConsumer
+
+
+@pytest.fixture
+def endpoint_access(user_manager):
+    """
+    Provide a RedisEndpointAccess instance with a mocked RedisUserManager from the user_manager fixture.
+    """
+    return RedisEndpointAccess(redis_user_manager=user_manager)
 
 
 @pytest.fixture
@@ -131,17 +140,6 @@ def sample_user_data():
         total_chargebacks=5.0,
         access_flags={"can_message": True, "can_purchase": True},
     )
-
-
-# @pytest.fixture
-# def mock_redis():
-#     """
-#     Create a mock Redis client for testing.
-#     """
-#     with patch("redis.StrictRedis") as mock_redis_cls:
-#         mock_redis_instance = MagicMock()
-#         mock_redis_cls.return_value = mock_redis_instance
-#         yield mock_redis_instance
 
 
 ###### MOCKS FOR INTEGRATION TETS ######
