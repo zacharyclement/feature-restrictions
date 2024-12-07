@@ -7,6 +7,11 @@ from typing import List
 
 import redis
 
+from feature_restriction.clients import (
+    RedisStreamClient,
+    RedisTripwireClient,
+    RedisUserClient,
+)
 from feature_restriction.config import (
     CONSUMER_GROUP,
     CONSUMER_NAME,
@@ -18,9 +23,9 @@ from feature_restriction.config import (
     REDIS_PORT,
 )
 from feature_restriction.models import Event
-from feature_restriction.redis_user_manager import RedisUserManager
+from feature_restriction.redis_user_manager import RedisUserManager, UserManager
 from feature_restriction.registry import EventHandlerRegistry, RuleRegistry
-from feature_restriction.tripwire_manager import RedisTripwireManager
+from feature_restriction.tripwire_manager import RedisTripwireManager, TripwireManager
 from feature_restriction.utils import logger
 
 
@@ -74,9 +79,9 @@ class RedisStreamConsumer(StreamConsumer):
 
     def __init__(
         self,
-        redis_client,
-        user_manager,
-        tripwire_manager,
+        redis_client: RedisStreamClient,
+        user_manager: UserManager,
+        tripwire_manager: TripwireManager,
         rule_registry,
         event_registry,
     ):
@@ -240,17 +245,14 @@ if __name__ == "__main__":
     """
     Script entry point for running the RedisStreamConsumer.
     """
-    redis_client_stream = redis.StrictRedis(
-        host=REDIS_HOST, port=REDIS_PORT, db=REDIS_DB_STREAM, decode_responses=True
-    )
-
-    redis_client_user = redis.StrictRedis(
-        host=REDIS_HOST, port=REDIS_PORT, db=REDIS_DB_USER, decode_responses=True
-    )
-
-    redis_client_tripwire = redis.StrictRedis(
-        host=REDIS_HOST, port=REDIS_PORT, db=REDIS_DB_TRIPWIRE, decode_responses=True
-    )
+    # Instantiate and connect to each Redis client
+    redis_client_stream = RedisStreamClient(
+        REDIS_HOST, REDIS_PORT, REDIS_DB_STREAM
+    ).connect()
+    redis_client_user = RedisUserClient(REDIS_HOST, REDIS_PORT, REDIS_DB_USER).connect()
+    redis_client_tripwire = RedisTripwireClient(
+        REDIS_HOST, REDIS_PORT, REDIS_DB_TRIPWIRE
+    ).connect()
 
     try:
         # Test connection to Redis stream and user databases

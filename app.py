@@ -3,6 +3,11 @@ import json
 import redis
 from fastapi import FastAPI, HTTPException
 
+from feature_restriction.clients import (
+    RedisStreamClient,
+    RedisTripwireClient,
+    RedisUserClient,
+)
 from feature_restriction.config import (
     REDIS_DB_STREAM,
     REDIS_DB_TRIPWIRE,
@@ -19,13 +24,12 @@ from feature_restriction.utils import logger
 app = FastAPI()
 
 
-redis_client_stream = redis.StrictRedis(
-    host=REDIS_HOST, port=REDIS_PORT, db=REDIS_DB_STREAM, decode_responses=True
-)
+# Instantiate and connect to each Redis client
+redis_client_stream = RedisStreamClient(
+    REDIS_HOST, REDIS_PORT, REDIS_DB_STREAM
+).connect()
+redis_client_user = RedisUserClient(REDIS_HOST, REDIS_PORT, REDIS_DB_USER).connect()
 
-redis_client_user = redis.StrictRedis(
-    host=REDIS_HOST, port=REDIS_PORT, db=REDIS_DB_USER, decode_responses=True
-)
 user_manager = RedisUserManager(redis_client_user)
 
 

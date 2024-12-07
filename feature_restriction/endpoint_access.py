@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 
 from fastapi import HTTPException
 
-from feature_restriction.redis_user_manager import RedisUserManager
+from feature_restriction.redis_user_manager import RedisUserManager, UserManager
 from feature_restriction.utils import logger
 
 
@@ -30,7 +30,7 @@ class RedisEndpointAccess(EndpointAccess):
         Checks whether a user has access to a specific feature based on their access flags.
     """
 
-    def __init__(self, redis_user_manager: RedisUserManager):
+    def __init__(self, redis_user_manager: UserManager):
         """
         Initialize the RedisEndpointAccess class.
 

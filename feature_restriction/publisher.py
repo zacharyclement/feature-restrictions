@@ -4,6 +4,7 @@ from abc import ABC, abstractmethod
 import redis
 from fastapi import HTTPException
 
+from feature_restriction.clients import RedisStreamClient
 from feature_restriction.config import (
     EVENT_STREAM_KEY,
     REDIS_DB_STREAM,
@@ -30,7 +31,7 @@ class RedisEventPublisher(EventPublisher):
         A Redis client instance connected to the appropriate Redis database.
     """
 
-    def __init__(self, redis_client):
+    def __init__(self, redis_client: RedisStreamClient):
         self.redis_client_stream = redis_client
 
     def add_event_to_stream(self, event: Event) -> dict:
