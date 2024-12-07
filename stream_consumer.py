@@ -131,7 +131,7 @@ class RedisStreamConsumer(StreamConsumer):
         self.rule_registry.register_default(self.tripwire_manager, self.user_manager)
         self.event_registry.register_default(self.tripwire_manager, self.user_manager)
 
-    def process_event(self, event_id, event_data):
+    def process_event(self, event_id: str, event_data: dict):
         """
         Processes a single event from the Redis stream.
 
