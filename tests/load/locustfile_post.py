@@ -1,7 +1,10 @@
 import random
 import string
 
+import redis
 from locust import FastHttpUser, constant_pacing, task
+
+from feature_restriction.config import REDIS_DB_LOCUST
 
 
 def random_user_id():
@@ -9,18 +12,21 @@ def random_user_id():
     return "".join(random.choices(string.ascii_letters + string.digits, k=8))
 
 
-class PostTestUser(FastHttpUser):
-    """
-    Simulates a user making POST requests to the service.
-    """
+class PostEventsUser(FastHttpUser):
+    host = "http://localhost:8000"
+    wait_time = constant_pacing(1 / 2000)
 
-    host = "http://localhost:8000"  # Update as needed
-    wait_time = constant_pacing(1 / 2000)  # 1,500 RPS per task
+    def on_start(self):
+        # Initialize Redis connection
+        self.redis_client = redis.StrictRedis(
+            host="localhost", port=6379, db=REDIS_DB_LOCUST
+        )
 
     @task(1)
     def send_event(self):
-        """Simulate sending an event to the /event endpoint."""
+        """Simulate sending an event to the /event endpoint and store the user_id in Redis."""
         user_id = random_user_id()
+
         event_types = [
             {
                 "name": "credit_card_added",
@@ -44,5 +50,9 @@ class PostTestUser(FastHttpUser):
         ]
         event = random.choice(event_types)
         response = self.client.post("/event", json=event)
-        if response.status_code != 200:
+
+        if response.status_code == 200:
+            # Store user_id in Redis set
+            self.redis_client.sadd("locust_user_ids", user_id)
+        else:
             print(f"Event post failed: {response.status_code}, {response.text}")

@@ -24,7 +24,7 @@ from feature_restriction.config import (
 )
 from feature_restriction.models import Event
 from feature_restriction.redis_user_manager import RedisUserManager, UserManager
-from feature_restriction.registry import EventHandlerRegistry, RuleRegistry
+from feature_restriction.registry import EventHandlerRegistry, Registry, RuleRegistry
 from feature_restriction.tripwire_manager import RedisTripwireManager, TripwireManager
 from feature_restriction.utils import logger
 
@@ -82,8 +82,8 @@ class RedisStreamConsumer(StreamConsumer):
         redis_client: RedisStreamClient,
         user_manager: UserManager,
         tripwire_manager: TripwireManager,
-        rule_registry,
-        event_registry,
+        rule_registry: Registry,
+        event_registry: Registry,
     ):
         self.redis_client_stream = redis_client
         self.user_manager = user_manager
@@ -97,28 +97,19 @@ class RedisStreamConsumer(StreamConsumer):
     def _initialize_consumer_group(self) -> None:
         """
         Initializes the Redis stream consumer group.
-
-        Creates the consumer group if it does not already exist. If the stream does not exist, it is created.
-
-        Raises
-        ------
-        redis.exceptions.ResponseError
-            If there is an error creating the consumer group.
         """
         try:
-            # Check if the stream exists
-            if not self.redis_client_stream.exists(EVENT_STREAM_KEY):
-                logger.info(f"Stream '{EVENT_STREAM_KEY}' does not exist. Creating it.")
-                self.redis_client_stream.xadd(
-                    EVENT_STREAM_KEY, {"message": "init"}, id="*"
-                )
-
-            # Create the consumer group if it doesn't exist
+            # Create the consumer group. Using mkstream=True ensures that if the stream doesn't exist,
+            # it will be created automatically.
+            # Using id="$" starts the group at the end of the stream to avoid empty stream errors.
             self.redis_client_stream.xgroup_create(
-                EVENT_STREAM_KEY, CONSUMER_GROUP, id="0", mkstream=True
+                EVENT_STREAM_KEY, CONSUMER_GROUP, id="$", mkstream=True
+            )
+            logger.info(
+                f"Consumer group '{CONSUMER_GROUP}' created on stream '{EVENT_STREAM_KEY}'."
             )
         except redis.exceptions.ResponseError as e:
-            if "BUSYGROUP Consumer Group name already exists" in str(e):
+            if "BUSYGROUP" in str(e):
                 logger.info(f"Consumer group '{CONSUMER_GROUP}' already exists.")
             else:
                 raise e
@@ -238,10 +229,8 @@ class RedisStreamConsumer(StreamConsumer):
 
 
 if __name__ == "__main__":
-    """
-    Script entry point for running the RedisStreamConsumer.
-    """
-    # Instantiate and connect to each Redis client
+    # Connect to Redis
+    time.sleep(5)  # Wait for Redis to start
     redis_client_stream = RedisStreamClient(
         REDIS_HOST, REDIS_PORT, REDIS_DB_STREAM
     ).connect()
@@ -251,26 +240,19 @@ if __name__ == "__main__":
     ).connect()
 
     try:
-        # Test connection to Redis stream and user databases
+        # Test connection to Redis
         redis_client_stream.ping()
         redis_client_user.ping()
         redis_client_tripwire.ping()
-        logger.info(
-            "Successfully connected to both Redis stream, user, and tripwire databases!"
-        )
+        logger.info("Successfully connected to Redis databases!")
 
-        # Clear the stream database
+        # Clear databases only once at startup (if that's desired)
+        logger.info("Clearing Redis databases before starting consumer...")
         redis_client_stream.flushdb()
-        logger.info("Cleared Redis stream database.")
-
-        # Clear the user database
         redis_client_user.flushdb()
-        logger.info("Cleared Redis user database.")
-
         redis_client_tripwire.flushdb()
-        logger.info("Cleared Redis tripwire database.")
+        logger.info("Databases cleared.")
 
-        # Log the number of keys in each database after cleanup
         stream_keys_count = len(redis_client_stream.keys("*"))
         user_keys_count = len(redis_client_user.keys("*"))
         tripwire_count = len(redis_client_tripwire.keys("*"))
@@ -288,23 +270,22 @@ if __name__ == "__main__":
     rule_registry = RuleRegistry()
     event_registry = EventHandlerRegistry()
 
-    while True:
-        try:
-            consumer = RedisStreamConsumer(
-                redis_client_stream,
-                user_manager,
-                tripwire_manager,
-                rule_registry,
-                event_registry,
-            )
+    # Create the consumer after flushing the DB and ensuring a clean state
+    consumer = RedisStreamConsumer(
+        redis_client_stream,
+        user_manager,
+        tripwire_manager,
+        rule_registry,
+        event_registry,
+    )
 
-            consumer.start()
-        except redis.ConnectionError as e:
-            logger.error(f"Redis connection error: {e}")
-        except KeyboardInterrupt:
-            logger.info("Shutting down Redis Stream Consumer.")
-            redis_client_stream.flushdb()
-            redis_client_user.flushdb()
-            redis_client_tripwire.flushdb()
-            logger.info("Cleared Redis user database.")
-            break
+    try:
+        consumer.start()
+    except redis.ConnectionError as e:
+        logger.error(f"Redis connection error: {e}")
+    except KeyboardInterrupt:
+        logger.info("Shutting down Redis Stream Consumer.")
+        redis_client_stream.flushdb()
+        redis_client_user.flushdb()
+        redis_client_tripwire.flushdb()
+        logger.info("Shutdown complete.")
