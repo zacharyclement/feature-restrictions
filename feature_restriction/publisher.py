@@ -1,4 +1,5 @@
 import json
+from abc import ABC, abstractmethod
 
 import redis
 from fastapi import HTTPException
@@ -13,7 +14,13 @@ from feature_restriction.models import Event
 from feature_restriction.utils import logger
 
 
-class EventPublisher:
+class Publisher(ABC):
+    @abstractmethod
+    def add_event_to_stream(self, event: Event) -> dict:
+        """Add an event to the Redis stream"""
+
+
+class EventPublisher(Publisher):
     """
     Handles adding events to a Redis stream.
 

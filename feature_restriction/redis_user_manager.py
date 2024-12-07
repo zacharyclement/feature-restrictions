@@ -1,8 +1,36 @@
+from abc import ABC, abstractmethod
+
 import redis
 
 from .config import REDIS_DB_USER, REDIS_HOST, REDIS_PORT
 from .models import UserData
 from .utils import logger
+
+
+class UserManager(ABC):
+    @abstractmethod
+    def get_user(self, user_id: str) -> UserData:
+        """get user data from storage"""
+
+    @abstractmethod
+    def create_user(self, user_id: str) -> UserData:
+        """create a new user"""
+
+    @abstractmethod
+    def save_user(self, user_data: UserData):
+        """save user data to storage"""
+
+    @abstractmethod
+    def delete_user(self, user_id: str):
+        """delete user data from storage"""
+
+    @abstractmethod
+    def get_user_count(self) -> int:
+        """get the total number of users"""
+
+    @abstractmethod
+    def clear_all_users(self):
+        """clear all user data from storage"""
 
 
 class RedisUserManager:

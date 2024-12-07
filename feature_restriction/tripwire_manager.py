@@ -100,6 +100,7 @@ class TripWireManager:
         self,
         rule_name: str,
         user_id: str,
+        total_users: int,
     ) -> None:
         """
         Apply tripwire logic to disable a rule if too many users are affected within a time window.
@@ -130,8 +131,8 @@ class TripWireManager:
         # Add or update the current user
         self.redis_client.hset(affected_users_key, user_id, current_time)
 
-        # Get the total number of users
-        total_users: int = self.user_manager.get_user_count()
+        # # Get the total number of users
+        # total_users: int = self.user_manager.get_user_count()
 
         # Calculate the percentage of affected users
         affected_count = self.redis_client.hlen(affected_users_key)

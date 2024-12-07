@@ -2,6 +2,7 @@ import json
 import logging
 import threading
 import time
+from abc import ABC, abstractmethod
 from typing import List
 
 import redis
@@ -23,7 +24,21 @@ from feature_restriction.tripwire_manager import TripWireManager
 from feature_restriction.utils import logger
 
 
-class RedisStreamConsumer:
+class StreamConsumer(ABC):
+    @abstractmethod
+    def start(self):
+        """start"""
+
+    @abstractmethod
+    def stop(self):
+        """stop"""
+
+    @abstractmethod
+    def process_event(self, event_id, event_data):
+        """process_event"""
+
+
+class RedisStreamConsumer(StreamConsumer):
     """
     A consumer for processing events from a Redis stream.
 
@@ -170,8 +185,10 @@ class RedisStreamConsumer:
                         logger.info(
                             f"disabled rules before: {self.tripwire_manager.get_disabled_rules()}"
                         )
+                        # Get the total number of users
+                        total_users: int = self.user_manager.get_user_count()
                         self.tripwire_manager.apply_tripwire_if_needed(
-                            rule.name, user_data.user_id
+                            rule.name, user_data.user_id, total_users
                         )
                         logger.info(
                             f"disabled rules after: {self.tripwire_manager.get_disabled_rules()}"
