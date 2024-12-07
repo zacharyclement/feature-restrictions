@@ -4,6 +4,15 @@ Here’s the revised README with your specifications:
 
 # Feature Restriction Service
 
+## Outline
+
+1. **Overview**
+2. **Project Structure**
+3. **Data Flow Description**
+4. **Setup, Starting, and Using the System**
+5. **Running Tests**
+6. **Adding New Event Handlers and Rules**
+
 ## Overview
 
 The **Feature Restriction Service** is a high-performance system designed to manage user-based feature restrictions. It leverages FastAPI for the backend, Redis for real-time data storage, and a consumer to process Redis streams. The system can scale to handle high request rates and supports various rules with a tripwire mechanism to manage rule thresholds. It is able to ingest 100 to 1K (valley to peak) new events per second & respond to 100 to 1K requests for feature restrictions.
@@ -365,5 +374,3 @@ docker stats
 ```
 
 
-
- 
