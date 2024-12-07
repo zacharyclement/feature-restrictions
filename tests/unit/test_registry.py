@@ -11,18 +11,18 @@ from feature_restriction.event_handlers import (
 from feature_restriction.registry import EventHandlerRegistry
 
 
-def test_register_event_handler_success(event_registry):
+def test_register_success(event_registry):
     """
     Test successful registration of an event handler.
     """
     mock_handler = MagicMock()
     mock_handler.event_name = "test_event"
-    event_registry.register_event_handler(mock_handler)
+    event_registry.register(mock_handler)
 
-    assert event_registry.get_event_handler("test_event") is mock_handler
+    assert event_registry.get("test_event") is mock_handler
 
 
-def test_register_event_handler_with_valid_handler():
+def test_register_with_valid_handler():
     registry = EventHandlerRegistry()
 
     # Create a mock event handler with the required 'event_name' attribute
@@ -30,13 +30,13 @@ def test_register_event_handler_with_valid_handler():
     mock_handler.event_name = "test_event"
 
     # Register the mock handler
-    registry.register_event_handler(mock_handler)
+    registry.register(mock_handler)
 
     # Assert that the handler is registered correctly
-    assert registry.get_event_handler("test_event") == mock_handler
+    assert registry.get("test_event") == mock_handler
 
 
-def test_register_event_handler_with_duplicate_event_name():
+def test_register_with_duplicate_event_name():
     registry = EventHandlerRegistry()
 
     # Create two mock event handlers with the same 'event_name'
@@ -46,14 +46,14 @@ def test_register_event_handler_with_duplicate_event_name():
     mock_handler_2.event_name = "test_event"
 
     # Register the first handler
-    registry.register_event_handler(mock_handler_1)
+    registry.register(mock_handler_1)
 
     # Attempt to register the second handler with the same event_name should raise ValueError
     with pytest.raises(ValueError, match="Duplicate event name detected"):
-        registry.register_event_handler(mock_handler_2)
+        registry.register(mock_handler_2)
 
 
-def test_register_event_handler_duplicate_event_name(event_registry):
+def test_register_duplicate_event_name(event_registry):
     """
     Test registering multiple handlers with the same 'event_name' raises an error.
     """
@@ -62,46 +62,40 @@ def test_register_event_handler_duplicate_event_name(event_registry):
     mock_handler2 = MagicMock()
     mock_handler2.event_name = "test_event"
 
-    event_registry.register_event_handler(mock_handler1)
+    event_registry.register(mock_handler1)
 
     with pytest.raises(ValueError, match="is already registered"):
-        event_registry.register_event_handler(mock_handler2)
+        event_registry.register(mock_handler2)
 
 
-def test_get_event_handler_not_found(event_registry):
+def test_get_not_found(event_registry):
     """
     Test retrieving a non-existent event handler returns None.
     """
-    handler = event_registry.get_event_handler("non_existent_event")
+    handler = event_registry.get("non_existent_event")
     assert handler is None
 
 
-def test_register_default_event_handlers(
-    event_registry, tripwire_manager, user_manager
-):
+def test_register_default(event_registry, tripwire_manager, user_manager):
     """
     Test registering default event handlers.
     """
-    event_registry.register_default_event_handlers(tripwire_manager, user_manager)
+    event_registry.register_default(tripwire_manager, user_manager)
 
     # Verify each handler is registered
+    assert isinstance(event_registry.get("credit_card_added"), CreditCardAddedHandler)
     assert isinstance(
-        event_registry.get_event_handler("credit_card_added"), CreditCardAddedHandler
-    )
-    assert isinstance(
-        event_registry.get_event_handler("scam_message_flagged"),
+        event_registry.get("scam_message_flagged"),
         ScamMessageFlaggedHandler,
     )
     assert isinstance(
-        event_registry.get_event_handler("chargeback_occurred"),
+        event_registry.get("chargeback_occurred"),
         ChargebackOccurredHandler,
     )
-    assert isinstance(
-        event_registry.get_event_handler("purchase_made"), PurchaseMadeHandler
-    )
+    assert isinstance(event_registry.get("purchase_made"), PurchaseMadeHandler)
 
     # Verify handlers are initialized with correct dependencies
-    handler = event_registry.get_event_handler("credit_card_added")
+    handler = event_registry.get("credit_card_added")
     assert handler.tripwire_manager == tripwire_manager
     assert handler.user_manager == user_manager
 
@@ -118,7 +112,7 @@ from feature_restriction.rules import (
 )
 
 
-def test_register_rule_success():
+def test_register_success():
     """
     Test successful registration of a rule.
     """
@@ -126,12 +120,12 @@ def test_register_rule_success():
     mock_rule = MagicMock()
     mock_rule.name = "test_rule"
 
-    rule_registry.register_rule(mock_rule)
+    rule_registry.register(mock_rule)
 
-    assert rule_registry.get_rule("test_rule") == mock_rule
+    assert rule_registry.get("test_rule") == mock_rule
 
 
-def test_register_rule_with_duplicate_name():
+def test_register_with_duplicate_name():
     """
     Test registering two rules with the same name raises an error.
     """
@@ -142,10 +136,10 @@ def test_register_rule_with_duplicate_name():
     mock_rule_2 = MagicMock()
     mock_rule_2.name = "test_rule"
 
-    rule_registry.register_rule(mock_rule_1)
+    rule_registry.register(mock_rule_1)
 
     with pytest.raises(ValueError, match="is already registered"):
-        rule_registry.register_rule(mock_rule_2)
+        rule_registry.register(mock_rule_2)
 
 
 def test_get_rule_not_found():
@@ -153,25 +147,23 @@ def test_get_rule_not_found():
     Test retrieving a non-existent rule returns None.
     """
     rule_registry = RuleRegistry()
-    rule = rule_registry.get_rule("non_existent_rule")
+    rule = rule_registry.get("non_existent_rule")
     assert rule is None
 
 
-def test_register_default_rules(tripwire_manager, user_manager):
+def test_register_default(tripwire_manager, user_manager):
     """
     Test registering default rules.
     """
     rule_registry = RuleRegistry()
-    rule_registry.register_default_rules(tripwire_manager, user_manager)
+    rule_registry.register_default(tripwire_manager, user_manager)
 
     # Verify that each default rule is registered
-    assert isinstance(rule_registry.get_rule("unique_zip_code_rule"), UniqueZipCodeRule)
-    assert isinstance(rule_registry.get_rule("scam_message_rule"), ScamMessageRule)
-    assert isinstance(
-        rule_registry.get_rule("chargeback_ratio_rule"), ChargebackRatioRule
-    )
+    assert isinstance(rule_registry.get("unique_zip_code_rule"), UniqueZipCodeRule)
+    assert isinstance(rule_registry.get("scam_message_rule"), ScamMessageRule)
+    assert isinstance(rule_registry.get("chargeback_ratio_rule"), ChargebackRatioRule)
 
     # Verify that rules are initialized with the correct dependencies
-    rule = rule_registry.get_rule("unique_zip_code_rule")
+    rule = rule_registry.get("unique_zip_code_rule")
     assert rule.tripwire_manager == tripwire_manager
     assert rule.user_manager == user_manager

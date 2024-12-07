@@ -29,9 +29,7 @@ def test_process_event_with_registered_handler(
     """
     # Mock the event handler
     mock_handler = MagicMock()
-    stream_consumer.event_registry.get_event_handler = MagicMock(
-        return_value=mock_handler
-    )
+    stream_consumer.event_registry.get = MagicMock(return_value=mock_handler)
 
     # Mock user retrieval
     with patch.object(

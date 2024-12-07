@@ -234,10 +234,10 @@ class NewRule(BaseRule):
 
 **File**: `feature_restriction/registry.py`
 
-Register the new rule in the `register_default_rules` method of the `RuleRegistry`:
+Register the new rule in the `register_default` method of the `RuleRegistry`:
 ```python
-def register_default_rules(self, tripwire_manager, user_manager):
-    self.register_rule(NewRule(tripwire_manager, user_manager))
+def register_default(self, tripwire_manager, user_manager):
+    self.register(NewRule(tripwire_manager, user_manager))
 ```
 
 ---
@@ -263,10 +263,10 @@ class NewEventHandler(BaseEventHandler):
 
 **File**: `feature_restriction/registry.py`
 
-Register the new event handler in the `register_default_event_handlers` method of the `EventHandlerRegistry`:
+Register the new event handler in the `register_default` method of the `EventHandlerRegistry`:
 ```python
-def register_default_event_handlers(self, tripwire_manager, user_manager):
-    self.register_event_handler(
+def register_default(self, tripwire_manager, user_manager):
+    self.register(
         NewEventHandler(tripwire_manager, user_manager),
         rule_names=["new_rule"]  # Associate with any applicable rules
     )

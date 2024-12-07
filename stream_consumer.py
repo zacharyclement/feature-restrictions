@@ -128,12 +128,8 @@ class RedisStreamConsumer(StreamConsumer):
         Registers default rules and event handlers in the corresponding registries.
         """
         # Register defaults
-        self.rule_registry.register_default_rules(
-            self.tripwire_manager, self.user_manager
-        )
-        self.event_registry.register_default_event_handlers(
-            self.tripwire_manager, self.user_manager
-        )
+        self.rule_registry.register_default(self.tripwire_manager, self.user_manager)
+        self.event_registry.register_default(self.tripwire_manager, self.user_manager)
 
     def process_event(self, event_id, event_data):
         """
@@ -168,7 +164,7 @@ class RedisStreamConsumer(StreamConsumer):
                 f"display user data before handler: {self.user_manager.display_user_data(user_id)}"
             )
             # STEP !: process the event
-            handler = self.event_registry.get_event_handler(event.name)
+            handler = self.event_registry.get(event.name)
             if handler:
                 handler.handle(event, user_data)
 
@@ -179,7 +175,7 @@ class RedisStreamConsumer(StreamConsumer):
             # STEP 2: process the rules
             rule_names: List[str] = self.event_registry.get_rules_for_event(event.name)
             for rule_name in rule_names:
-                rule = self.rule_registry.get_rule(rule_name)
+                rule = self.rule_registry.get(rule_name)
                 if rule:
                     rule_applied: bool = rule.process_rule(user_data)
 
