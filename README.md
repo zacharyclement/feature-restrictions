@@ -298,6 +298,12 @@ Sometimes a redis server is left running. To kill it:
   kill PID
    ```
 
+### Docker Stats
+1. Get docker stats on local
+```bash
+docker stats
+```
+
 
 
  
