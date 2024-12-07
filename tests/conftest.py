@@ -16,7 +16,7 @@ from feature_restriction.config import (
     REDIS_PORT,
 )
 from feature_restriction.models import Event, UserData
-from feature_restriction.publisher import EventPublisher
+from feature_restriction.publisher import RedisEventPublisher
 from feature_restriction.redis_user_manager import RedisUserManager
 from feature_restriction.registry import EventHandlerRegistry, RuleRegistry
 from feature_restriction.tripwire_manager import RedisTripwireManager
@@ -97,8 +97,8 @@ def stream_consumer(
 
 @pytest.fixture
 def event_publisher(mock_redis):
-    """Fixture to create an EventPublisher instance with a mock Redis client."""
-    return EventPublisher(redis_client=mock_redis["stream"])
+    """Fixture to create an RedisEventPublisher instance with a mock Redis client."""
+    return RedisEventPublisher(redis_client=mock_redis["stream"])
 
 
 @pytest.fixture

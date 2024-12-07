@@ -3,7 +3,7 @@ import time
 
 from feature_restriction.config import EVENT_STREAM_KEY
 from feature_restriction.models import Event
-from feature_restriction.publisher import EventPublisher
+from feature_restriction.publisher import RedisEventPublisher
 from feature_restriction.redis_user_manager import RedisUserManager
 
 
@@ -14,7 +14,7 @@ def test_scam_message_flagged_event(
     Test that RedisStreamConsumer processes 'scam_message_flagged' events.
     """
     # Arrange
-    publisher = EventPublisher(redis_stream)
+    publisher = RedisEventPublisher(redis_stream)
     user_manager = RedisUserManager(redis_user)
 
     event = Event(name="scam_message_flagged", event_properties={"user_id": "12345"})
@@ -33,10 +33,12 @@ def test_event_publishing_and_consuming(
     redis_stream, redis_user, stream_consumer_subprocess, redis_tripwire
 ):
     """
-    Test the integration between EventPublisher and RedisStreamConsumer.
+    Test the integration between RedisEventPublisher and RedisStreamConsumer.
     """
     # Arrange
-    publisher = EventPublisher(redis_stream)  # Uses redis_stream via EventPublisher
+    publisher = RedisEventPublisher(
+        redis_stream
+    )  # Uses redis_stream via RedisEventPublisher
     user_manager = RedisUserManager(redis_user)
 
     # Create an Event object to mirror the API flow
@@ -49,7 +51,7 @@ def test_event_publishing_and_consuming(
         },
     )
 
-    # Act: Publish the event using EventPublisher
+    # Act: Publish the event using RedisEventPublisher
     publisher.add_event_to_stream(event)
 
     # Allow time for the consumer to process
@@ -71,13 +73,15 @@ def test_event_processing_via_consumer(
     Test that RedisStreamConsumer processes events from the stream and updates user data.
     """
     # Arrange
-    publisher = EventPublisher(redis_stream)  # Uses redis_stream via EventPublisher
+    publisher = RedisEventPublisher(
+        redis_stream
+    )  # Uses redis_stream via RedisEventPublisher
     user_manager = RedisUserManager(redis_user)
 
     # Create an Event object to simulate a realistic API call
     event = Event(name="scam_message_flagged", event_properties={"user_id": "12345"})
 
-    # Act: Publish the event using EventPublisher
+    # Act: Publish the event using RedisEventPublisher
     publisher.add_event_to_stream(event)
 
     # Allow time for the consumer to process
@@ -101,7 +105,7 @@ def test_chargeback_occurred_event(
     Test that RedisStreamConsumer processes 'chargeback_occurred' events.
     """
     # Arrange
-    publisher = EventPublisher(redis_stream)
+    publisher = RedisEventPublisher(redis_stream)
     user_manager = RedisUserManager(redis_user)
 
     event = Event(

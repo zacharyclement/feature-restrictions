@@ -12,7 +12,7 @@ from feature_restriction.config import (
 )
 from feature_restriction.endpoint_access import EndpointAccess
 from feature_restriction.models import Event
-from feature_restriction.publisher import EventPublisher
+from feature_restriction.publisher import RedisEventPublisher
 from feature_restriction.redis_user_manager import RedisUserManager
 from feature_restriction.utils import logger
 
@@ -99,7 +99,7 @@ async def handle_event(event: Event):
     HTTPException
         If there is an issue with adding the event to the stream.
     """
-    response = EventPublisher(redis_client_stream).add_event_to_stream(event)
+    response = RedisEventPublisher(redis_client_stream).add_event_to_stream(event)
     return response
 
 

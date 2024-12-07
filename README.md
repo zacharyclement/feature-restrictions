@@ -26,7 +26,7 @@ The **Feature Restriction Service** is a high-performance system designed to man
 │   ├── rules.py                 # Business rules for events
 │   ├── utils.py                 # Utility functions and helpers
 │   ├── registry.py              # Event handler registry
-│   ├── publisher.py             # EventPublisher class
+│   ├── publisher.py             # RedisEventPublisher class
 │   ├── endpoint_access.py       # Abstraction of get access logic
 ├── tests/                       # Test suite
 │   ├── unit/                    # Unit tests

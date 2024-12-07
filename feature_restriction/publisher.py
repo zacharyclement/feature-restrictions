@@ -14,13 +14,13 @@ from feature_restriction.models import Event
 from feature_restriction.utils import logger
 
 
-class Publisher(ABC):
+class EventPublisher(ABC):
     @abstractmethod
     def add_event_to_stream(self, event: Event) -> dict:
         """Add an event to the Redis stream"""
 
 
-class EventPublisher(Publisher):
+class RedisEventPublisher(EventPublisher):
     """
     Handles adding events to a Redis stream.
 
