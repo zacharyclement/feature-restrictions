@@ -159,13 +159,13 @@ The **Feature Restriction Service** is a high-performance system designed to man
       brew install redis
       ```
 
-**Redis Server**: Ensure a Redis instance is running locally:
+1. **Start Redis Server**: Ensure a Redis instance is running locally:
 
    ```bash
    redis-server
    ```
 
-1. Start redis.
+
 2. Run the integration tests:
    ```bash
    pytest tests/integration
