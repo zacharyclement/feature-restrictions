@@ -129,6 +129,66 @@ The **Feature Restriction Service** is a high-performance system designed to man
 
 **note**: with container running, see link for swagger docs: http://localhost:8000/docs#/
 
+#### Example post events
+
+
+Here are examples of the JSON objects used for the different event types in the `send_event` method:
+
+##### 1. `scam_message_flagged`
+This event flags a message as a potential scam for a specific user.
+```json
+{
+  "name": "scam_message_flagged",
+  "event_properties": {
+    "user_id": "1"
+  }
+}
+```
+
+---
+
+##### 2. `credit_card_added`
+This event indicates that a user has added a new credit card to their account.
+```json
+{
+  "name": "credit_card_added",
+  "event_properties": {
+    "user_id": "1",
+    "card_id": "card_25",
+    "zip_code": "12345"
+  }
+}
+```
+
+---
+
+##### 3. `purchase_made`
+This event logs a purchase made by a user, including the purchase amount.
+```json
+{
+  "name": "purchase_made",
+  "event_properties": {
+    "user_id": "1",
+    "amount": 324.56
+  }
+}
+```
+
+---
+
+##### 4. `chargeback_occurred`
+This event logs a chargeback that occurred on a user's account, including the chargeback amount.
+```json
+{
+  "name": "chargeback_occurred",
+  "event_properties": {
+    "user_id": "1",
+    "amount": 78.90
+  }
+}
+```
+
+
 ---
 
 ## Running Tests
