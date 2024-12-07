@@ -19,7 +19,7 @@ from feature_restriction.models import Event, UserData
 from feature_restriction.publisher import EventPublisher
 from feature_restriction.redis_user_manager import RedisUserManager
 from feature_restriction.registry import EventHandlerRegistry, RuleRegistry
-from feature_restriction.tripwire_manager import TripWireManager
+from feature_restriction.tripwire_manager import RedisTripwireManager
 from stream_consumer import RedisStreamConsumer
 
 
@@ -48,9 +48,9 @@ def mock_redis():
 @pytest.fixture
 def tripwire_manager(mock_redis):
     """
-    Provide a TripWireManager instance with a mocked Redis client.
+    Provide a RedisTripwireManager instance with a mocked Redis client.
     """
-    manager = TripWireManager(mock_redis["tripwire"])
+    manager = RedisTripwireManager(mock_redis["tripwire"])
     return manager
 
 
@@ -183,7 +183,7 @@ def redis_user():
 @pytest.fixture(scope="function")
 def redis_tripwire():
     """
-    Fixture to provide a clean Redis instance for the TripWireManager.
+    Fixture to provide a clean Redis instance for the RedisTripwireManager.
     """
     client = redis.StrictRedis(
         host=REDIS_HOST, port=REDIS_PORT, db=REDIS_DB_TRIPWIRE, decode_responses=True

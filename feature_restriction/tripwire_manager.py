@@ -1,4 +1,5 @@
 import time
+from abc import ABC, abstractmethod
 from typing import Dict
 
 import redis
@@ -7,7 +8,26 @@ from feature_restriction.config import REDIS_DB_TRIPWIRE, REDIS_HOST, REDIS_PORT
 from feature_restriction.utils import logger
 
 
-class TripWireManager:
+class TripwireManager(ABC):
+    @abstractmethod
+    def is_rule_disabled_via_tripwire(self, rule_name: str) -> bool:
+        """Check if a rule is disabled via the tripwire."""
+
+    @abstractmethod
+    def apply_tripwire_if_needed(
+        self,
+        rule_name: str,
+        user_id: str,
+        total_users: int,
+    ) -> None:
+        """Apply tripwire logic to disable a rule if too many users are affected within a time window."""
+
+    @abstractmethod
+    def get_disabled_rules(self) -> Dict[str, bool]:
+        """Retrieve all rules and their disabled states from Redis."""
+
+
+class RedisTripwireManager(TripwireManager):
     """
     Manages tripwire states and user activity for rules to prevent rules from affecting too many users.
 
@@ -35,7 +55,7 @@ class TripWireManager:
     Examples
     --------
     >>> redis_client = redis.StrictRedis(host='localhost', port=6379, db=0)
-    >>> manager = TripWireManager(redis_client)
+    >>> manager = RedisTripwireManager(redis_client)
     >>> manager.apply_tripwire_if_needed('scam_message_rule', 'user_123')
     >>> manager.is_rule_disabled_via_tripwire('scam_message_rule')
     False
@@ -63,7 +83,7 @@ class TripWireManager:
 
     def __init__(self, redis_client: redis.StrictRedis):
         """
-        Initialize the TripWireManager with a dedicated Redis connection and configuration.
+        Initialize the RedisTripwireManager with a dedicated Redis connection and configuration.
 
         Parameters
         ----------

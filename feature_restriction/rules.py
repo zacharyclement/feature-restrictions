@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 
 from .models import UserData
 from .redis_user_manager import RedisUserManager
-from .tripwire_manager import TripWireManager
+from .tripwire_manager import RedisTripwireManager
 from .utils import logger
 
 
@@ -17,7 +17,7 @@ class BaseRule(ABC):
     ----------
     name : str
         Unique identifier for the rule.
-    tripwire_manager : TripWireManager
+    tripwire_manager : RedisTripwireManager
         Manager to handle tripwires and check if rules are disabled.
     user_manager : RedisUserManager
         Manager to handle user data stored in Redis.
@@ -26,14 +26,14 @@ class BaseRule(ABC):
     name: str  # Unique identifier for the rule
 
     def __init__(
-        self, tripwire_manager: TripWireManager, user_manager: RedisUserManager
+        self, tripwire_manager: RedisTripwireManager, user_manager: RedisUserManager
     ):
         """
         Initialize a BaseRule instance.
 
         Parameters
         ----------
-        tripwire_manager : TripWireManager
+        tripwire_manager : RedisTripwireManager
             Manager to handle tripwire states.
         user_manager : RedisUserManager
             Manager to interact with user data stored in Redis.

@@ -20,7 +20,7 @@ from feature_restriction.config import (
 from feature_restriction.models import Event
 from feature_restriction.redis_user_manager import RedisUserManager
 from feature_restriction.registry import EventHandlerRegistry, RuleRegistry
-from feature_restriction.tripwire_manager import TripWireManager
+from feature_restriction.tripwire_manager import RedisTripwireManager
 from feature_restriction.utils import logger
 
 
@@ -51,7 +51,7 @@ class RedisStreamConsumer(StreamConsumer):
         The Redis client connected to the event stream database.
     user_manager : RedisUserManager
         The manager for handling user-related operations in Redis.
-    tripwire_manager : TripWireManager
+    tripwire_manager : RedisTripwireManager
         The manager for handling tripwire logic in Redis.
     rule_registry : RuleRegistry
         The registry for managing rules applied to events.
@@ -64,7 +64,7 @@ class RedisStreamConsumer(StreamConsumer):
         The Redis client connected to the event stream database.
     user_manager : RedisUserManager
         The manager for handling user-related operations.
-    tripwire_manager : TripWireManager
+    tripwire_manager : RedisTripwireManager
         The manager for tripwire logic.
     rule_registry : RuleRegistry
         The registry for managing rules.
@@ -286,7 +286,7 @@ if __name__ == "__main__":
         raise e
 
     user_manager = RedisUserManager(redis_client_user)
-    tripwire_manager = TripWireManager(redis_client_tripwire)
+    tripwire_manager = RedisTripwireManager(redis_client_tripwire)
     rule_registry = RuleRegistry()
     event_registry = EventHandlerRegistry()
 

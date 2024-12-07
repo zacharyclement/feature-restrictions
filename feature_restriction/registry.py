@@ -12,7 +12,7 @@ from feature_restriction.rules import (
     ScamMessageRule,
     UniqueZipCodeRule,
 )
-from feature_restriction.tripwire_manager import TripWireManager
+from feature_restriction.tripwire_manager import RedisTripwireManager
 
 
 class RuleRegistry:
@@ -72,7 +72,7 @@ class RuleRegistry:
         return self.rules.get(rule_name)
 
     def register_default_rules(
-        self, tripwire_manager: TripWireManager, user_manager: RedisUserManager
+        self, tripwire_manager: RedisTripwireManager, user_manager: RedisUserManager
     ):
         """
         Registers default rules.

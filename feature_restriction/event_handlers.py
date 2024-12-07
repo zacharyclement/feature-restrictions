@@ -1,7 +1,7 @@
 from .models import Event, UserData
 from .redis_user_manager import RedisUserManager
 from .rules import ChargebackRatioRule, ScamMessageRule, UniqueZipCodeRule
-from .tripwire_manager import TripWireManager
+from .tripwire_manager import RedisTripwireManager
 from .utils import logger
 
 
@@ -13,13 +13,13 @@ class BaseEventHandler:
     ----------
     user_manager : RedisUserManager
         Manager for handling user data in Redis.
-    tripwire_manager : TripWireManager
+    tripwire_manager : RedisTripwireManager
         Manager for handling tripwire-related functionality.
     """
 
     def __init__(
         self,
-        tripwire_manager: TripWireManager,
+        tripwire_manager: RedisTripwireManager,
         user_manager: RedisUserManager,
     ):
         """
@@ -27,7 +27,7 @@ class BaseEventHandler:
 
         Parameters
         ----------
-        tripwire_manager : TripWireManager
+        tripwire_manager : RedisTripwireManager
             Instance of the tripwire manager.
         user_manager : RedisUserManager
             Instance of the user manager for interacting with Redis.
