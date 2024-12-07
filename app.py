@@ -10,7 +10,7 @@ from feature_restriction.config import (
     REDIS_HOST,
     REDIS_PORT,
 )
-from feature_restriction.endpoint_access import EndpointAccess
+from feature_restriction.endpoint_access import RedisEndpointAccess
 from feature_restriction.models import Event
 from feature_restriction.publisher import RedisEventPublisher
 from feature_restriction.redis_user_manager import RedisUserManager
@@ -123,7 +123,7 @@ def can_message(user_id: str):
     HTTPException
         If there is an error checking access.
     """
-    endpoint_access = EndpointAccess(user_manager)
+    endpoint_access = RedisEndpointAccess(user_manager)
     return endpoint_access.check_access(user_id, "can_message")
 
 
@@ -147,7 +147,7 @@ def can_purchase(user_id: str):
     HTTPException
         If there is an error checking access.
     """
-    endpoint_access = EndpointAccess(user_manager)
+    endpoint_access = RedisEndpointAccess(user_manager)
     return endpoint_access.check_access(user_id, "can_purchase")
 
 

@@ -33,12 +33,12 @@ class UserManager(ABC):
         """clear all user data from storage"""
 
 
-class RedisUserManager:
+class RedisUserManager(UserManager):
     """
     A manager for handling user data stored in a Redis database.
     """
 
-    def __init__(self, redis_client):
+    def __init__(self, redis_client: redis.StrictRedis):
         """
         Initialize the RedisUserManager with a Redis connection.
         """

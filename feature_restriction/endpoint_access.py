@@ -1,3 +1,5 @@
+from abc import ABC, abstractmethod
+
 from fastapi import HTTPException
 
 from feature_restriction.redis_user_manager import RedisUserManager
@@ -5,6 +7,12 @@ from feature_restriction.utils import logger
 
 
 class EndpointAccess:
+    @abstractmethod
+    def check_access(self, user_id: str, access_key: str) -> dict:
+        """Check user access for a given feature or endpoint."""
+
+
+class RedisEndpointAccess(EndpointAccess):
     """
     Handles user access logic for the 'can_message' and 'can_purchase' endpoints.
 
@@ -24,7 +32,7 @@ class EndpointAccess:
 
     def __init__(self, redis_user_manager: RedisUserManager):
         """
-        Initialize the EndpointAccess class.
+        Initialize the RedisEndpointAccess class.
 
         Parameters
         ----------
