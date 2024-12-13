@@ -120,7 +120,7 @@ class RedisStreamConsumer(StreamConsumer):
         """
         # Register defaults
         self.rule_registry.register_default(self.tripwire_manager, self.user_manager)
-        self.event_registry.register_default(self.user_manager)
+        self.event_registry.register_default(self.user_manager, self.user_manager)
 
     def process_event(self, event_id: str, event_data: dict):
         """

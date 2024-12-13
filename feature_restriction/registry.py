@@ -200,20 +200,18 @@ class EventHandlerRegistry(Registry):
         - `PurchaseMadeHandler` with no associated rules.
         """
         self.register(
-            CreditCardAddedHandler(tripwire_manager, user_manager),
+            CreditCardAddedHandler(user_manager),
             rule_names=["unique_zip_code_rule"],
         )
         self.register(
-            ScamMessageFlaggedHandler(tripwire_manager, user_manager),
+            ScamMessageFlaggedHandler(user_manager),
             rule_names=["scam_message_rule"],
         )
         self.register(
-            ChargebackOccurredHandler(tripwire_manager, user_manager),
+            ChargebackOccurredHandler(user_manager),
             rule_names=["chargeback_ratio_rule"],
         )
-        self.register(
-            PurchaseMadeHandler(tripwire_manager, user_manager), rule_names=[]
-        )
+        self.register(PurchaseMadeHandler(user_manager), rule_names=[])
 
     def get_rules_for_event(self, event_name: str) -> list:
         """
