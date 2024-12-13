@@ -43,6 +43,7 @@ def test_can_purchase_disabled(
     """
     Test the /canpurchase endpoint when the user is restricted from making purchases.
     """
+    time.sleep(1)
     # Arrange
     user_id = "user_456"
     user_manager = RedisUserManager(redis_user)
@@ -98,6 +99,7 @@ def test_can_message_disabled(
     """
     Test the /canmessage endpoint when the user is restricted from sending/receiving messages.
     """
+    time.sleep(1)
     # Arrange
     user_id = "user_101"
     user_manager = RedisUserManager(redis_user)

@@ -27,7 +27,7 @@ def test_credit_card_added_handler(user_manager, tripwire_manager, sample_user_d
     )
 
     # Instantiate the handler
-    handler = CreditCardAddedHandler(tripwire_manager, user_manager)
+    handler = CreditCardAddedHandler(user_manager)
 
     # Act
     handler.handle(event, sample_user_data)
@@ -50,7 +50,7 @@ def test_scam_message_flagged_handler(user_manager, tripwire_manager, sample_use
     user_manager.save_user = MagicMock()
     scam_message_rule = ScamMessageRule(tripwire_manager, user_manager)
     scam_message_rule.process_rule = MagicMock()
-    handler = ScamMessageFlaggedHandler(tripwire_manager, user_manager)
+    handler = ScamMessageFlaggedHandler(user_manager)
 
     # Act
     handler.handle(event, sample_user_data)
@@ -68,7 +68,7 @@ def test_chargeback_occurred_handler(user_manager, tripwire_manager, sample_user
     user_manager.save_user = MagicMock()
     chargeback_ratio_rule = ChargebackRatioRule(tripwire_manager, user_manager)
     chargeback_ratio_rule.process_rule = MagicMock()
-    handler = ChargebackOccurredHandler(tripwire_manager, user_manager)
+    handler = ChargebackOccurredHandler(user_manager)
 
     # Act
     handler.handle(event, sample_user_data)
@@ -84,7 +84,7 @@ def test_purchase_made_handler(user_manager, tripwire_manager, sample_user_data)
     # Arrange
     event = Event(name="purchase_made", event_properties={"amount": 100.0})
     user_manager.save_user = MagicMock()
-    handler = PurchaseMadeHandler(tripwire_manager, user_manager)
+    handler = PurchaseMadeHandler(user_manager)
 
     # Act
     handler.handle(event, sample_user_data)
@@ -102,7 +102,7 @@ def test_credit_card_added_handler_missing_properties(
     """
     # Arrange
     event = Event(name="credit_card_added", event_properties={})
-    handler = CreditCardAddedHandler(tripwire_manager, user_manager)
+    handler = CreditCardAddedHandler(user_manager)
 
     # Act & Assert
     with pytest.raises(ValueError, match="Both 'card_id' and 'zip_code' are required."):
@@ -117,7 +117,7 @@ def test_chargeback_occurred_handler_missing_amount(
     """
     # Arrange
     event = Event(name="chargeback_occurred", event_properties={})
-    handler = ChargebackOccurredHandler(tripwire_manager, user_manager)
+    handler = ChargebackOccurredHandler(user_manager)
 
     # Act & Assert
     with pytest.raises(ValueError, match="'amount' is required."):
@@ -132,7 +132,7 @@ def test_purchase_made_handler_missing_amount(
     """
     # Arrange
     event = Event(name="purchase_made", event_properties={})
-    handler = PurchaseMadeHandler(tripwire_manager, user_manager)
+    handler = PurchaseMadeHandler(user_manager)
 
     # Act & Assert
     with pytest.raises(ValueError, match="'amount' is required."):

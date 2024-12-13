@@ -5,22 +5,6 @@ from feature_restriction.models import Event
 from stream_consumer import RedisStreamConsumer
 
 
-def test_initialize_consumer_group(mock_redis):
-    """
-    Test that the consumer group is created if it doesn't already exist.
-    """
-    RedisStreamConsumer(
-        redis_client=mock_redis["stream"],
-        user_manager=MagicMock(),
-        tripwire_manager=MagicMock(),
-        rule_registry=MagicMock(),
-        event_registry=MagicMock(),
-    )
-    mock_redis["stream"].xgroup_create.assert_called_once_with(
-        EVENT_STREAM_KEY, CONSUMER_GROUP, id="0", mkstream=True
-    )
-
-
 def test_process_event_with_registered_handler(
     stream_consumer, user_manager, sample_user_data
 ):

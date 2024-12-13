@@ -94,6 +94,7 @@ def test_tripwire_and_rule_integration_stepwise(
     """
     Test the integration of rules, tripwire, and access flags via stepwise event posting.
     """
+    time.sleep(1)  # Allow the consumer to start
     # Simulate the RedisTripwireManager in Redis
     tripwire_manager = RedisTripwireManager(redis_tripwire)
     # Arrange

@@ -9,6 +9,7 @@ def test_unique_zip_code_rule(
     """
     Test if the UniqueZipCodeRule disables 'can_purchase' when the threshold is exceeded.
     """
+    time.sleep(1)
     # Arrange
     user_id = "user_123"
     user_manager = RedisUserManager(redis_user)
@@ -60,6 +61,7 @@ def test_scam_message_rule(
     """
     Test if the ScamMessageRule disables 'can_message' after the scam message flag threshold is reached.
     """
+    time.sleep(1)
     # Arrange
     user_id = "user_456"
     user_manager = RedisUserManager(redis_user)
@@ -92,6 +94,7 @@ def test_chargeback_ratio_rule(
     """
     Test if the ChargebackRatioRule disables 'can_purchase' when the chargeback-to-spend ratio exceeds the limit.
     """
+    time.sleep(1)
     # Arrange
     user_id = "user_789"
     user_manager = RedisUserManager(redis_user)

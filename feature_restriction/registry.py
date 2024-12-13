@@ -178,9 +178,7 @@ class EventHandlerRegistry(Registry):
         """
         return self.event_handler_registry.get(name)
 
-    def register_default(
-        self, tripwire_manager: TripwireManager, user_manager: UserManager
-    ) -> None:
+    def register_default(self, user_manager: UserManager) -> None:
         """
         Registers default event handlers and their associated rules.
 

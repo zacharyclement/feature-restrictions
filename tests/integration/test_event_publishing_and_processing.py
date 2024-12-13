@@ -13,13 +13,13 @@ def test_scam_message_flagged_event(
     """
     Test that RedisStreamConsumer processes 'scam_message_flagged' events.
     """
+    time.sleep(1)  # Adjust timing based on system performance
     # Arrange
     publisher = RedisEventPublisher(redis_stream)
     user_manager = RedisUserManager(redis_user)
 
+    # Publish the event
     event = Event(name="scam_message_flagged", event_properties={"user_id": "12345"})
-
-    # Act
     publisher.add_event_to_stream(event)
     time.sleep(1)  # Wait for the consumer to process
 
@@ -35,6 +35,7 @@ def test_event_publishing_and_consuming(
     """
     Test the integration between RedisEventPublisher and RedisStreamConsumer.
     """
+    time.sleep(1)
     # Arrange
     publisher = RedisEventPublisher(
         redis_stream
@@ -72,6 +73,7 @@ def test_event_processing_via_consumer(
     """
     Test that RedisStreamConsumer processes events from the stream and updates user data.
     """
+    time.sleep(1)
     # Arrange
     publisher = RedisEventPublisher(
         redis_stream
@@ -104,6 +106,7 @@ def test_chargeback_occurred_event(
     """
     Test that RedisStreamConsumer processes 'chargeback_occurred' events.
     """
+    time.sleep(1)
     # Arrange
     publisher = RedisEventPublisher(redis_stream)
     user_manager = RedisUserManager(redis_user)
@@ -129,6 +132,7 @@ def test_e2e_concurrent_events(
     """
     Test the end-to-end flow for concurrent events affecting multiple users.
     """
+    time.sleep(1)
     # Arrange
     user_manager = RedisUserManager(redis_user)
     users = [
@@ -169,6 +173,7 @@ def test_event_publishing_to_stream(
     """
     Test if events are successfully added to the Redis stream.
     """
+    time.sleep(1)
     # must delele because the initilization of the stream adds an init message like this
     # [('1733373899511-0', {'message': 'init'}), ('1733373900356-0', {'event_properties': '{"user_id": "12345", "card_id": "card_678", "zip_code": "12345"}', 'name': 'credit_card_added'})]
     redis_stream.delete(EVENT_STREAM_KEY)
@@ -209,6 +214,7 @@ def test_multiple_event_handling_via_endpoint(
     """
     Test the processing of multiple events in sequence via the endpoint.
     """
+    time.sleep(1)
     # Arrange
     user_manager = RedisUserManager(redis_user)
     user_id = "12345"

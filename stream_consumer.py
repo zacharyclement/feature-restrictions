@@ -120,7 +120,7 @@ class RedisStreamConsumer(StreamConsumer):
         """
         # Register defaults
         self.rule_registry.register_default(self.tripwire_manager, self.user_manager)
-        self.event_registry.register_default(self.user_manager, self.user_manager)
+        self.event_registry.register_default(self.user_manager)
 
     def process_event(self, event_id: str, event_data: dict):
         """
@@ -230,7 +230,7 @@ class RedisStreamConsumer(StreamConsumer):
 
 if __name__ == "__main__":
     # Connect to Redis
-    time.sleep(5)  # Wait for Redis to start
+    time.sleep(1)  # Wait for Redis to start
     redis_client_stream = RedisStreamClient(
         REDIS_HOST, REDIS_PORT, REDIS_DB_STREAM
     ).connect()
